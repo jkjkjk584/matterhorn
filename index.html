@@ -3682,6 +3682,25 @@
       display: contents;
     }
 
+
+    .admin-name-edit {
+      width: 100%;
+      min-height: 32px;
+      border-radius: 10px;
+      border: 1px solid #d7e0eb;
+      background: rgba(255,255,255,0.92);
+      padding: 0 9px;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 950;
+      outline: none;
+    }
+
+    .admin-name-edit:focus {
+      border-color: var(--navy);
+      box-shadow: 0 0 0 3px rgba(7,26,51,0.07);
+    }
+
     .admin-member-title { min-width: 0; }
 
     .admin-member-title strong {
@@ -5346,21 +5365,30 @@
     }
 
     body:not(.admin-mode) .compact-score {
-      background: #ffffff !important;
+      background: rgba(255,255,255,0.72) !important;
       color: var(--text);
-      pointer-events: auto;
-      cursor: text;
-      border-color: #b7cbe3;
-      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
-    }
-
-    body:not(.admin-mode) .compact-score:focus {
-      border-color: var(--blue);
-      box-shadow: 0 0 0 3px rgba(15, 103, 200, 0.12);
     }
 
     body:not(.admin-mode) .team-stat .admin-stat-piece {
       display: none !important;
+    }
+
+
+    /* v28: 공개 조 편성 탭 - 결과 제목과 보드를 한 박스 안에 표시 */
+    body:not(.admin-mode) #page-teams > .panel {
+      margin-top: 0 !important;
+    }
+
+    body:not(.admin-mode) #page-teams > .panel .section-head {
+      margin-bottom: 10px;
+    }
+
+    body:not(.admin-mode) #page-teams > .panel .section-icon {
+      background: var(--navy);
+    }
+
+    body:not(.admin-mode) #page-teams .team-column.unassigned {
+      order: 10;
     }
 
     .public-guide-panel {
@@ -5427,76 +5455,164 @@
     }
 
   
-
-    /* v25: 사용자 화면 불필요 안내 패널 제거 */
-    #page-members .participant-view-grid {
-      grid-template-columns: 1fr !important;
-    }
-
-    #page-members .participant-view-panel {
-      width: 100%;
-    }
-
-    .public-participant-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-      max-height: none !important;
-    }
-
-    /* v27: 남녀 색상톤 v22 수준으로 복원 */
-    .public-participant-card.male,
-    .assignment-card.male {
-      border: 1px solid #bcd9ff !important;
-      background: linear-gradient(135deg, #edf6ff 0%, #dcecff 100%) !important;
-      box-shadow: none !important;
-    }
-
-    .public-participant-card.female,
-    .assignment-card.female {
-      border: 1px solid #ffc4da !important;
-      background: linear-gradient(135deg, #fff0f6 0%, #ffddea 100%) !important;
-      box-shadow: none !important;
-    }
-
-    .public-participant-card.male .participant-number,
-    .gender-chip.male,
-    .assignment-gender-pill.male {
-      color: #1559a8 !important;
-      background: #dcebff !important;
-      border: 1px solid #c7ddfb !important;
-    }
-
-    .public-participant-card.female .participant-number,
-    .gender-chip.female,
-    .assignment-gender-pill.female {
-      color: #b6366a !important;
-      background: #ffe1ec !important;
-      border: 1px solid #ffc8dc !important;
-    }
-
-    .public-participant-card.male strong {
-      color: #113f77 !important;
-    }
-
-    .public-participant-card.female strong {
-      color: #8f2852 !important;
-    }
-
-    .public-participant-card.male small {
-      color: #3e6d9d !important;
-    }
-
-    .public-participant-card.female small {
-      color: #9b5773 !important;
-    }
-
-    .assignment-card.male .assignment-top strong,
-    .assignment-card.female .assignment-top strong {
-      color: #071a33 !important;
+    .admin-member-controls {
+      grid-template-columns: 0.75fr 0.9fr 1fr 34px !important;
     }
 
     @media (max-width: 720px) {
-      .public-participant-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      .admin-member-controls {
+        grid-template-columns: 1fr 1fr 1fr 32px !important;
+      }
+    }
+
+
+    /* v29: 상단 배너/관리자 진입 UI 정리 */
+    .hero {
+      min-height: 245px !important;
+      background-position: center 28% !important;
+      background-image:
+        linear-gradient(90deg, rgba(4,17,36,0.58) 0%, rgba(4,17,36,0.34) 38%, rgba(4,17,36,0.10) 70%, rgba(4,17,36,0.28) 100%),
+        url("./matterhorn-banner.png") !important;
+    }
+
+    .hero::after {
+      background:
+        radial-gradient(circle at 22% 26%, rgba(255,255,255,0.08), transparent 22%),
+        linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.20)) !important;
+    }
+
+    .hero-inner {
+      min-height: 245px !important;
+      padding: 14px 0 24px !important;
+      justify-content: space-between !important;
+    }
+
+    .hero-top {
+      align-items: flex-start !important;
+      justify-content: space-between !important;
+    }
+
+    .hero-pill.gold,
+    .hero-copy .eyebrow,
+    .hero-copy p,
+    .mode-switch-bar,
+    .public-guide-panel {
+      display: none !important;
+    }
+
+    .hero-copy {
+      max-width: 640px !important;
+      margin-top: auto !important;
+    }
+
+    .hero-copy h1,
+    h1 {
+      font-size: clamp(31px, 4.2vw, 50px) !important;
+      line-height: 1.02 !important;
+      letter-spacing: -0.06em !important;
+      text-shadow: 0 8px 22px rgba(0,0,0,0.32) !important;
+    }
+
+    .hero-admin-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 7px;
+      flex: 0 0 auto;
+    }
+
+    .hero-admin-btn {
+      min-height: 34px !important;
+      padding: 0 12px !important;
+      border-radius: 999px !important;
+      border: 1px solid rgba(255,255,255,0.26) !important;
+      background: rgba(7,26,51,0.42) !important;
+      color: #fff !important;
+      box-shadow: none !important;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      font-size: 11px !important;
+      font-weight: 1000 !important;
+    }
+
+    .hero-admin-btn-logout {
+      background: rgba(220,76,100,0.36) !important;
+    }
+
+    @media (max-width: 720px) {
+      .hero {
+        min-height: 205px !important;
+        background-position: center 18% !important;
+      }
+
+      .hero-inner {
+        min-height: 205px !important;
+        width: calc(100% - 24px) !important;
+        padding: 12px 0 18px !important;
+      }
+
+      .hero-top {
+        gap: 8px !important;
+      }
+
+      .hero-pill {
+        max-width: calc(100% - 104px) !important;
+        min-height: 32px !important;
+        padding: 0 10px !important;
+        font-size: 10px !important;
+      }
+
+      .hero-admin-actions {
+        gap: 5px;
+      }
+
+      .hero-admin-btn {
+        min-height: 32px !important;
+        padding: 0 10px !important;
+        font-size: 10px !important;
+      }
+
+      .hero-copy h1,
+      h1 {
+        font-size: 30px !important;
+      }
+    }
+
+
+    /* vNext: 경기현황 중심 공개화면 + 참가자 상태 변경 허용 */
+    .match-status-head {
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .match-refresh-btn {
+      margin-left: auto;
+      flex: 0 0 auto;
+    }
+
+    body:not(.admin-mode) .status-cycle-btn {
+      pointer-events: auto !important;
+      opacity: 1;
+    }
+
+    body:not(.admin-mode) .compact-score {
+      background: #ffffff !important;
+    }
+
+    .admin-modal-card input,
+    .admin-modal-card .field {
+      font-size: 16px !important;
+    }
+
+    @media (max-width: 720px) {
+      .match-status-head {
+        display: grid;
+        grid-template-columns: 38px 1fr;
+      }
+      .match-refresh-btn {
+        grid-column: 1 / -1;
+        width: 100%;
+        margin-left: 0;
       }
     }
 
@@ -5507,43 +5623,25 @@
     <div class="hero-inner">
       <div class="hero-top">
         <div class="hero-pill">⛰️ 마테호른 · MATTERHORN TENNIS CLUB</div>
-        <div class="hero-pill gold">Monthly Gathering Manager</div>
+        <div class="hero-admin-actions">
+          <button class="btn hero-admin-btn public-only" id="enterAdminModeBtn">🔐 관리자</button>
+          <button class="btn hero-admin-btn admin-only" id="publicModeBtn">공개화면</button>
+          <button class="btn hero-admin-btn hero-admin-btn-logout admin-only" id="adminQuickLogoutBtn">로그아웃</button>
+        </div>
       </div>
       <div class="hero-copy">
-        <div class="eyebrow">✨ 모바일·태블릿 운영형 월례회 시스템</div>
         <h1>월례회 통합관리 시스템</h1>
-        <p>
-          참가자 등록, 조 편성, 경기 점수, 개인 순위, 경품 추첨까지
-          월례회 당일 운영 흐름을 기능별 페이지로 나눠 빠르게 관리합니다.
-        </p>
       </div>
     </div>
   </header>
 
   <main class="wrap">
 
-
-    <div class="mode-switch-bar">
-      <div class="mode-switch-copy public-only">
-        <strong>참가자 공개 화면</strong>
-        <span>회원은 명단, 조 편성 결과, 경기 일정, 순위만 볼 수 있습니다.</span>
-      </div>
-      <div class="mode-switch-copy admin-only">
-        <strong>관리자 운영 콘솔</strong>
-        <span>명단 확정, 조 편성, 대진 생성, 점수 입력, 추첨을 관리합니다.</span>
-      </div>
-      <div class="mode-switch-actions">
-        <button class="btn btn-outline admin-only" id="publicModeBtn">공개화면으로</button>
-        <button class="btn btn-dark public-only" id="enterAdminModeBtn">🔐 관리자 모드</button>
-        <button class="btn btn-rose admin-only" id="adminQuickLogoutBtn">로그아웃</button>
-      </div>
-    </div>
-
     <nav class="desktop-page-tabs desktop-public-tabs">
-      <button class="page-tab active" data-page="members">1. 참가자</button>
-      <button class="page-tab" data-page="teams">2. 조 편성</button>
-      <button class="page-tab" data-page="matches">3. 경기 일정</button>
-      <button class="page-tab" data-page="awards">4. 순위</button>
+      <button class="page-tab active" data-page="matches">1. 경기현황</button>
+      <button class="page-tab" data-page="awards">2. 순위</button>
+      <button class="page-tab" data-page="teams">3. 조 편성</button>
+      <button class="page-tab" data-page="members">4. 참가자</button>
     </nav>
 
     <nav class="desktop-page-tabs desktop-admin-tabs admin-only">
@@ -5553,9 +5651,8 @@
       <button class="page-tab" data-page="awards">4. 추첨·순위</button>
     </nav>
 
-    <section class="page active" id="page-members">
-      <div class="page-grid participant-view-grid">
-        <div class="panel participant-view-panel">
+    <section class="page" id="page-members">
+      <div class="panel participant-view-panel">
           <div class="section-head compact-section-head">
             <div class="section-icon">👥</div>
             <div>
@@ -5572,11 +5669,11 @@
 
           <div class="public-participant-grid" id="publicParticipantList"></div>
         </div>
+
       </div>
     </section>
 
     <section class="page" id="page-teams">
-      <div class="public-guide-panel public-only"><strong>조 편성 결과</strong><span>관리자가 확정한 팀 배정만 표시됩니다. 팀 변경과 랜덤 편성은 관리자 모드에서만 가능합니다.</span></div>
       <div class="page-grid">
         <div class="panel">
           <div class="section-head">
@@ -5611,16 +5708,15 @@
         <div class="section-head">
           <div class="section-icon">🧩</div>
           <div>
-            <h2>조 편성 보드</h2>
-            <p>공개 화면에서는 결과만 보이고, 관리자 모드에서는 터치로 팀을 조정할 수 있습니다.</p>
+            <h2><span class="public-only">조 편성 결과</span><span class="admin-only">조 편성 보드</span></h2>
+            <p><span class="public-only">확정된 팀 배정 결과입니다.</span><span class="admin-only">공개 화면에서는 결과만 보이고, 관리자 모드에서는 터치로 팀을 조정할 수 있습니다.</span></p>
           </div>
         </div>
         <div class="team-board" id="teamBoard"></div>
       </div>
     </section>
 
-    <section class="page" id="page-matches">
-      <div class="public-guide-panel public-only"><strong>경기 일정 및 진행 상태</strong><span>점수 입력과 경기 상태 변경은 관리자 모드에서만 가능합니다.</span></div>
+    <section class="page active" id="page-matches">
       <section class="team-record-dashboard">
             <div class="team-leader-banner" id="teamLeaderBanner">
               <span class="leader-label">현재 우세</span>
@@ -5681,19 +5777,19 @@
       </div>
 
       <div class="panel" style="margin-top:18px;">
-        <div class="section-head">
+        <div class="section-head match-status-head">
           <div class="section-icon">📝</div>
           <div>
-            <h2>경기 일정 · 점수 현황</h2>
-            <p>공개 화면에서는 조회만 가능하고, 관리자 모드에서 점수와 상태를 변경합니다.</p>
+            <h2>경기현황 · 점수 입력</h2>
+            <p>참가자도 점수와 경기상태를 입력할 수 있습니다. 다른 기기 변경사항은 새로고침으로 불러옵니다.</p>
           </div>
+          <button class="btn btn-outline match-refresh-btn" id="refreshMatchStatusBtn">↻ 새로고침</button>
         </div>
         <div id="matchArea"></div>
       </div>
     </section>
 
     <section class="page" id="page-awards">
-      <div class="public-guide-panel public-only"><strong>개인 순위</strong><span>경기 점수 입력 후 자동으로 누적 순위가 계산됩니다. 경품 추첨은 관리자 모드에서 진행합니다.</span></div>
       <div class="page-grid">
         <div class="panel">
           <div class="section-head">
@@ -5723,6 +5819,7 @@
                 <span>순위권 제외</span>
               </label>
               <select id="excludeTopCountSelect" class="field raffle-select" disabled>
+                <option value="0">제외 없음</option>
                 <option value="1">1위 제외</option>
                 <option value="2">상위 2명 제외</option>
                 <option value="3" selected>상위 3명 제외</option>
@@ -5783,7 +5880,7 @@
           </div>
 
           <div class="status-row admin-status-row">
-            <div class="save-status" id="saveStatus">💾 로컬 저장 준비됨</div>
+            <div class="save-status" id="saveStatus">💾 DB 저장 준비됨</div>
             <div class="actions compact-actions">
               <button class="btn btn-outline" id="manualSaveBtn">저장</button>
               <button class="btn btn-rose" id="resetSampleBtn">샘플 초기화</button>
@@ -5805,13 +5902,17 @@
             <div class="section-head compact-section-head">
               <div class="section-icon">➕</div>
               <div>
-                <h2>Guest 추가</h2>
-                <p>당일 초대 회원도 참가자 명단에 바로 넣을 수 있습니다.</p>
+                <h2>회원 추가</h2>
+                <p>정회원과 Guest를 모두 DB 회원명단에 추가할 수 있습니다.</p>
               </div>
             </div>
 
             <div class="guest-form">
-              <input id="guestName" class="field" placeholder="Guest 이름" />
+              <input id="guestName" class="field" placeholder="회원 이름" />
+              <select id="newMemberType" class="field">
+                <option value="regular" selected>정회원</option>
+                <option value="guest">Guest</option>
+              </select>
               <select id="guestGender" class="field">
                 <option value="남">남</option>
                 <option value="여">여</option>
@@ -5823,12 +5924,12 @@
                 <option value="4">실력 4</option>
                 <option value="5">실력 5</option>
               </select>
-              <button class="btn btn-dark" id="addGuestBtn">Guest 추가</button>
+              <button class="btn btn-dark" id="addGuestBtn">회원 추가</button>
             </div>
 
             <div class="note compact-note">
-              게스트는 추가 즉시 <strong>참가</strong> 상태로 들어갑니다.
-              실력은 관리자만 보며, 조 편성 균형을 잡는 참고용으로 사용합니다.
+              추가한 정회원/Guest는 즉시 <strong>참가</strong> 상태로 들어가며, 저장되면 다른 기기에서도 같은 회원명단을 사용합니다.
+              이름·성별·실력·회원구분은 관리자 화면에서 바로 수정할 수 있습니다.
             </div>
           </div>
 
@@ -5861,10 +5962,10 @@
   </main>
 
   <nav class="bottom-nav bottom-nav-public">
-    <button class="active" data-page="members"><span>👥</span><span>참가자</span></button>
-    <button data-page="teams"><span>🔀</span><span>조 편성</span></button>
-    <button data-page="matches"><span>🎾</span><span>경기</span></button>
+    <button class="active" data-page="matches"><span>🎾</span><span>경기현황</span></button>
     <button data-page="awards"><span>🏆</span><span>순위</span></button>
+    <button data-page="teams"><span>🔀</span><span>조 편성</span></button>
+    <button data-page="members"><span>👥</span><span>참가자</span></button>
   </nav>
 
   <nav class="bottom-nav bottom-nav-admin admin-only">
@@ -5953,6 +6054,55 @@
     </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    // Matterhorn shared DB adapter: Supabase DB 저장만 사용하고 Realtime 자동 동기화는 사용하지 않습니다.
+    const SUPABASE_URL = "https://fgbiyvfnkvbcijlvtlsg.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_Mln3GFeJtAtblF1bnCqemQ_syZZ-CCc";
+    const SUPABASE_STATE_TABLE = "matterhorn_state";
+    const SUPABASE_STATE_ID = "main";
+
+    window.MATTERHORN_DB_ADAPTER = (() => {
+      let client = null;
+
+      function getClient() {
+        if (!window.supabase) {
+          throw new Error("Supabase 라이브러리를 불러오지 못했습니다.");
+        }
+        if (!client) {
+          client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        }
+        return client;
+      }
+
+      return {
+        async loadMonthlyMeetupState() {
+          const { data, error } = await getClient()
+            .from(SUPABASE_STATE_TABLE)
+            .select("payload")
+            .eq("id", SUPABASE_STATE_ID)
+            .maybeSingle();
+
+          if (error) throw error;
+          return data?.payload || null;
+        },
+
+        async saveMonthlyMeetupState(payload) {
+          const { error } = await getClient()
+            .from(SUPABASE_STATE_TABLE)
+            .upsert({
+              id: SUPABASE_STATE_ID,
+              payload,
+              updated_at: new Date().toISOString()
+            }, { onConflict: "id" });
+
+          if (error) throw error;
+          return { ok: true, storage: "supabase" };
+        }
+      };
+    })();
+  </script>
+
   <script>
     const STORAGE_KEY = "matterhorn_monthly_manager_v2";
     const ADMIN_PASSWORD_KEY = "matterhorn_admin_password";
@@ -6012,57 +6162,13 @@
       excludeTopRankCount: 3,
       wheelRotation: 0,
       matchEditMode: false,
-      activePage: "members",
+      activePage: "matches",
       updatedAt: null
     };
 
     const clone = (value) => JSON.parse(JSON.stringify(value));
     let state = clone(defaultState);
     let saveTimer = null;
-
-    const SUPABASE_URL = "https://fgbiyvfnkvbcijlvtlsg.supabase.co";
-    const SUPABASE_ANON_KEY = "sb_publishable_Mln3GFeJtAtblF1bnCqemQ_syZZ-CCc";
-    const SUPABASE_STATE_TABLE = "matterhorn_state";
-    const SUPABASE_STATE_ID = "main";
-
-    async function supabaseRequest(path, options = {}) {
-      const response = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
-        ...options,
-        headers: {
-          apikey: SUPABASE_ANON_KEY,
-          Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-          "Content-Type": "application/json",
-          ...(options.headers || {})
-        }
-      });
-
-      if (!response.ok) {
-        const message = await response.text().catch(() => "");
-        throw new Error(`Supabase 요청 실패: ${response.status} ${message}`);
-      }
-
-      if (response.status === 204) return null;
-      return response.json();
-    }
-
-    const supabaseStorageAdapter = {
-      async loadMonthlyMeetupState() {
-        const rows = await supabaseRequest(`${SUPABASE_STATE_TABLE}?id=eq.${encodeURIComponent(SUPABASE_STATE_ID)}&select=payload&limit=1`, {
-          method: "GET"
-        });
-        return Array.isArray(rows) && rows[0] ? rows[0].payload : null;
-      },
-      async saveMonthlyMeetupState(payload) {
-        await supabaseRequest(`${SUPABASE_STATE_TABLE}?id=eq.${encodeURIComponent(SUPABASE_STATE_ID)}`, {
-          method: "PATCH",
-          headers: { Prefer: "return=minimal" },
-          body: JSON.stringify({ payload, updated_at: new Date().toISOString() })
-        });
-        return { ok: true, storage: "supabase" };
-      }
-    };
-
-    window.MATTERHORN_DB_ADAPTER = window.MATTERHORN_DB_ADAPTER || supabaseStorageAdapter;
 
     const fallbackStorageAdapter = {
       async loadMonthlyMeetupState() {
@@ -6149,7 +6255,6 @@
         excludeTopRankCount: state.excludeTopRankCount,
         wheelRotation: state.wheelRotation,
         matchEditMode: state.matchEditMode,
-        activePage: state.activePage,
         updatedAt: new Date().toISOString()
       };
     }
@@ -6162,7 +6267,13 @@
         setSaveStatus("✅ 저장됨 · " + new Date().toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" }), true);
       } catch (error) {
         console.error(error);
-        setSaveStatus("⚠️ 저장 실패");
+        const message = error?.message || String(error || "알 수 없는 오류");
+        setSaveStatus("⚠️ 저장 실패 · " + message.slice(0, 46));
+        try {
+          localStorage.setItem(STORAGE_KEY + "_last_failed_backup", JSON.stringify(exportState()));
+        } catch (backupError) {
+          console.warn("저장 실패 백업도 실패", backupError);
+        }
       }
     }
 
@@ -6192,7 +6303,7 @@
             wheelRotation: Number(loaded.wheelRotation || 0),
             matchEditMode: Boolean(loaded.matchEditMode)
           };
-          setSaveStatus("✅ DB 데이터 불러옴", true);
+          setSaveStatus("✅ 저장 데이터 불러옴", true);
         } else {
           setSaveStatus("💾 DB 저장 준비됨");
         }
@@ -6205,7 +6316,46 @@
       if ($("menDoublesCountInput")) $("menDoublesCountInput").value = String(state.desiredMenDoublesCount || 0);
       if ($("womenDoublesCountInput")) $("womenDoublesCountInput").value = String(state.desiredWomenDoublesCount || 0);
       syncRaffleControls();
-      activatePage(state.activePage === "admin" ? "members" : (state.activePage || "members"), false);
+      // 첫 접속 화면은 항상 경기현황 화면으로 고정한다.
+      // DB에 예전 activePage 값이 남아 있어도 사용자별 첫 화면이 흔들리지 않게 무시한다.
+      activatePage("matches", false);
+    }
+
+    async function refreshFromDb() {
+      try {
+        setSaveStatus("🔄 최신 데이터 불러오는 중...");
+        const loaded = await dataAdapter.loadMonthlyMeetupState();
+        if (loaded && typeof loaded === "object") {
+          state = {
+            ...clone(defaultState),
+            ...loaded,
+            members: Array.isArray(loaded.members) ? loaded.members : clone(defaultState.members),
+            matches: Array.isArray(loaded.matches)
+              ? loaded.matches.map(match => ({ ...match, status: match.status || "pending" }))
+              : [],
+            giftWinners: Array.isArray(loaded.giftWinners) ? loaded.giftWinners : [],
+            desiredGamesPerPlayer: Number(loaded.desiredGamesPerPlayer || 2),
+            desiredMenDoublesCount: Number(loaded.desiredMenDoublesCount || 0),
+            desiredWomenDoublesCount: Number(loaded.desiredWomenDoublesCount || 0),
+            excludeRankersFromRaffle: Boolean(loaded.excludeRankersFromRaffle),
+            excludeTopRankCount: Number(loaded.excludeTopRankCount ?? 3),
+            wheelRotation: Number(loaded.wheelRotation || 0),
+            matchEditMode: Boolean(loaded.matchEditMode)
+          };
+          if ($("desiredGamesSelect")) $("desiredGamesSelect").value = String(state.desiredGamesPerPlayer || 2);
+          if ($("menDoublesCountInput")) $("menDoublesCountInput").value = String(state.desiredMenDoublesCount || 0);
+          if ($("womenDoublesCountInput")) $("womenDoublesCountInput").value = String(state.desiredWomenDoublesCount || 0);
+          renderAll();
+          activatePage(state.activePage || "matches", false);
+          setSaveStatus("✅ 최신 데이터 반영됨 · " + new Date().toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" }), true);
+        } else {
+          setSaveStatus("💾 불러올 DB 데이터가 없습니다");
+        }
+      } catch (error) {
+        console.error(error);
+        const message = error?.message || String(error || "알 수 없는 오류");
+        setSaveStatus("⚠️ 새로고침 실패 · " + message.slice(0, 46));
+      }
     }
 
     function renderAll() {
@@ -6371,12 +6521,8 @@
             <div class="admin-member-content">
               <div class="admin-member-top">
                 <div class="admin-member-title">
-                  <strong title="${safeText(member.name)}">${safeText(member.name)}</strong>
-                  <small></small>
+                  <input class="admin-name-edit" value="${safeText(member.name)}" title="회원 이름 수정" oninput="updateMember('${member.id}','name',this.value)" />
                 </div>
-                <span class="admin-member-meta-inline ${member.isGuest ? "guest" : ""}">
-                  ${member.isGuest ? "Guest" : "정회원"}
-                </span>
                 <button class="admin-participation-btn ${member.joined ? "on" : "off"}" onclick="toggleJoin('${member.id}')">
                   ${member.joined ? "참가" : "불참"}
                 </button>
@@ -6390,7 +6536,11 @@
                 <select class="compact-select" onchange="updateMember('${member.id}','skill',Number(this.value))">
                   ${[1,2,3,4,5].map(level => `<option value="${level}" ${Number(member.skill) === level ? "selected" : ""}>실력 ${level}</option>`).join("")}
                 </select>
-                <button class="delete-mini" onclick="removeMember('${member.id}')" title="${member.isGuest ? "Guest 삭제" : "회원 삭제"}">×</button>
+                <select class="compact-select" onchange="updateMember('${member.id}','isGuest',this.value === 'guest')">
+                  <option value="regular" ${member.isGuest ? "" : "selected"}>정회원</option>
+                  <option value="guest" ${member.isGuest ? "selected" : ""}>Guest</option>
+                </select>
+                <button class="delete-mini" onclick="removeMember('${member.id}')" title="회원 삭제">×</button>
               </div>
             </div>
           </article>
@@ -6676,8 +6826,8 @@
           matchType === "여복" ? "women" : "mixed";
         const side1Display = playerNamesWithOrdinals(match.side1Players);
         const side2Display = playerNamesWithOrdinals(match.side2Players);
-        const scoreControlAttrs = `inputmode="numeric" aria-label="경기 점수 입력"`;
-        const statusButtonAttrs = adminUnlocked ? `onclick="cycleMatchStatus('${match.id}')" title="누르면 상태가 변경됩니다"` : `disabled title="관리자 모드에서 변경할 수 있습니다"`;
+        const scoreControlAttrs = "";
+        const statusButtonAttrs = `onclick="cycleMatchStatus('${match.id}')" title="누르면 상태가 변경됩니다"`;
 
         return `
           <article class="match-row status-${status} ${adminUnlocked && state.matchEditMode ? "edit-mode" : ""}">
@@ -6851,9 +7001,18 @@
 
     function updateMember(id, key, value) {
       if (!requireAdmin()) return;
-      state.members = state.members.map(member => member.id === id ? { ...member, [key]: value } : member);
-      if (key === "team") state.matches = [];
-      renderAll();
+      const normalizedValue = key === "name" ? String(value).trimStart() : value;
+      state.members = state.members.map(member => member.id === id ? { ...member, [key]: normalizedValue } : member);
+      if (["team", "gender", "isGuest"].includes(key)) state.matches = [];
+      if (key === "name") {
+        renderSummary();
+        renderPublicParticipants();
+        renderTeamBoard();
+        renderMatches();
+        renderRankings();
+      } else {
+        renderAll();
+      }
       scheduleSave();
     }
 
@@ -6878,16 +7037,18 @@
       if (!requireAdmin()) return;
       const name = $("guestName").value.trim();
       if (!name) return;
+      const isGuest = $("newMemberType") ? $("newMemberType").value === "guest" : true;
       state.members.push({
-        id: createId("guest"),
+        id: createId(isGuest ? "guest" : "member"),
         name,
         gender: $("guestGender").value,
         skill: Number($("guestSkill").value),
         joined: true,
         team: "",
-        isGuest: true
+        isGuest
       });
       $("guestName").value = "";
+      if ($("newMemberType")) $("newMemberType").value = "regular";
       $("guestGender").value = "남";
       $("guestSkill").value = "3";
       state.matches = [];
@@ -7186,7 +7347,6 @@
     }
 
     function cycleMatchStatus(id) {
-      if (!requireAdmin()) return;
       const current = state.matches.find(match => match.id === id)?.status || "pending";
       const nextStatus =
         current === "pending" ? "playing" :
@@ -7290,7 +7450,7 @@
       if (!toggle || !select) return;
       toggle.checked = Boolean(state.excludeRankersFromRaffle);
       select.disabled = !state.excludeRankersFromRaffle;
-      select.value = String(state.excludeTopRankCount || 3);
+      select.value = String(state.excludeTopRankCount ?? 3);
     }
 
     function spinRaffleWheel() {
@@ -7360,7 +7520,7 @@
       if ($("desiredGamesSelect")) $("desiredGamesSelect").value = String(state.desiredGamesPerPlayer || 2);
       if ($("menDoublesCountInput")) $("menDoublesCountInput").value = String(state.desiredMenDoublesCount || 0);
       if ($("womenDoublesCountInput")) $("womenDoublesCountInput").value = String(state.desiredWomenDoublesCount || 0);
-      activatePage("members", false);
+      activatePage("matches", false);
       saveNow();
     }
 
@@ -7373,7 +7533,6 @@
       $("adminPasswordModal").classList.remove("hidden");
       $("adminPasswordInput").value = "";
       $("adminPasswordError").textContent = "";
-      setTimeout(() => $("adminPasswordInput").focus(), 0);
     }
 
     function closeAdminPasswordModal() {
@@ -7403,7 +7562,7 @@
       state.matchEditMode = false;
       syncAccessMode();
       renderAll();
-      activatePage("members");
+      activatePage("matches");
     }
 
     function changeAdminPassword() {
@@ -7453,12 +7612,12 @@
       if (typeof action === "function") action();
     }
 
-    function activatePage(page, persist = true) {
+    function activatePage(page, persist = false) {
       if (page === "admin" && !adminUnlocked) {
         openAdminPasswordModal();
         return;
       }
-      if (!adminUnlocked && page === "admin") page = "members";
+      if (!adminUnlocked && page === "admin") page = "matches";
       state.activePage = page;
       syncAccessMode();
       document.querySelectorAll(".page").forEach(section => {
@@ -7495,6 +7654,7 @@
     $("clearMatchesBtn").addEventListener("click", clearMatches);
     $("toggleMatchEditModeBtn").addEventListener("click", toggleMatchEditMode);
     $("addCustomMatchBtn").addEventListener("click", () => openMatchEditor(null, "add"));
+    if ($("refreshMatchStatusBtn")) $("refreshMatchStatusBtn").addEventListener("click", refreshFromDb);
     $("spinWheelBtn").addEventListener("click", spinRaffleWheel);
     $("resetGiftBtn").addEventListener("click", resetGift);
     $("manualSaveBtn").addEventListener("click", saveNow);
@@ -7557,6 +7717,7 @@
     window.updateScore = updateScore;
     window.updateMatchStatus = updateMatchStatus;
     window.cycleMatchStatus = cycleMatchStatus;
+    window.refreshFromDb = refreshFromDb;
     window.openMatchEditor = openMatchEditor;
     window.moveMatchOrder = moveMatchOrder;
     window.deleteCustomMatch = deleteCustomMatch;
