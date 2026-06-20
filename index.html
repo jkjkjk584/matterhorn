@@ -5199,6 +5199,76 @@
       }
     }
 
+
+
+    /* v23: 배경 이미지 노출 개선 - 참가자 카드가 히어로 배경을 과하게 덮지 않도록 조정 */
+    body {
+      background:
+        linear-gradient(180deg, rgba(5, 18, 39, 0.18) 0%, rgba(238, 244, 250, 0.92) 330px, rgba(238, 244, 250, 0.98) 100%),
+        url("./matterhorn-banner.png") center top / 100% auto no-repeat fixed,
+        radial-gradient(circle at 18% 0%, rgba(15,103,200,0.13), transparent 28%),
+        linear-gradient(180deg, #f8fbff 0%, var(--bg) 100%);
+    }
+
+    .hero {
+      min-height: 286px !important;
+      background-position: center 34% !important;
+    }
+
+    .hero-inner {
+      min-height: 286px !important;
+      padding-bottom: 34px !important;
+    }
+
+    .wrap {
+      margin-top: 10px !important;
+    }
+
+    .participant-view-panel {
+      background: rgba(255,255,255,0.88) !important;
+      border-color: rgba(255,255,255,0.88) !important;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 16px 42px rgba(7,26,51,0.14) !important;
+    }
+
+    .public-participant-card.male {
+      background: linear-gradient(135deg, rgba(244,249,255,0.92) 0%, rgba(234,244,255,0.88) 100%) !important;
+    }
+
+    .public-participant-card.female {
+      background: linear-gradient(135deg, rgba(255,246,249,0.92) 0%, rgba(255,234,242,0.88) 100%) !important;
+    }
+
+    @media (max-width: 720px) {
+      body {
+        background:
+          linear-gradient(180deg, rgba(5, 18, 39, 0.16) 0%, rgba(238, 244, 250, 0.90) 300px, rgba(238, 244, 250, 0.98) 100%),
+          url("./matterhorn-banner.png") center top / auto 300px no-repeat fixed,
+          linear-gradient(180deg, #f8fbff 0%, var(--bg) 100%);
+      }
+
+      .hero {
+        min-height: 248px !important;
+        background-position: center top !important;
+      }
+
+      .hero-inner {
+        min-height: 248px !important;
+        padding-bottom: 24px !important;
+      }
+
+      .wrap {
+        margin-top: 8px !important;
+        width: calc(100% - 20px) !important;
+      }
+
+      .participant-view-panel {
+        background: rgba(255,255,255,0.90) !important;
+        border-radius: 22px !important;
+      }
+    }
+
   </style>
 </head>
 <body>
