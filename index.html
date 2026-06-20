@@ -5466,182 +5466,245 @@
     }
 
 
-    /* v29: 상단 배너/관리자 진입 UI 정리 */
+    /* final hero cleanup: keep Matterhorn mark visible */
     .hero {
-      min-height: 245px !important;
-      background-position: center 28% !important;
-      background-image:
-        linear-gradient(90deg, rgba(4,17,36,0.58) 0%, rgba(4,17,36,0.34) 38%, rgba(4,17,36,0.10) 70%, rgba(4,17,36,0.28) 100%),
-        url("./matterhorn-banner.png") !important;
+      min-height: 230px !important;
+      background-position: center 42% !important;
     }
 
     .hero::after {
-      background:
-        radial-gradient(circle at 22% 26%, rgba(255,255,255,0.08), transparent 22%),
-        linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.20)) !important;
+      background: linear-gradient(90deg, rgba(4,17,36,0.18), rgba(4,17,36,0.04) 48%, rgba(4,17,36,0.16)) !important;
     }
 
-    .hero-inner {
-      min-height: 245px !important;
-      padding: 14px 0 24px !important;
-      justify-content: space-between !important;
+    .hero-inner-clean {
+      min-height: 230px !important;
+      padding: 14px 20px 18px !important;
+      justify-content: flex-start !important;
     }
 
-    .hero-top {
+    .hero-top-clean {
+      justify-content: flex-end !important;
       align-items: flex-start !important;
-      justify-content: space-between !important;
+      width: 100%;
     }
 
-    .hero-pill.gold,
-    .hero-copy .eyebrow,
-    .hero-copy p,
-    .mode-switch-bar,
-    .public-guide-panel {
-      display: none !important;
-    }
-
-    .hero-copy {
-      max-width: 640px !important;
-      margin-top: auto !important;
-    }
-
-    .hero-copy h1,
-    h1 {
-      font-size: clamp(31px, 4.2vw, 50px) !important;
-      line-height: 1.02 !important;
-      letter-spacing: -0.06em !important;
-      text-shadow: 0 8px 22px rgba(0,0,0,0.32) !important;
-    }
-
-    .hero-admin-actions {
+    .hero-right-tools {
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      gap: 7px;
-      flex: 0 0 auto;
+      gap: 8px;
+      flex-wrap: wrap;
+      max-width: min(100%, 620px);
+    }
+
+    .hero-pill-right {
+      background: rgba(7, 26, 51, 0.30) !important;
+      border-color: rgba(255,255,255,0.28) !important;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.10);
+    }
+
+    .hero-copy,
+    .hero-copy h1,
+    .hero-copy p,
+    .hero-pill.gold,
+    .eyebrow,
+    .mode-switch-bar {
+      display: none !important;
     }
 
     .hero-admin-btn {
       min-height: 34px !important;
       padding: 0 12px !important;
       border-radius: 999px !important;
-      border: 1px solid rgba(255,255,255,0.26) !important;
-      background: rgba(7,26,51,0.42) !important;
+      border: 1px solid rgba(255,255,255,0.28) !important;
+      background: rgba(7,26,51,0.38) !important;
       color: #fff !important;
-      box-shadow: none !important;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
       font-size: 11px !important;
       font-weight: 1000 !important;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
     }
 
-    .hero-admin-btn-logout {
-      background: rgba(220,76,100,0.36) !important;
+    #resetSampleBtn {
+      display: none !important;
     }
 
     @media (max-width: 720px) {
       .hero {
-        min-height: 205px !important;
-        background-position: center 18% !important;
+        min-height: 180px !important;
+        background-position: center 38% !important;
       }
-
-      .hero-inner {
-        min-height: 205px !important;
-        width: calc(100% - 24px) !important;
-        padding: 12px 0 18px !important;
+      .hero-inner-clean {
+        min-height: 180px !important;
+        padding: 10px 12px 14px !important;
       }
-
-      .hero-top {
-        gap: 8px !important;
+      .hero-right-tools {
+        gap: 6px;
       }
-
-      .hero-pill {
-        max-width: calc(100% - 104px) !important;
-        min-height: 32px !important;
-        padding: 0 10px !important;
+      .hero-pill-right {
+        max-width: calc(100vw - 112px) !important;
+        min-height: 30px !important;
+        padding: 0 9px !important;
         font-size: 10px !important;
       }
-
-      .hero-admin-actions {
-        gap: 5px;
-      }
-
       .hero-admin-btn {
-        min-height: 32px !important;
-        padding: 0 10px !important;
+        min-height: 30px !important;
+        padding: 0 9px !important;
         font-size: 10px !important;
       }
+    }
 
-      .hero-copy h1,
-      h1 {
-        font-size: 30px !important;
+    /* v29: 기기별 최초 역할 선택 화면 - 기존 UI/기능 로직과 분리 */
+    .role-select-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 120;
+      min-height: 100vh;
+      padding: 24px;
+      display: grid;
+      place-items: center;
+      background:
+        linear-gradient(90deg, rgba(4,17,36,0.88) 0%, rgba(4,17,36,0.55) 42%, rgba(4,17,36,0.25) 100%),
+        url("./matterhorn-banner.png");
+      background-size: cover;
+      background-position: center;
+      color: white;
+    }
+
+    .role-select-screen.hidden {
+      display: none;
+    }
+
+    .role-select-card {
+      width: min(520px, 100%);
+      padding: 26px;
+      border-radius: 28px;
+      border: 1px solid rgba(255,255,255,0.26);
+      background: rgba(255,255,255,0.13);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 28px 80px rgba(2,8,23,0.34);
+    }
+
+    .role-select-card h2 {
+      margin: 0;
+      font-size: 29px;
+      line-height: 1.15;
+      letter-spacing: -0.045em;
+      font-weight: 1000;
+    }
+
+    .role-select-card p {
+      margin: 9px 0 18px;
+      color: rgba(255,255,255,0.86);
+      font-size: 13px;
+      line-height: 1.6;
+      font-weight: 800;
+    }
+
+    .role-select-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .role-choice-btn {
+      min-height: 112px;
+      padding: 16px;
+      border: 1px solid rgba(255,255,255,0.24);
+      border-radius: 22px;
+      background: rgba(255,255,255,0.96);
+      color: var(--text);
+      text-align: left;
+      box-shadow: 0 14px 34px rgba(2,8,23,0.16);
+    }
+
+    .role-choice-btn strong {
+      display: block;
+      font-size: 18px;
+      font-weight: 1000;
+      letter-spacing: -0.04em;
+    }
+
+    .role-choice-btn span {
+      display: block;
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+      font-weight: 850;
+    }
+
+
+    body.role-select-active > .hero,
+    body.role-select-active > .wrap,
+    body.role-select-active > .bottom-nav {
+      display: none !important;
+    }
+
+    @media (max-width: 520px) {
+      .role-select-screen {
+        padding: 16px;
       }
-    }
 
-
-    /* vNext: 경기현황 중심 공개화면 + 참가자 상태 변경 허용 */
-    .match-status-head {
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .match-refresh-btn {
-      margin-left: auto;
-      flex: 0 0 auto;
-    }
-
-    body:not(.admin-mode) .status-cycle-btn {
-      pointer-events: auto !important;
-      opacity: 1;
-    }
-
-    body:not(.admin-mode) .compact-score {
-      background: #ffffff !important;
-    }
-
-    .admin-modal-card input,
-    .admin-modal-card .field {
-      font-size: 16px !important;
-    }
-
-    @media (max-width: 720px) {
-      .match-status-head {
-        display: grid;
-        grid-template-columns: 38px 1fr;
+      .role-select-card {
+        padding: 20px;
+        border-radius: 24px;
       }
-      .match-refresh-btn {
-        grid-column: 1 / -1;
-        width: 100%;
-        margin-left: 0;
+
+      .role-select-card h2 {
+        font-size: 24px;
+      }
+
+      .role-select-actions {
+        grid-template-columns: 1fr;
+      }
+
+      .role-choice-btn {
+        min-height: 92px;
       }
     }
 
   </style>
+  <!-- matterhorn_v30: v29 role select + match DB immediate save, role-change feature removed -->
 </head>
 <body>
+
+  <div class="role-select-screen hidden" id="roleSelectScreen" aria-modal="true" role="dialog">
+    <div class="role-select-card">
+      <h2>마테호른 월례회</h2>
+      <p>이 기기에서 사용할 기본 화면을 선택하세요. 선택값은 이 기기에만 저장됩니다.</p>
+      <div class="role-select-actions">
+        <button type="button" class="role-choice-btn" id="chooseParticipantRoleBtn">
+          <strong>참가자로 보기</strong>
+          <span>경기현황, 순위, 조편성, 참가자 명단을 확인합니다.</span>
+        </button>
+        <button type="button" class="role-choice-btn" id="chooseAdminRoleBtn">
+          <strong>관리자로 보기</strong>
+          <span>비밀번호 입력 후 회원관리, 경기관리, 추첨을 진행합니다.</span>
+        </button>
+      </div>
+    </div>
+  </div>
   <header class="hero">
-    <div class="hero-inner">
-      <div class="hero-top">
-        <div class="hero-pill">⛰️ 마테호른 · MATTERHORN TENNIS CLUB</div>
-        <div class="hero-admin-actions">
+    <div class="hero-inner hero-inner-clean">
+      <div class="hero-top hero-top-clean">
+        <div class="hero-right-tools">
+          <div class="hero-pill hero-pill-right">⛰️ 마테호른 · MATTERHORN TENNIS CLUB</div>
           <button class="btn hero-admin-btn public-only" id="enterAdminModeBtn">🔐 관리자</button>
           <button class="btn hero-admin-btn admin-only" id="publicModeBtn">공개화면</button>
-          <button class="btn hero-admin-btn hero-admin-btn-logout admin-only" id="adminQuickLogoutBtn">로그아웃</button>
         </div>
-      </div>
-      <div class="hero-copy">
-        <h1>월례회 통합관리 시스템</h1>
       </div>
     </div>
   </header>
 
   <main class="wrap">
 
+
     <nav class="desktop-page-tabs desktop-public-tabs">
-      <button class="page-tab active" data-page="matches">1. 경기현황</button>
-      <button class="page-tab" data-page="awards">2. 순위</button>
-      <button class="page-tab" data-page="teams">3. 조 편성</button>
-      <button class="page-tab" data-page="members">4. 참가자</button>
+      <button class="page-tab active" data-page="members">1. 참가자</button>
+      <button class="page-tab" data-page="teams">2. 조 편성</button>
+      <button class="page-tab" data-page="matches">3. 경기 일정</button>
+      <button class="page-tab" data-page="awards">4. 순위</button>
     </nav>
 
     <nav class="desktop-page-tabs desktop-admin-tabs admin-only">
@@ -5669,8 +5732,6 @@
 
           <div class="public-participant-grid" id="publicParticipantList"></div>
         </div>
-
-      </div>
     </section>
 
     <section class="page" id="page-teams">
@@ -5717,6 +5778,7 @@
     </section>
 
     <section class="page" id="page-matches">
+      <div class="public-guide-panel public-only"><strong>경기 일정 및 점수 입력</strong><span>점수 입력은 누구나 가능하고, 경기 상태 변경과 대진 편집은 관리자 모드에서만 가능합니다.</span></div>
       <section class="team-record-dashboard">
             <div class="team-leader-banner" id="teamLeaderBanner">
               <span class="leader-label">현재 우세</span>
@@ -5777,19 +5839,19 @@
       </div>
 
       <div class="panel" style="margin-top:18px;">
-        <div class="section-head match-status-head">
+        <div class="section-head">
           <div class="section-icon">📝</div>
           <div>
-            <h2>경기현황 · 점수 입력</h2>
-            <p>참가자도 점수와 경기상태를 입력할 수 있습니다. 다른 기기 변경사항은 새로고침으로 불러옵니다.</p>
+            <h2>경기 일정 · 점수 현황</h2>
+            <p>공개 화면에서는 조회만 가능하고, 관리자 모드에서 점수와 상태를 변경합니다.</p>
           </div>
-          <button class="btn btn-outline match-refresh-btn" id="refreshMatchStatusBtn">↻ 새로고침</button>
         </div>
         <div id="matchArea"></div>
       </div>
     </section>
 
     <section class="page" id="page-awards">
+      <div class="public-guide-panel public-only"><strong>개인 순위</strong><span>경기 점수 입력 후 자동으로 누적 순위가 계산됩니다. 경품 추첨은 관리자 모드에서 진행합니다.</span></div>
       <div class="page-grid">
         <div class="panel">
           <div class="section-head">
@@ -5819,7 +5881,6 @@
                 <span>순위권 제외</span>
               </label>
               <select id="excludeTopCountSelect" class="field raffle-select" disabled>
-                <option value="0">제외 없음</option>
                 <option value="1">1위 제외</option>
                 <option value="2">상위 2명 제외</option>
                 <option value="3" selected>상위 3명 제외</option>
@@ -5883,6 +5944,7 @@
             <div class="save-status" id="saveStatus">💾 DB 저장 준비됨</div>
             <div class="actions compact-actions">
               <button class="btn btn-outline" id="manualSaveBtn">저장</button>
+              <button class="btn btn-rose" id="resetSampleBtn">샘플 초기화</button>
               <button class="btn btn-outline" id="adminLogoutBtn">로그아웃</button>
             </div>
           </div>
@@ -5961,10 +6023,10 @@
   </main>
 
   <nav class="bottom-nav bottom-nav-public">
-    <button class="active" data-page="matches"><span>🎾</span><span>경기현황</span></button>
-    <button data-page="awards"><span>🏆</span><span>순위</span></button>
+    <button class="active" data-page="members"><span>👥</span><span>참가자</span></button>
     <button data-page="teams"><span>🔀</span><span>조 편성</span></button>
-    <button data-page="members"><span>👥</span><span>참가자</span></button>
+    <button data-page="matches"><span>🎾</span><span>경기</span></button>
+    <button data-page="awards"><span>🏆</span><span>순위</span></button>
   </nav>
 
   <nav class="bottom-nav bottom-nav-admin admin-only">
@@ -6105,13 +6167,80 @@
   <script>
     const STORAGE_KEY = "matterhorn_monthly_manager_v2";
     const ADMIN_PASSWORD_KEY = "matterhorn_admin_password";
-    const PAGE_STORAGE_KEY = STORAGE_KEY + "_active_page";
+    const DEVICE_ROLE_KEY = "matterhorn_device_default_role";
     let adminUnlocked = false;
     let pendingAdminNavigation = false;
     let pendingConfirmAction = null;
     let raffleSpinLocked = false;
     let editingMatchId = null;
     let editingMatchMode = "edit";
+
+
+    function getDeviceRole() {
+      try {
+        return localStorage.getItem(DEVICE_ROLE_KEY) || "";
+      } catch (error) {
+        return "";
+      }
+    }
+
+    function setDeviceRole(role) {
+      try {
+        localStorage.setItem(DEVICE_ROLE_KEY, role);
+      } catch (error) {
+        console.warn("기기 역할 저장 실패", error);
+      }
+    }
+
+    function clearDeviceRole() {
+      try {
+        localStorage.removeItem(DEVICE_ROLE_KEY);
+      } catch (error) {
+        console.warn("기기 역할 초기화 실패", error);
+      }
+    }
+
+    function showRoleSelectScreen() {
+      const screen = $("roleSelectScreen");
+      if (screen) screen.classList.remove("hidden");
+      document.body.classList.add("role-select-active");
+    }
+
+    function hideRoleSelectScreen() {
+      const screen = $("roleSelectScreen");
+      if (screen) screen.classList.add("hidden");
+      document.body.classList.remove("role-select-active");
+    }
+
+    function chooseParticipantRole() {
+      setDeviceRole("participant");
+      if (adminUnlocked) {
+        adminUnlocked = false;
+      }
+      hideRoleSelectScreen();
+      syncAccessMode();
+      renderAll();
+      activatePage(state.activePage === "admin" ? "members" : (state.activePage || "members"), false);
+      applyDeviceRoleAfterBootstrap();
+    }
+
+    function chooseAdminRole() {
+      setDeviceRole("admin");
+      hideRoleSelectScreen();
+      openAdminPasswordModal();
+    }
+
+    function applyDeviceRoleAfterBootstrap() {
+      const role = getDeviceRole();
+      if (!role) {
+        showRoleSelectScreen();
+        return;
+      }
+      hideRoleSelectScreen();
+      if (role === "admin" && !adminUnlocked) {
+        openAdminPasswordModal();
+      }
+    }
 
     function requireAdmin() {
       if (adminUnlocked) return true;
@@ -6162,7 +6291,7 @@
       excludeTopRankCount: 3,
       wheelRotation: 0,
       matchEditMode: false,
-      activePage: "matches",
+      activePage: "members",
       updatedAt: null
     };
 
@@ -6188,29 +6317,6 @@
 
     const dataAdapter = window.MATTERHORN_DB_ADAPTER || fallbackStorageAdapter;
     const $ = (id) => document.getElementById(id);
-
-    function validPage(page) {
-      return ["matches", "awards", "teams", "members", "admin"].includes(page);
-    }
-
-    function getPreferredPage() {
-      try {
-        const saved = localStorage.getItem(PAGE_STORAGE_KEY);
-        if (validPage(saved)) return saved;
-      } catch (error) {
-        console.warn("현재 화면 기억 불러오기 실패", error);
-      }
-      return "matches";
-    }
-
-    function rememberPage(page) {
-      if (!validPage(page)) return;
-      try {
-        localStorage.setItem(PAGE_STORAGE_KEY, page);
-      } catch (error) {
-        console.warn("현재 화면 기억 저장 실패", error);
-      }
-    }
 
     function safeText(value) {
       return String(value ?? "")
@@ -6278,6 +6384,7 @@
         excludeTopRankCount: state.excludeTopRankCount,
         wheelRotation: state.wheelRotation,
         matchEditMode: state.matchEditMode,
+        activePage: state.activePage,
         updatedAt: new Date().toISOString()
       };
     }
@@ -6339,47 +6446,7 @@
       if ($("menDoublesCountInput")) $("menDoublesCountInput").value = String(state.desiredMenDoublesCount || 0);
       if ($("womenDoublesCountInput")) $("womenDoublesCountInput").value = String(state.desiredWomenDoublesCount || 0);
       syncRaffleControls();
-      // 현재 화면은 DB에 저장하지 않고, 사용자 기기(localStorage)에만 저장한다.
-      // 처음 접속한 기기라면 경기현황 화면으로 시작한다.
-      activatePage(getPreferredPage(), false);
-    }
-
-    async function refreshFromDb() {
-      const currentPage = validPage(state.activePage) ? state.activePage : getPreferredPage();
-      try {
-        setSaveStatus("🔄 최신 데이터 불러오는 중...");
-        const loaded = await dataAdapter.loadMonthlyMeetupState();
-        if (loaded && typeof loaded === "object") {
-          state = {
-            ...clone(defaultState),
-            ...loaded,
-            members: Array.isArray(loaded.members) ? loaded.members : clone(defaultState.members),
-            matches: Array.isArray(loaded.matches)
-              ? loaded.matches.map(match => ({ ...match, status: match.status || "pending" }))
-              : [],
-            giftWinners: Array.isArray(loaded.giftWinners) ? loaded.giftWinners : [],
-            desiredGamesPerPlayer: Number(loaded.desiredGamesPerPlayer || 2),
-            desiredMenDoublesCount: Number(loaded.desiredMenDoublesCount || 0),
-            desiredWomenDoublesCount: Number(loaded.desiredWomenDoublesCount || 0),
-            excludeRankersFromRaffle: Boolean(loaded.excludeRankersFromRaffle),
-            excludeTopRankCount: Number(loaded.excludeTopRankCount ?? 3),
-            wheelRotation: Number(loaded.wheelRotation || 0),
-            matchEditMode: Boolean(loaded.matchEditMode)
-          };
-          if ($("desiredGamesSelect")) $("desiredGamesSelect").value = String(state.desiredGamesPerPlayer || 2);
-          if ($("menDoublesCountInput")) $("menDoublesCountInput").value = String(state.desiredMenDoublesCount || 0);
-          if ($("womenDoublesCountInput")) $("womenDoublesCountInput").value = String(state.desiredWomenDoublesCount || 0);
-          renderAll();
-          activatePage(currentPage, false);
-          setSaveStatus("✅ 최신 데이터 반영됨 · " + new Date().toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" }), true);
-        } else {
-          setSaveStatus("💾 불러올 DB 데이터가 없습니다");
-        }
-      } catch (error) {
-        console.error(error);
-        const message = error?.message || String(error || "알 수 없는 오류");
-        setSaveStatus("⚠️ 새로고침 실패 · " + message.slice(0, 46));
-      }
+      activatePage(state.activePage === "admin" ? "members" : (state.activePage || "members"), false);
     }
 
     function renderAll() {
@@ -6755,7 +6822,7 @@
       renumberMatches();
       closeMatchEditor();
       renderAll();
-      scheduleSave();
+      saveNow();
     }
 
     function saveMatchEditor() {
@@ -6792,7 +6859,7 @@
       state.matches = next;
       renumberMatches();
       renderAll();
-      scheduleSave();
+      saveNow();
     }
 
     function deleteCustomMatch(matchId) {
@@ -6804,7 +6871,7 @@
           state.matches = state.matches.filter(match => match.id !== matchId);
           renumberMatches();
           renderAll();
-          scheduleSave();
+          saveNow();
         }
       });
     }
@@ -6850,8 +6917,8 @@
           matchType === "여복" ? "women" : "mixed";
         const side1Display = playerNamesWithOrdinals(match.side1Players);
         const side2Display = playerNamesWithOrdinals(match.side2Players);
-        const scoreControlAttrs = "";
-        const statusButtonAttrs = `onclick="cycleMatchStatus('${match.id}')" title="누르면 상태가 변경됩니다"`;
+        const scoreControlAttrs = adminUnlocked ? "" : `readonly tabindex="-1"`;
+        const statusButtonAttrs = adminUnlocked ? `onclick="cycleMatchStatus('${match.id}')" title="누르면 상태가 변경됩니다"` : `disabled title="관리자 모드에서 변경할 수 있습니다"`;
 
         return `
           <article class="match-row status-${status} ${adminUnlocked && state.matchEditMode ? "edit-mode" : ""}">
@@ -7094,7 +7161,7 @@
           }));
           state.matches = [];
           renderAll();
-          scheduleSave();
+          saveNow();
         }
       });
     }
@@ -7321,7 +7388,7 @@
       }
 
       renderAll();
-      scheduleSave();
+      saveNow();
     }
 
     function generateMatches() {
@@ -7342,7 +7409,7 @@
         onConfirm: () => {
           state.matches = [];
           renderAll();
-          scheduleSave();
+          saveNow();
         }
       });
     }
@@ -7474,7 +7541,7 @@
       if (!toggle || !select) return;
       toggle.checked = Boolean(state.excludeRankersFromRaffle);
       select.disabled = !state.excludeRankersFromRaffle;
-      select.value = String(state.excludeTopRankCount ?? 3);
+      select.value = String(state.excludeTopRankCount || 3);
     }
 
     function spinRaffleWheel() {
@@ -7544,7 +7611,7 @@
       if ($("desiredGamesSelect")) $("desiredGamesSelect").value = String(state.desiredGamesPerPlayer || 2);
       if ($("menDoublesCountInput")) $("menDoublesCountInput").value = String(state.desiredMenDoublesCount || 0);
       if ($("womenDoublesCountInput")) $("womenDoublesCountInput").value = String(state.desiredWomenDoublesCount || 0);
-      activatePage("matches", false);
+      activatePage("members", false);
       saveNow();
     }
 
@@ -7557,6 +7624,7 @@
       $("adminPasswordModal").classList.remove("hidden");
       $("adminPasswordInput").value = "";
       $("adminPasswordError").textContent = "";
+      setTimeout(() => $("adminPasswordInput").focus(), 0);
     }
 
     function closeAdminPasswordModal() {
@@ -7586,7 +7654,7 @@
       state.matchEditMode = false;
       syncAccessMode();
       renderAll();
-      activatePage("matches");
+      activatePage("members");
     }
 
     function changeAdminPassword() {
@@ -7636,15 +7704,13 @@
       if (typeof action === "function") action();
     }
 
-    function activatePage(page, persist = false) {
-      if (!validPage(page)) page = "matches";
+    function activatePage(page, persist = true) {
       if (page === "admin" && !adminUnlocked) {
         openAdminPasswordModal();
         return;
       }
-      if (!adminUnlocked && page === "admin") page = "matches";
+      if (!adminUnlocked && page === "admin") page = "members";
       state.activePage = page;
-      rememberPage(page);
       syncAccessMode();
       document.querySelectorAll(".page").forEach(section => {
         section.classList.toggle("active", section.id === "page-" + page);
@@ -7655,6 +7721,7 @@
       const scrollTarget = document.querySelector(".summary-strip") || document.querySelector(".wrap") || document.body;
       const scrollTop = window.innerWidth <= 1024 ? Math.max(0, scrollTarget.offsetTop - 10) : 0;
       window.scrollTo({ top: scrollTop, behavior: "smooth" });
+      if (persist) scheduleSave();
     }
 
     document.querySelectorAll("[data-page]").forEach(button => {
@@ -7664,6 +7731,8 @@
     if ($("enterAdminModeBtn")) $("enterAdminModeBtn").addEventListener("click", openAdminPasswordModal);
     if ($("publicModeBtn")) $("publicModeBtn").addEventListener("click", logoutAdmin);
     if ($("adminQuickLogoutBtn")) $("adminQuickLogoutBtn").addEventListener("click", logoutAdmin);
+    if ($("chooseParticipantRoleBtn")) $("chooseParticipantRoleBtn").addEventListener("click", chooseParticipantRole);
+    if ($("chooseAdminRoleBtn")) $("chooseAdminRoleBtn").addEventListener("click", chooseAdminRole);
 
     document.querySelectorAll(".mode-card").forEach(card => {
       card.addEventListener("click", () => setTeamCount(Number(card.dataset.teamCount)));
@@ -7679,11 +7748,10 @@
     $("clearMatchesBtn").addEventListener("click", clearMatches);
     $("toggleMatchEditModeBtn").addEventListener("click", toggleMatchEditMode);
     $("addCustomMatchBtn").addEventListener("click", () => openMatchEditor(null, "add"));
-    if ($("refreshMatchStatusBtn")) $("refreshMatchStatusBtn").addEventListener("click", refreshFromDb);
     $("spinWheelBtn").addEventListener("click", spinRaffleWheel);
     $("resetGiftBtn").addEventListener("click", resetGift);
     $("manualSaveBtn").addEventListener("click", saveNow);
-    if ($("resetSampleBtn")) $("resetSampleBtn").addEventListener("click", resetSample);
+    $("resetSampleBtn").addEventListener("click", resetSample);
     $("adminLogoutBtn").addEventListener("click", logoutAdmin);
     $("confirmAdminLoginBtn").addEventListener("click", confirmAdminLogin);
     $("cancelConfirmActionBtn").addEventListener("click", closeConfirmation);
@@ -7702,7 +7770,7 @@
       state.desiredGamesPerPlayer = Number(event.target.value || 2);
       state.matches = [];
       renderAll();
-      scheduleSave();
+      saveNow();
     });
 
     $("menDoublesCountInput").addEventListener("change", (event) => {
@@ -7710,7 +7778,7 @@
       event.target.value = String(state.desiredMenDoublesCount);
       state.matches = [];
       renderAll();
-      scheduleSave();
+      saveNow();
     });
 
     $("womenDoublesCountInput").addEventListener("change", (event) => {
@@ -7718,7 +7786,7 @@
       event.target.value = String(state.desiredWomenDoublesCount);
       state.matches = [];
       renderAll();
-      scheduleSave();
+      saveNow();
     });
 
     $("excludeRankersToggle").addEventListener("change", (event) => {
@@ -7742,7 +7810,6 @@
     window.updateScore = updateScore;
     window.updateMatchStatus = updateMatchStatus;
     window.cycleMatchStatus = cycleMatchStatus;
-    window.refreshFromDb = refreshFromDb;
     window.openMatchEditor = openMatchEditor;
     window.moveMatchOrder = moveMatchOrder;
     window.deleteCustomMatch = deleteCustomMatch;
