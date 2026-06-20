@@ -4900,9 +4900,16 @@
     }
 
     .match-console-actions .btn.active {
-      background: #0f67c8 !important;
-      border-color: #0f67c8 !important;
-      color: #fff !important;
+      background: #f59e0b !important;
+      border-color: #d97706 !important;
+      color: #111827 !important;
+      box-shadow: 0 10px 22px rgba(245, 158, 11, 0.28) !important;
+    }
+
+    .match-console-actions #toggleMatchEditModeBtn.active {
+      background: #f59e0b !important;
+      border-color: #d97706 !important;
+      color: #111827 !important;
     }
 
     .compact-match-config {
@@ -5739,6 +5746,124 @@
       }
     }
 
+  
+
+    /* v36: 관리자 대진 편집 모드 - 모바일에서 이름이 가려지지 않도록 2줄 확장 */
+    @media (max-width: 720px) {
+      .match-row.edit-mode {
+        min-width: 0 !important;
+        width: 100% !important;
+        min-height: 104px !important;
+        grid-template-columns: 58px minmax(0, 1fr) 90px minmax(0, 1fr) !important;
+        grid-template-areas:
+          "meta side1 score side2"
+          "status status actions actions";
+        align-items: center;
+        gap: 7px 6px !important;
+        padding: 9px 10px !important;
+      }
+
+      .match-row.edit-mode > .match-meta {
+        grid-area: meta;
+      }
+
+      .match-row.edit-mode > .compact-side:nth-child(2) {
+        grid-area: side1;
+      }
+
+      .match-row.edit-mode > .compact-score-wrap {
+        grid-area: score;
+      }
+
+      .match-row.edit-mode > .compact-side:nth-child(4) {
+        grid-area: side2;
+      }
+
+      .match-row.edit-mode > .match-status-box {
+        grid-area: status;
+        width: 100%;
+        grid-template-columns: 1fr !important;
+        justify-content: stretch;
+      }
+
+      .match-row.edit-mode > .match-edit-actions {
+        grid-area: actions;
+        width: 100%;
+        display: grid !important;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 5px;
+        justify-content: stretch;
+      }
+
+      .match-row.edit-mode .compact-side {
+        min-width: 0;
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr);
+        align-items: center;
+        gap: 5px;
+      }
+
+      .match-row.edit-mode .compact-side-names {
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+        line-height: 1.22;
+        font-size: 11px;
+        word-break: keep-all;
+      }
+
+      .match-row.edit-mode .player-name-token {
+        display: inline-flex;
+        align-items: baseline;
+        margin-right: 3px;
+      }
+
+      .match-row.edit-mode .status-pill {
+        width: 100% !important;
+      }
+
+      .match-row.edit-mode .mini-edit-btn {
+        width: 100%;
+        min-width: 0;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .match-row.edit-mode {
+        grid-template-columns: 54px minmax(0, 1fr) 84px minmax(0, 1fr) !important;
+        gap: 6px 5px !important;
+      }
+
+      .match-row.edit-mode .compact-side {
+        grid-template-columns: 1fr;
+        align-content: center;
+      }
+
+      .match-row.edit-mode .compact-side-top {
+        min-width: 0;
+      }
+
+      .match-row.edit-mode .team-badge {
+        width: fit-content;
+      }
+    }
+
+
+    /* v40: 대진 편집모드 버튼 상태 색상 강제 적용 */
+    #toggleMatchEditModeBtn.match-edit-active-btn,
+    #toggleMatchEditModeBtn.active.match-edit-active-btn,
+    .match-console-actions #toggleMatchEditModeBtn.match-edit-active-btn {
+      background: #f59e0b !important;
+      border: 1px solid #d97706 !important;
+      color: #111827 !important;
+      box-shadow: 0 10px 22px rgba(245, 158, 11, 0.34) !important;
+    }
+
+    #toggleMatchEditModeBtn.match-edit-active-btn:hover {
+      background: #d97706 !important;
+      color: #111827 !important;
+    }
+
   </style>
   <!-- matterhorn_v31: v30 + admin participant label + red admin background tone -->
 </head>
@@ -5776,10 +5901,10 @@
 
 
     <nav class="desktop-page-tabs desktop-public-tabs">
-      <button class="page-tab active" data-page="members">1. 참가자</button>
-      <button class="page-tab" data-page="teams">2. 조 편성</button>
-      <button class="page-tab" data-page="matches">3. 경기 일정</button>
-      <button class="page-tab" data-page="awards">4. 순위</button>
+      <button class="page-tab active" data-page="matches">1. 경기현황</button>
+      <button class="page-tab" data-page="awards">2. 순위</button>
+      <button class="page-tab" data-page="teams">3. 조 편성</button>
+      <button class="page-tab" data-page="members">4. 참가자</button>
     </nav>
 
     <nav class="desktop-page-tabs desktop-admin-tabs admin-only">
@@ -5789,7 +5914,7 @@
       <button class="page-tab" data-page="awards">4. 추첨·순위</button>
     </nav>
 
-    <section class="page active" id="page-members">
+    <section class="page" id="page-members">
       <div class="panel participant-view-panel">
           <div class="section-head compact-section-head">
             <div class="section-icon">👥</div>
@@ -5852,7 +5977,7 @@
       </div>
     </section>
 
-    <section class="page" id="page-matches">
+    <section class="page active" id="page-matches">
       <div class="public-guide-panel public-only"><strong>경기 일정 및 점수 입력</strong><span>점수 입력은 누구나 가능하고, 경기 상태 변경과 대진 편집은 관리자 모드에서만 가능합니다.</span></div>
       <section class="team-record-dashboard">
             <div class="team-leader-banner" id="teamLeaderBanner">
@@ -5874,9 +5999,9 @@
 
           <div class="match-console-actions">
             <button class="btn btn-dark" id="generateMatchesBtn">🎾 생성</button>
-            <button class="btn btn-outline" id="clearMatchesBtn">초기화</button>
             <button class="btn btn-blue" id="toggleMatchEditModeBtn">✏️ 대진 편집</button>
             <button class="btn btn-outline" id="addCustomMatchBtn">＋ 경기 추가</button>
+            <button class="btn btn-outline" id="clearMatchesBtn">초기화</button>
           </div>
         </div>
 
@@ -6098,10 +6223,10 @@
   </main>
 
   <nav class="bottom-nav bottom-nav-public">
-    <button class="active" data-page="members"><span>👥</span><span>참가자</span></button>
-    <button data-page="teams"><span>🔀</span><span>조 편성</span></button>
-    <button data-page="matches"><span>🎾</span><span>경기</span></button>
+    <button class="active" data-page="matches"><span>🎾</span><span>경기현황</span></button>
     <button data-page="awards"><span>🏆</span><span>순위</span></button>
+    <button data-page="teams"><span>🔀</span><span>조편성</span></button>
+    <button data-page="members"><span>👥</span><span>참가자</span></button>
   </nav>
 
   <nav class="bottom-nav bottom-nav-admin admin-only">
@@ -6295,7 +6420,7 @@
       hideRoleSelectScreen();
       syncAccessMode();
       renderAll();
-      activatePage(state.activePage === "admin" ? "members" : (state.activePage || "members"), false);
+      activatePage(state.activePage === "admin" ? "matches" : (state.activePage || "matches"), false);
       applyDeviceRoleAfterBootstrap();
     }
 
@@ -6377,7 +6502,7 @@
       excludeTopRankCount: 3,
       wheelRotation: 0,
       matchEditMode: false,
-      activePage: "members",
+      activePage: "matches",
       updatedAt: null
     };
 
@@ -6532,7 +6657,7 @@
       if ($("menDoublesCountInput")) $("menDoublesCountInput").value = String(state.desiredMenDoublesCount || 0);
       if ($("womenDoublesCountInput")) $("womenDoublesCountInput").value = String(state.desiredWomenDoublesCount || 0);
       syncRaffleControls();
-      activatePage(state.activePage === "admin" ? "members" : (state.activePage || "members"), false);
+      activatePage(state.activePage === "admin" ? "matches" : (state.activePage || "matches"), false);
     }
 
     function renderAll() {
@@ -6543,6 +6668,7 @@
       renderAdminMembers();
       renderTeamBoard();
       renderMatches();
+      syncMatchEditModeButton();
       renderRankings();
       renderWinners();
       renderRaffleWheel();
@@ -6553,8 +6679,12 @@
     function syncMatchEditModeButton() {
       const button = $("toggleMatchEditModeBtn");
       if (!button) return;
-      button.classList.toggle("active", Boolean(state.matchEditMode));
-      button.textContent = state.matchEditMode ? "✅ 편집 중" : "✏️ 대진 편집";
+      const isEditing = Boolean(state.matchEditMode);
+      button.classList.toggle("active", isEditing);
+      button.classList.toggle("btn-blue", !isEditing);
+      button.classList.toggle("btn-amber", isEditing);
+      button.classList.toggle("match-edit-active-btn", isEditing);
+      button.textContent = isEditing ? "🟡 편집모드" : "✏️ 대진 편집";
     }
 
     function renderSummary() {
@@ -7300,88 +7430,81 @@
       return pairs;
     }
 
-    function eligiblePlayersForTeam(team, playCounts, desired, gender = null) {
-      return shuffle(
-        participants()
-          .filter(member => member.team === team)
-          .filter(member => gender ? member.gender === gender : true)
-          .filter(member => (playCounts.get(member.id) || 0) < desired)
-      ).sort((a, b) => {
-        const diff = (playCounts.get(a.id) || 0) - (playCounts.get(b.id) || 0);
-        if (diff !== 0) return diff;
+    function activeTeamPlayers(team, gender = null) {
+      return participants()
+        .filter(member => member.team === team)
+        .filter(member => gender ? member.gender === gender : true);
+    }
+
+    function sortCandidatesByNeed(list, playCounts, minGames) {
+      return shuffle(list).sort((a, b) => {
+        const countA = playCounts.get(a.id) || 0;
+        const countB = playCounts.get(b.id) || 0;
+        const minDiffA = Math.max(0, minGames - countA);
+        const minDiffB = Math.max(0, minGames - countB);
+        if (minDiffA !== minDiffB) return minDiffB - minDiffA;
+        if (countA !== countB) return countA - countB;
         return String(a.name || "").localeCompare(String(b.name || ""), "ko-KR");
       });
     }
 
-    function choosePair(team, playCounts, desired, matchType = "any") {
+    function pairCombinations(list, limit = 14) {
+      const sliced = list.slice(0, limit);
+      const pairs = [];
+      for (let i = 0; i < sliced.length - 1; i += 1) {
+        for (let j = i + 1; j < sliced.length; j += 1) {
+          pairs.push([sliced[i].id, sliced[j].id]);
+        }
+      }
+      return pairs;
+    }
+
+    function getPairOptions(team, playCounts, targetGames, minGames, matchType) {
       if (matchType === "men") {
-        const candidates = eligiblePlayersForTeam(team, playCounts, desired, "남");
-        if (candidates.length < 2) return null;
-        const pair = [candidates[0].id, candidates[1].id];
-        pair.forEach(id => playCounts.set(id, (playCounts.get(id) || 0) + 1));
-        return pair;
+        return pairCombinations(
+          sortCandidatesByNeed(
+            activeTeamPlayers(team, "남").filter(member => (playCounts.get(member.id) || 0) < targetGames),
+            playCounts,
+            minGames
+          )
+        );
       }
 
       if (matchType === "women") {
-        const candidates = eligiblePlayersForTeam(team, playCounts, desired, "여");
-        if (candidates.length < 2) return null;
-        const pair = [candidates[0].id, candidates[1].id];
-        pair.forEach(id => playCounts.set(id, (playCounts.get(id) || 0) + 1));
-        return pair;
+        return pairCombinations(
+          sortCandidatesByNeed(
+            activeTeamPlayers(team, "여").filter(member => (playCounts.get(member.id) || 0) < targetGames),
+            playCounts,
+            minGames
+          )
+        );
       }
 
       if (matchType === "mixed") {
-        const maleCandidates = eligiblePlayersForTeam(team, playCounts, desired, "남");
-        const femaleCandidates = eligiblePlayersForTeam(team, playCounts, desired, "여");
-        if (!maleCandidates.length || !femaleCandidates.length) return null;
-        const pair = [maleCandidates[0].id, femaleCandidates[0].id];
-        pair.forEach(id => playCounts.set(id, (playCounts.get(id) || 0) + 1));
-        return pair;
+        const males = sortCandidatesByNeed(
+          activeTeamPlayers(team, "남").filter(member => (playCounts.get(member.id) || 0) < targetGames),
+          playCounts,
+          minGames
+        ).slice(0, 12);
+        const females = sortCandidatesByNeed(
+          activeTeamPlayers(team, "여").filter(member => (playCounts.get(member.id) || 0) < targetGames),
+          playCounts,
+          minGames
+        ).slice(0, 12);
+        const pairs = [];
+        males.forEach(male => {
+          females.forEach(female => pairs.push([male.id, female.id]));
+        });
+        return pairs;
       }
 
-      const candidates = eligiblePlayersForTeam(team, playCounts, desired);
-      if (candidates.length < 2) return null;
-      const pair = [candidates[0].id, candidates[1].id];
-      pair.forEach(id => playCounts.set(id, (playCounts.get(id) || 0) + 1));
-      return pair;
-    }
-
-    function remainingCapacity(team, playCounts, desired, matchType = "any") {
-      const active = participants().filter(member => member.team === team);
-      const remaining = member => Math.max(0, desired - (playCounts.get(member.id) || 0));
-
-      if (matchType === "men") {
-        return active
-          .filter(member => member.gender === "남")
-          .reduce((sum, member) => sum + remaining(member), 0);
-      }
-
-      if (matchType === "women") {
-        return active
-          .filter(member => member.gender === "여")
-          .reduce((sum, member) => sum + remaining(member), 0);
-      }
-
-      if (matchType === "mixed") {
-        const maleCapacity = active
-          .filter(member => member.gender === "남")
-          .reduce((sum, member) => sum + remaining(member), 0);
-        const femaleCapacity = active
-          .filter(member => member.gender === "여")
-          .reduce((sum, member) => sum + remaining(member), 0);
-        return Math.min(maleCapacity, femaleCapacity);
-      }
-
-      return active.reduce((sum, member) => sum + remaining(member), 0);
-    }
-
-    function teamPairCapacity(team, playCounts, desired, matchType) {
-      if (matchType === "mixed") {
-        const maleCandidates = eligiblePlayersForTeam(team, playCounts, desired, "남").length;
-        const femaleCandidates = eligiblePlayersForTeam(team, playCounts, desired, "여").length;
-        return Math.min(maleCandidates, femaleCandidates);
-      }
-      return Math.floor(remainingCapacity(team, playCounts, desired, matchType) / 2);
+      return pairCombinations(
+        sortCandidatesByNeed(
+          activeTeamPlayers(team).filter(member => (playCounts.get(member.id) || 0) < targetGames),
+          playCounts,
+          minGames
+        )
+      );
     }
 
     function getMatchupsForCurrentTeamCount() {
@@ -7390,18 +7513,79 @@
         : [["A", "B"], ["B", "C"], ["C", "A"]];
     }
 
-    function chooseBestMatchupForType(playCounts, desired, matchType) {
-      return getMatchupsForCurrentTeamCount()
-        .map(([left, right]) => ({
-          left,
-          right,
-          capacity: Math.min(
-            teamPairCapacity(left, playCounts, desired, matchType),
-            teamPairCapacity(right, playCounts, desired, matchType)
-          )
-        }))
-        .filter(item => item.capacity > 0)
-        .sort((a, b) => b.capacity - a.capacity)[0] || null;
+    function countPlayersBelow(playCounts, threshold) {
+      return participants()
+        .filter(member => member.team)
+        .filter(member => (playCounts.get(member.id) || 0) < threshold)
+        .length;
+    }
+
+    function hasGenerationCapacity(playCounts, targetGames, minGames, allowedTypes) {
+      return Boolean(findBestNextMatch(playCounts, targetGames, minGames, allowedTypes, { men: 0, women: 0 }, 0, 0, true));
+    }
+
+    function scoreCandidateMatch(playerIds, playCounts, minGames, targetGames) {
+      const counts = playerIds.map(id => playCounts.get(id) || 0);
+      const afterCounts = counts.map(count => count + 1);
+      const belowMinBefore = counts.filter(count => count < minGames).length;
+      const belowMinAfter = afterCounts.filter(count => count < minGames).length;
+      const minDeficitBefore = counts.reduce((sum, count) => sum + Math.max(0, minGames - count), 0);
+      const minDeficitAfter = afterCounts.reduce((sum, count) => sum + Math.max(0, minGames - count), 0);
+      const targetDeficitBefore = counts.reduce((sum, count) => sum + Math.max(0, targetGames - count), 0);
+      const targetDeficitAfter = afterCounts.reduce((sum, count) => sum + Math.max(0, targetGames - count), 0);
+      const maxAfter = Math.max(...afterCounts);
+      const minAfter = Math.min(...afterCounts);
+
+      return (
+        (belowMinAfter - belowMinBefore) * 9000 +
+        (minDeficitAfter - minDeficitBefore) * 2600 +
+        (targetDeficitAfter - targetDeficitBefore) * 260 +
+        maxAfter * 95 +
+        (maxAfter - minAfter) * 160 +
+        afterCounts.reduce((sum, count) => sum + count, 0) * 12 +
+        Math.random() * 4
+      );
+    }
+
+    function findBestNextMatch(playCounts, targetGames, minGames, allowedTypes, typeCounts, requestedMen, requestedWomen, fastOnly = false) {
+      const candidateTypes = allowedTypes && allowedTypes.length ? allowedTypes : ["mixed", "men", "women"];
+      const candidates = [];
+
+      candidateTypes.forEach(matchType => {
+        getMatchupsForCurrentTeamCount().forEach(([left, right]) => {
+          const leftOptions = getPairOptions(left, playCounts, targetGames, minGames, matchType);
+          const rightOptions = getPairOptions(right, playCounts, targetGames, minGames, matchType);
+          if (!leftOptions.length || !rightOptions.length) return;
+
+          leftOptions.slice(0, 42).forEach(leftPair => {
+            rightOptions.slice(0, 42).forEach(rightPair => {
+              const playerIds = [...leftPair, ...rightPair];
+              const uniqueIds = new Set(playerIds);
+              if (uniqueIds.size !== playerIds.length) return;
+
+              let score = scoreCandidateMatch(playerIds, playCounts, minGames, targetGames);
+
+              if (matchType === "men" && (typeCounts.men || 0) < requestedMen) score -= 4200;
+              if (matchType === "women" && (typeCounts.women || 0) < requestedWomen) score -= 4200;
+
+              const belowMinIncluded = playerIds.filter(id => (playCounts.get(id) || 0) < minGames).length;
+              score -= belowMinIncluded * 700;
+
+              candidates.push({
+                matchType,
+                selected: { left, right },
+                leftPair,
+                rightPair,
+                score
+              });
+            });
+          });
+        });
+      });
+
+      if (!candidates.length) return null;
+      if (fastOnly) return candidates[0];
+      return candidates.sort((a, b) => a.score - b.score)[0];
     }
 
     function pushGeneratedMatch(generated, courtCounter, selected, leftPair, rightPair) {
@@ -7419,62 +7603,161 @@
       });
     }
 
-    function scheduleMatchesByType(generated, playCounts, desired, matchType, targetCount = Infinity, courtCounterStart = 1) {
-      let created = 0;
-      let courtCounter = courtCounterStart;
+    function applyMatchPick(generated, playCounts, pick, typeCounts, courtCounter) {
+      [...pick.leftPair, ...pick.rightPair].forEach(id => {
+        playCounts.set(id, (playCounts.get(id) || 0) + 1);
+      });
+      typeCounts[pick.matchType] = (typeCounts[pick.matchType] || 0) + 1;
+      pushGeneratedMatch(generated, courtCounter, pick.selected, pick.leftPair, pick.rightPair);
+    }
+
+    function buildFairGeneratedMatches(targetGames, requestedMen, requestedWomen) {
+      const activePlayers = participants().filter(member => member.team);
+      const minGames = Math.max(1, targetGames - 1);
+      const playCounts = new Map(activePlayers.map(member => [member.id, 0]));
+      const generated = [];
+      const typeCounts = { men: 0, women: 0, mixed: 0 };
+      let courtCounter = 1;
       let safety = 0;
 
-      while (created < targetCount && safety < 1000) {
+      while (safety < 1200) {
         safety += 1;
-        const selected = chooseBestMatchupForType(playCounts, desired, matchType);
-        if (!selected) break;
 
-        const leftPair = choosePair(selected.left, playCounts, desired, matchType);
-        const rightPair = choosePair(selected.right, playCounts, desired, matchType);
-        if (!leftPair || !rightPair) break;
+        const belowMin = countPlayersBelow(playCounts, minGames);
+        const belowTarget = countPlayersBelow(playCounts, targetGames);
+        const requiredTypes = [];
+        if (typeCounts.men < requestedMen) requiredTypes.push("men");
+        if (typeCounts.women < requestedWomen) requiredTypes.push("women");
 
-        pushGeneratedMatch(generated, courtCounter, selected, leftPair, rightPair);
-        created += 1;
+        let allowedTypes = [];
+        if (belowMin > 0) {
+          allowedTypes = ["mixed", "men", "women"];
+        } else if (requiredTypes.length) {
+          allowedTypes = requiredTypes;
+        } else if (belowTarget > 0) {
+          allowedTypes = ["mixed", "men", "women"];
+        } else {
+          break;
+        }
+
+        let pick = findBestNextMatch(playCounts, targetGames, minGames, allowedTypes, typeCounts, requestedMen, requestedWomen);
+
+        if (!pick && requiredTypes.length) {
+          pick = findBestNextMatch(playCounts, targetGames, minGames, requiredTypes, typeCounts, requestedMen, requestedWomen);
+        }
+
+        if (!pick && belowMin > 0) {
+          pick = findBestNextMatch(playCounts, targetGames, minGames, ["mixed", "men", "women"], typeCounts, requestedMen, requestedWomen);
+        }
+
+        if (!pick) break;
+
+        applyMatchPick(generated, playCounts, pick, typeCounts, courtCounter);
         courtCounter += 1;
       }
 
-      return { created, nextCourtCounter: courtCounter };
+      return {
+        generated,
+        playCounts,
+        typeCounts,
+        minGames
+      };
+    }
+
+    function orderMatchesFairly(matches) {
+      const remaining = shuffle([...(matches || [])]);
+      const ordered = [];
+      const scheduledCounts = new Map();
+      const lastPlayedRound = new Map();
+
+      remaining.forEach(match => {
+        getMatchPlayerIds(match).forEach(playerId => {
+          if (!scheduledCounts.has(playerId)) scheduledCounts.set(playerId, 0);
+          if (!lastPlayedRound.has(playerId)) lastPlayedRound.set(playerId, -999);
+        });
+      });
+
+      while (remaining.length) {
+        const nextIndex = ordered.length;
+        const scored = remaining.map((match, index) => {
+          const playerIds = getMatchPlayerIds(match);
+          const counts = playerIds.map(id => scheduledCounts.get(id) || 0);
+          const lastRounds = playerIds.map(id => lastPlayedRound.get(id) ?? -999);
+          const totalPlayed = counts.reduce((sum, count) => sum + count, 0);
+          const maxPlayed = counts.length ? Math.max(...counts) : 0;
+          const zeroCount = counts.filter(count => count === 0).length;
+          const consecutiveCount = lastRounds.filter(round => round === nextIndex - 1).length;
+          const shortRestCount = lastRounds.filter(round => nextIndex - round <= 2).length;
+          const waitBonus = lastRounds.reduce((sum, round) => {
+            if (round < 0) return sum + 4;
+            return sum + Math.min(4, Math.max(0, nextIndex - round));
+          }, 0);
+
+          return {
+            index,
+            score:
+              consecutiveCount * 10000 +
+              shortRestCount * 420 +
+              totalPlayed * 150 +
+              maxPlayed * 80 -
+              zeroCount * 240 -
+              waitBonus * 8 +
+              Math.random() * 3
+          };
+        }).sort((a, b) => a.score - b.score);
+
+        const selected = remaining.splice(scored[0].index, 1)[0];
+        ordered.push(selected);
+        getMatchPlayerIds(selected).forEach(playerId => {
+          scheduledCounts.set(playerId, (scheduledCounts.get(playerId) || 0) + 1);
+          lastPlayedRound.set(playerId, nextIndex);
+        });
+      }
+
+      return ordered.map((match, index) => ({
+        ...match,
+        round: index + 1,
+        court: index + 1
+      }));
+    }
+
+    function buildPlayCountSummary(playCounts, targetGames, minGames) {
+      const activePlayers = participants().filter(member => member.team);
+      const distribution = new Map();
+      activePlayers.forEach(member => {
+        const count = playCounts.get(member.id) || 0;
+        distribution.set(count, (distribution.get(count) || 0) + 1);
+      });
+      const distributionText = [...distribution.entries()]
+        .sort((a, b) => b[0] - a[0])
+        .map(([games, count]) => `${games}경기 ${count}명`)
+        .join(" / ");
+      const underMin = activePlayers.filter(member => (playCounts.get(member.id) || 0) < minGames).length;
+      const minText = targetGames > 1 ? `최소보장 ${minGames}경기` : `목표 ${targetGames}경기`;
+      return `${minText} · ${distributionText}${underMin ? ` · 최소 미달 ${underMin}명` : ""}`;
     }
 
     function applyGenerateMatches() {
       const desired = Number(state.desiredGamesPerPlayer || 2);
       const requestedMen = Math.max(0, Number(state.desiredMenDoublesCount || 0));
       const requestedWomen = Math.max(0, Number(state.desiredWomenDoublesCount || 0));
-      const playCounts = new Map(participants().map(member => [member.id, 0]));
-      const generated = [];
-      let courtCounter = 1;
+      const result = buildFairGeneratedMatches(desired, requestedMen, requestedWomen);
 
-      const menResult = scheduleMatchesByType(generated, playCounts, desired, "men", requestedMen, courtCounter);
-      courtCounter = menResult.nextCourtCounter;
-
-      const womenResult = scheduleMatchesByType(generated, playCounts, desired, "women", requestedWomen, courtCounter);
-      courtCounter = womenResult.nextCourtCounter;
-
-      const mixedResult = scheduleMatchesByType(generated, playCounts, desired, "mixed", Infinity, courtCounter);
-      courtCounter = mixedResult.nextCourtCounter;
-
-      state.matches = shuffle(generated).map((match, index) => ({
-        ...match,
-        round: index + 1,
-        court: index + 1
-      }));
+      state.matches = orderMatchesFairly(result.generated);
 
       const feedback = $("matchPlanFeedback");
       if (feedback) {
-        const menText = menResult.created === requestedMen
-          ? `남복 ${menResult.created}경기`
-          : `남복 ${menResult.created}/${requestedMen}경기`;
-        const womenText = womenResult.created === requestedWomen
-          ? `여복 ${womenResult.created}경기`
-          : `여복 ${womenResult.created}/${requestedWomen}경기`;
+        const menText = result.typeCounts.men === requestedMen
+          ? `남복 ${result.typeCounts.men}경기`
+          : `남복 ${result.typeCounts.men}경기(요청 ${requestedMen})`;
+        const womenText = result.typeCounts.women === requestedWomen
+          ? `여복 ${result.typeCounts.women}경기`
+          : `여복 ${result.typeCounts.women}경기(요청 ${requestedWomen})`;
         feedback.textContent =
-          `생성 결과: ${menText} · ${womenText} · 혼복 ${mixedResult.created}경기 · 총 ${generated.length}경기`;
-        feedback.classList.toggle("warning", menResult.created !== requestedMen || womenResult.created !== requestedWomen);
+          `생성 결과: ${menText} · ${womenText} · 혼복 ${result.typeCounts.mixed}경기 · 총 ${result.generated.length}경기 · ${buildPlayCountSummary(result.playCounts, desired, result.minGames)}`;
+        const activeCount = participants().filter(member => member.team).length;
+        const underMin = [...result.playCounts.values()].filter(count => count < result.minGames).length;
+        feedback.classList.toggle("warning", underMin > 0 || result.playCounts.size < activeCount);
       }
 
       renderAll();
@@ -7854,7 +8137,7 @@
         openAdminPasswordModal();
         return;
       }
-      if (!adminUnlocked && page === "admin") page = "members";
+      if (!adminUnlocked && page === "admin") page = "matches";
       state.activePage = page;
       syncAccessMode();
       document.querySelectorAll(".page").forEach(section => {
