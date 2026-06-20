@@ -5361,7 +5361,8 @@
     }
 
     body:not(.admin-mode) .status-cycle-btn {
-      pointer-events: none;
+      pointer-events: auto;
+      cursor: pointer;
     }
 
     body:not(.admin-mode) .compact-score {
@@ -7002,8 +7003,8 @@
           matchType === "여복" ? "women" : "mixed";
         const side1Display = playerNamesWithOrdinals(match.side1Players);
         const side2Display = playerNamesWithOrdinals(match.side2Players);
-        const scoreControlAttrs = adminUnlocked ? "" : `readonly tabindex="-1"`;
-        const statusButtonAttrs = adminUnlocked ? `onclick="cycleMatchStatus('${match.id}')" title="누르면 상태가 변경됩니다"` : `disabled title="관리자 모드에서 변경할 수 있습니다"`;
+        const scoreControlAttrs = "";
+        const statusButtonAttrs = `onclick="cycleMatchStatus('${match.id}')" title="누르면 상태가 변경됩니다"`;
 
         return `
           <article class="match-row status-${status} ${adminUnlocked && state.matchEditMode ? "edit-mode" : ""}">
@@ -7457,7 +7458,11 @@
       const mixedResult = scheduleMatchesByType(generated, playCounts, desired, "mixed", Infinity, courtCounter);
       courtCounter = mixedResult.nextCourtCounter;
 
-      state.matches = generated;
+      state.matches = shuffle(generated).map((match, index) => ({
+        ...match,
+        round: index + 1,
+        court: index + 1
+      }));
 
       const feedback = $("matchPlanFeedback");
       if (feedback) {
@@ -7522,11 +7527,66 @@
       scheduleSave();
     }
 
+    function getMatchPlayerIds(match) {
+      return [...(match?.side1Players || []), ...(match?.side2Players || [])];
+    }
+
+    function getMatchLabel(match) {
+      return `${match?.round || ""}게임`;
+    }
+
+    function getPlayingConflictMessage(targetMatch) {
+      const targetPlayerIds = new Set(getMatchPlayerIds(targetMatch));
+      const conflicts = [];
+
+      state.matches
+        .filter(match => match.id !== targetMatch.id)
+        .filter(match => (match.status || "pending") === "playing")
+        .forEach(match => {
+          getMatchPlayerIds(match).forEach(playerId => {
+            if (!targetPlayerIds.has(playerId)) return;
+            const member = memberById(playerId);
+            conflicts.push({
+              name: member?.name || "해당 선수",
+              matchLabel: getMatchLabel(match)
+            });
+          });
+        });
+
+      if (!conflicts.length) return "";
+
+      const uniqueLines = [...new Map(
+        conflicts.map(item => [`${item.name}-${item.matchLabel}`, item])
+      ).values()]
+        .slice(0, 4)
+        .map(item => `${item.name}님이 ${item.matchLabel}을 진행중입니다.`);
+
+      const extraCount = conflicts.length - uniqueLines.length;
+      const extraText = extraCount > 0 ? `\n외 ${extraCount}건의 중복 진행이 있습니다.` : "";
+      return `${uniqueLines.join("\n")}${extraText}\n그래도 진행하시겠습니까?`;
+    }
+
     function cycleMatchStatus(id) {
-      const current = state.matches.find(match => match.id === id)?.status || "pending";
+      const targetMatch = state.matches.find(match => match.id === id);
+      if (!targetMatch) return;
+
+      const current = targetMatch.status || "pending";
       const nextStatus =
         current === "pending" ? "playing" :
         current === "playing" ? "finished" : "pending";
+
+      if (nextStatus === "playing") {
+        const conflictMessage = getPlayingConflictMessage(targetMatch);
+        if (conflictMessage) {
+          requestConfirmation({
+            title: "중복 경기 진행 확인",
+            message: conflictMessage,
+            onConfirm: () => updateMatchStatus(id, nextStatus)
+          });
+          return;
+        }
+      }
+
       updateMatchStatus(id, nextStatus);
     }
 
