@@ -5634,6 +5634,11 @@
       font-weight: 850;
     }
 
+    .role-change-btn {
+      background: rgba(255,255,255,0.14);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.22);
+    }
 
     body.role-select-active > .hero,
     body.role-select-active > .wrap,
@@ -5664,8 +5669,77 @@
       }
     }
 
+
+    /* v31: 관리자 모드 시 전체 배경 톤 붉은색 계열로 전환 */
+    body.admin-mode {
+      --bg: #fff1f2;
+      --panel-soft: #fff7f7;
+      --line: #f2c9ce;
+      background:
+        radial-gradient(circle at 18% 0%, rgba(220, 76, 100, 0.18), transparent 30%),
+        radial-gradient(circle at 82% 8%, rgba(217, 139, 8, 0.10), transparent 26%),
+        linear-gradient(180deg, #fff8f8 0%, #ffe8eb 100%);
+    }
+
+    body.admin-mode .hero {
+      background-image:
+        linear-gradient(90deg, rgba(85, 14, 25, 0.90) 0%, rgba(116, 24, 37, 0.70) 42%, rgba(116, 24, 37, 0.28) 68%, rgba(85, 14, 25, 0.58) 100%),
+        url("./matterhorn-banner.png");
+    }
+
+    body.admin-mode .summary-card,
+    body.admin-mode .desktop-page-tabs,
+    body.admin-mode .panel,
+    body.admin-mode .bottom-nav {
+      border-color: rgba(242, 201, 206, 0.95);
+      box-shadow: 0 10px 26px rgba(127, 29, 29, 0.09);
+    }
+
+    body.admin-mode .page-tab.active,
+    body.admin-mode .bottom-nav button.active {
+      background: #7f1d1d;
+      color: #fff;
+    }
+
+    body.admin-mode .save-status {
+      border-color: #f2c9ce;
+      background: #fff7f7;
+      color: #8f2532;
+    }
+
+  
+
+    /* v32: 대진표 선수별 몇 번째 게임 숫자 강조 - 빨간색 통일 */
+    .player-game-ordinal {
+      display: inline-block !important;
+      position: relative !important;
+      top: -0.38em !important;
+      margin-left: 2px !important;
+      min-width: 10px !important;
+      padding: 0 2px !important;
+      border-radius: 999px !important;
+      color: #dc2626 !important;
+      background: rgba(220, 38, 38, 0.10) !important;
+      font-size: 10px !important;
+      line-height: 1.15 !important;
+      font-weight: 1000 !important;
+      text-align: center !important;
+      vertical-align: super !important;
+    }
+
+    @media (max-width: 720px) {
+      .player-game-ordinal {
+        top: -0.34em !important;
+        margin-left: 1px !important;
+        min-width: 9px !important;
+        padding: 0 2px !important;
+        font-size: 9px !important;
+        line-height: 1.15 !important;
+      }
+    }
+
   </style>
-  <!-- matterhorn_v30: v29 role select + match DB immediate save, role-change feature removed -->
+  <!-- matterhorn_v31: v30 + admin participant label + red admin background tone -->
 </head>
 <body>
 
@@ -5691,7 +5765,7 @@
         <div class="hero-right-tools">
           <div class="hero-pill hero-pill-right">⛰️ 마테호른 · MATTERHORN TENNIS CLUB</div>
           <button class="btn hero-admin-btn public-only" id="enterAdminModeBtn">🔐 관리자</button>
-          <button class="btn hero-admin-btn admin-only" id="publicModeBtn">공개화면</button>
+          <button class="btn hero-admin-btn admin-only" id="publicModeBtn">참가자모드</button>
         </div>
       </div>
     </div>
@@ -6228,6 +6302,17 @@
       setDeviceRole("admin");
       hideRoleSelectScreen();
       openAdminPasswordModal();
+    }
+
+    function changeDeviceRole() {
+      clearDeviceRole();
+      if (adminUnlocked) {
+        adminUnlocked = false;
+        state.matchEditMode = false;
+      }
+      syncAccessMode();
+      renderAll();
+      showRoleSelectScreen();
     }
 
     function applyDeviceRoleAfterBootstrap() {
@@ -7409,7 +7494,7 @@
         onConfirm: () => {
           state.matches = [];
           renderAll();
-          saveNow();
+          scheduleSave();
         }
       });
     }
@@ -7733,6 +7818,7 @@
     if ($("adminQuickLogoutBtn")) $("adminQuickLogoutBtn").addEventListener("click", logoutAdmin);
     if ($("chooseParticipantRoleBtn")) $("chooseParticipantRoleBtn").addEventListener("click", chooseParticipantRole);
     if ($("chooseAdminRoleBtn")) $("chooseAdminRoleBtn").addEventListener("click", chooseAdminRole);
+    if ($("changeRoleBtn")) $("changeRoleBtn").addEventListener("click", changeDeviceRole);
 
     document.querySelectorAll(".mode-card").forEach(card => {
       card.addEventListener("click", () => setTeamCount(Number(card.dataset.teamCount)));
@@ -7786,7 +7872,7 @@
       event.target.value = String(state.desiredWomenDoublesCount);
       state.matches = [];
       renderAll();
-      saveNow();
+      scheduleSave();
     });
 
     $("excludeRankersToggle").addEventListener("change", (event) => {
