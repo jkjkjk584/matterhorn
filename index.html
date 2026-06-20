@@ -5651,7 +5651,7 @@
       <button class="page-tab" data-page="awards">4. 추첨·순위</button>
     </nav>
 
-    <section class="page" id="page-members">
+    <section class="page active" id="page-members">
       <div class="panel participant-view-panel">
           <div class="section-head compact-section-head">
             <div class="section-icon">👥</div>
@@ -5716,7 +5716,7 @@
       </div>
     </section>
 
-    <section class="page active" id="page-matches">
+    <section class="page" id="page-matches">
       <section class="team-record-dashboard">
             <div class="team-leader-banner" id="teamLeaderBanner">
               <span class="leader-label">현재 우세</span>
@@ -5883,7 +5883,6 @@
             <div class="save-status" id="saveStatus">💾 DB 저장 준비됨</div>
             <div class="actions compact-actions">
               <button class="btn btn-outline" id="manualSaveBtn">저장</button>
-              <button class="btn btn-rose" id="resetSampleBtn">샘플 초기화</button>
               <button class="btn btn-outline" id="adminLogoutBtn">로그아웃</button>
             </div>
           </div>
@@ -6106,6 +6105,7 @@
   <script>
     const STORAGE_KEY = "matterhorn_monthly_manager_v2";
     const ADMIN_PASSWORD_KEY = "matterhorn_admin_password";
+    const PAGE_STORAGE_KEY = STORAGE_KEY + "_active_page";
     let adminUnlocked = false;
     let pendingAdminNavigation = false;
     let pendingConfirmAction = null;
@@ -6188,6 +6188,29 @@
 
     const dataAdapter = window.MATTERHORN_DB_ADAPTER || fallbackStorageAdapter;
     const $ = (id) => document.getElementById(id);
+
+    function validPage(page) {
+      return ["matches", "awards", "teams", "members", "admin"].includes(page);
+    }
+
+    function getPreferredPage() {
+      try {
+        const saved = localStorage.getItem(PAGE_STORAGE_KEY);
+        if (validPage(saved)) return saved;
+      } catch (error) {
+        console.warn("현재 화면 기억 불러오기 실패", error);
+      }
+      return "matches";
+    }
+
+    function rememberPage(page) {
+      if (!validPage(page)) return;
+      try {
+        localStorage.setItem(PAGE_STORAGE_KEY, page);
+      } catch (error) {
+        console.warn("현재 화면 기억 저장 실패", error);
+      }
+    }
 
     function safeText(value) {
       return String(value ?? "")
@@ -6316,12 +6339,13 @@
       if ($("menDoublesCountInput")) $("menDoublesCountInput").value = String(state.desiredMenDoublesCount || 0);
       if ($("womenDoublesCountInput")) $("womenDoublesCountInput").value = String(state.desiredWomenDoublesCount || 0);
       syncRaffleControls();
-      // 첫 접속 화면은 항상 경기현황 화면으로 고정한다.
-      // DB에 예전 activePage 값이 남아 있어도 사용자별 첫 화면이 흔들리지 않게 무시한다.
-      activatePage("matches", false);
+      // 현재 화면은 DB에 저장하지 않고, 사용자 기기(localStorage)에만 저장한다.
+      // 처음 접속한 기기라면 경기현황 화면으로 시작한다.
+      activatePage(getPreferredPage(), false);
     }
 
     async function refreshFromDb() {
+      const currentPage = validPage(state.activePage) ? state.activePage : getPreferredPage();
       try {
         setSaveStatus("🔄 최신 데이터 불러오는 중...");
         const loaded = await dataAdapter.loadMonthlyMeetupState();
@@ -6346,7 +6370,7 @@
           if ($("menDoublesCountInput")) $("menDoublesCountInput").value = String(state.desiredMenDoublesCount || 0);
           if ($("womenDoublesCountInput")) $("womenDoublesCountInput").value = String(state.desiredWomenDoublesCount || 0);
           renderAll();
-          activatePage(state.activePage || "matches", false);
+          activatePage(currentPage, false);
           setSaveStatus("✅ 최신 데이터 반영됨 · " + new Date().toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" }), true);
         } else {
           setSaveStatus("💾 불러올 DB 데이터가 없습니다");
@@ -7613,12 +7637,14 @@
     }
 
     function activatePage(page, persist = false) {
+      if (!validPage(page)) page = "matches";
       if (page === "admin" && !adminUnlocked) {
         openAdminPasswordModal();
         return;
       }
       if (!adminUnlocked && page === "admin") page = "matches";
       state.activePage = page;
+      rememberPage(page);
       syncAccessMode();
       document.querySelectorAll(".page").forEach(section => {
         section.classList.toggle("active", section.id === "page-" + page);
@@ -7629,7 +7655,6 @@
       const scrollTarget = document.querySelector(".summary-strip") || document.querySelector(".wrap") || document.body;
       const scrollTop = window.innerWidth <= 1024 ? Math.max(0, scrollTarget.offsetTop - 10) : 0;
       window.scrollTo({ top: scrollTop, behavior: "smooth" });
-      if (persist) scheduleSave();
     }
 
     document.querySelectorAll("[data-page]").forEach(button => {
@@ -7658,7 +7683,7 @@
     $("spinWheelBtn").addEventListener("click", spinRaffleWheel);
     $("resetGiftBtn").addEventListener("click", resetGift);
     $("manualSaveBtn").addEventListener("click", saveNow);
-    $("resetSampleBtn").addEventListener("click", resetSample);
+    if ($("resetSampleBtn")) $("resetSampleBtn").addEventListener("click", resetSample);
     $("adminLogoutBtn").addEventListener("click", logoutAdmin);
     $("confirmAdminLoginBtn").addEventListener("click", confirmAdminLogin);
     $("cancelConfirmActionBtn").addEventListener("click", closeConfirmation);
