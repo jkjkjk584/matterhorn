@@ -1,0 +1,7170 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>월례회 통합관리 시스템 | 마테호른 테니스클럽</title>
+  <style>
+    :root {
+      --bg: #eef4fa;
+      --panel: rgba(255,255,255,0.96);
+      --panel-soft: #f7fbff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --line: #d9e4ef;
+      --navy: #071a33;
+      --blue: #0f67c8;
+      --blue-dark: #0b4f9b;
+      --green: #0f8d67;
+      --amber: #d98b08;
+      --rose: #dc4c64;
+      --shadow: 0 16px 40px rgba(15, 23, 42, 0.10);
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding-bottom: calc(88px + var(--safe-bottom));
+      background:
+        radial-gradient(circle at 18% 0%, rgba(15,103,200,0.13), transparent 28%),
+        linear-gradient(180deg, #f8fbff 0%, var(--bg) 100%);
+      color: var(--text);
+      font-family: Inter, Pretendard, "Noto Sans KR", "Apple SD Gothic Neo", Arial, sans-serif;
+    }
+
+    button, input, select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 330px;
+      overflow: hidden;
+      color: #fff;
+      background-image:
+        linear-gradient(90deg, rgba(4,17,36,0.90) 0%, rgba(4,17,36,0.68) 40%, rgba(4,17,36,0.24) 68%, rgba(4,17,36,0.54) 100%),
+        url("./matterhorn-banner.png");
+      background-size: cover;
+      background-position: center center;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 22%, rgba(255,255,255,0.14), transparent 22%),
+        linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.34));
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      width: min(1180px, calc(100% - 32px));
+      min-height: 330px;
+      margin: 0 auto;
+      padding: 18px 0 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .hero-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      max-width: 100%;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.20);
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(12px);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-pill.gold {
+      color: #ffe5ad;
+      border-color: rgba(255,226,168,0.35);
+      background: rgba(255,226,168,0.12);
+    }
+
+    .hero-copy {
+      max-width: 780px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 11px;
+      margin-bottom: 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(10px);
+      color: #dbeafe;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(34px, 5vw, 58px);
+      line-height: 1.04;
+      letter-spacing: -0.055em;
+      font-weight: 1000;
+      text-shadow: 0 8px 24px rgba(0,0,0,0.28);
+    }
+
+    .hero-copy p {
+      max-width: 720px;
+      margin: 14px 0 0;
+      color: rgba(255,255,255,0.92);
+      font-size: 16px;
+      line-height: 1.68;
+      font-weight: 700;
+      text-shadow: 0 4px 14px rgba(0,0,0,0.24);
+    }
+
+    .wrap {
+      position: relative;
+      z-index: 2;
+      width: min(1180px, calc(100% - 32px));
+      margin: -28px auto 34px;
+    }
+
+    .summary-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .summary-card {
+      min-height: 106px;
+      padding: 16px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,0.95);
+      background: rgba(255,255,255,0.97);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .summary-label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .summary-value {
+      margin-top: 6px;
+      font-size: 29px;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      font-weight: 1000;
+    }
+
+    .summary-sub {
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 750;
+    }
+
+    .summary-icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 15px;
+      background: var(--navy);
+      color: white;
+      font-size: 20px;
+      flex: 0 0 auto;
+    }
+
+    .desktop-page-tabs {
+      position: sticky;
+      top: 12px;
+      z-index: 12;
+      display: flex;
+      gap: 10px;
+      padding: 10px;
+      margin-bottom: 16px;
+      border-radius: 22px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.90);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 12px 28px rgba(15,23,42,0.08);
+    }
+
+    .page-tab {
+      min-height: 48px;
+      flex: 1;
+      border: 0;
+      border-radius: 16px;
+      background: transparent;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 950;
+      transition: 0.18s ease;
+    }
+
+    .page-tab.active {
+      background: var(--navy);
+      color: white;
+      box-shadow: 0 12px 22px rgba(7,26,51,0.18);
+    }
+
+    .page {
+      display: none;
+      animation: fade 0.18s ease;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    @keyframes fade {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .page-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 18px;
+    }
+
+    .stack {
+      display: grid;
+      gap: 18px;
+    }
+
+    .panel {
+      padding: 20px;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--line);
+      background: var(--panel);
+      box-shadow: 0 12px 30px rgba(15,23,42,0.07);
+    }
+
+    .section-head {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 16px;
+    }
+
+    .section-icon {
+      width: 42px;
+      height: 42px;
+      flex: 0 0 auto;
+      display: grid;
+      place-items: center;
+      border-radius: 15px;
+      color: white;
+      background: var(--navy);
+      font-size: 20px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: 21px;
+      line-height: 1.25;
+      letter-spacing: -0.04em;
+      font-weight: 1000;
+    }
+
+    .section-head p {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.62;
+      font-weight: 720;
+    }
+
+    .status-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .save-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 40px;
+      padding: 0 13px;
+      border-radius: 999px;
+      border: 1px solid #d7e6f5;
+      background: #f3f8fd;
+      color: #31506f;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .save-status.good {
+      border-color: #ccecdf;
+      background: #edfdf7;
+      color: #0c7559;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      min-height: 46px;
+      padding: 0 16px;
+      border: 0;
+      border-radius: 15px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      white-space: nowrap;
+      font-size: 13px;
+      font-weight: 1000;
+      transition: 0.18s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-dark { background: var(--navy); color: white; }
+    .btn-blue { background: var(--blue); color: white; }
+    .btn-outline { border: 1px solid var(--line); background: white; color: var(--text); }
+    .btn-amber { background: var(--amber); color: white; }
+    .btn-rose { background: #fff1f4; color: var(--rose); border: 1px solid #ffd7df; }
+
+    .field {
+      width: 100%;
+      min-height: 46px;
+      border-radius: 15px;
+      border: 1px solid #d7e0eb;
+      background: white;
+      color: var(--text);
+      padding: 0 13px;
+      outline: none;
+      font-size: 14px;
+      font-weight: 850;
+    }
+
+    .field:focus {
+      border-color: var(--navy);
+      box-shadow: 0 0 0 4px rgba(7,26,51,0.08);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1.25fr 0.62fr 0.62fr auto;
+      gap: 10px;
+      padding: 12px;
+      margin-bottom: 14px;
+      border-radius: 22px;
+      border: 1px solid #e6edf5;
+      background: var(--panel-soft);
+    }
+
+    .member-list {
+      display: grid;
+      gap: 10px;
+      max-height: 590px;
+      overflow: auto;
+      padding-right: 2px;
+    }
+
+    .member-card {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 10px;
+      align-items: center;
+      padding: 12px;
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      background: white;
+    }
+
+    .member-main {
+      min-width: 0;
+    }
+
+    .member-name-line {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+      flex-wrap: wrap;
+    }
+
+    .name-edit {
+      width: min(220px, 100%);
+      min-height: 38px;
+      border-radius: 12px;
+      border: 1px solid #d7e0eb;
+      padding: 0 10px;
+      font-size: 14px;
+      font-weight: 950;
+      color: var(--text);
+    }
+
+    .member-meta {
+      margin-top: 6px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tiny-badge {
+      display: inline-flex;
+      min-height: 26px;
+      align-items: center;
+      padding: 0 9px;
+      border-radius: 999px;
+      background: #eef4fb;
+      border: 1px solid #dbe7f3;
+      color: #46637f;
+      font-size: 11px;
+      font-weight: 950;
+    }
+
+    .join-toggle {
+      min-width: 58px;
+      min-height: 38px;
+      border: 0;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 1000;
+    }
+
+    .join-toggle.on {
+      background: var(--navy);
+      color: white;
+    }
+
+    .join-toggle.off {
+      background: #edf2f7;
+      color: #64748b;
+    }
+
+    .member-tools {
+      display: grid;
+      gap: 8px;
+      justify-items: end;
+    }
+
+    .compact-select {
+      min-width: 82px;
+      min-height: 38px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      padding: 0 10px;
+      background: white;
+      font-size: 12px;
+      font-weight: 950;
+    }
+
+    .delete-mini {
+      width: 38px;
+      height: 38px;
+      border: 1px solid #ffd7df;
+      border-radius: 12px;
+      background: #fff2f5;
+      color: var(--rose);
+      font-size: 18px;
+      font-weight: 1000;
+    }
+
+    .mode-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .mode-card {
+      min-height: 102px;
+      padding: 16px;
+      border-radius: 22px;
+      border: 1px solid var(--line);
+      background: var(--panel-soft);
+      color: var(--text);
+      text-align: left;
+      transition: 0.18s ease;
+    }
+
+    .mode-card.active {
+      border-color: var(--navy);
+      background: var(--navy);
+      color: white;
+      box-shadow: 0 14px 26px rgba(7,26,51,0.18);
+    }
+
+    .mode-card small {
+      display: block;
+      opacity: 0.72;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .mode-card strong {
+      display: block;
+      margin-top: 6px;
+      font-size: 25px;
+      letter-spacing: -0.04em;
+      font-weight: 1000;
+    }
+
+    .mode-card span {
+      display: block;
+      margin-top: 8px;
+      opacity: 0.76;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .team-board {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      align-items: start;
+    }
+
+    .team-board.three {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .team-column {
+      overflow: hidden;
+      min-height: 0;
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      background: #f8fbfe;
+    }
+
+    .team-column.unassigned {
+      grid-column: 1 / -1;
+    }
+
+    .team-head {
+      padding: 11px 12px;
+      color: white;
+    }
+
+    .team-head.a { background: linear-gradient(135deg, #2582db, #164d92); }
+    .team-head.b { background: linear-gradient(135deg, #13aa81, #0c6c54); }
+    .team-head.c { background: linear-gradient(135deg, #e8a21b, #c16c04); }
+    .team-head.u { background: linear-gradient(135deg, #475569, #1f2937); }
+
+    .team-head-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .team-head h3 {
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: -0.04em;
+      font-weight: 1000;
+    }
+
+    .head-count {
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.20);
+      font-size: 10px;
+      font-weight: 1000;
+    }
+
+    .team-stat {
+      margin-top: 5px;
+      font-size: 11px;
+      font-weight: 800;
+      color: rgba(255,255,255,0.94);
+      line-height: 1.35;
+    }
+
+    .team-cards {
+      display: grid;
+      gap: 6px;
+      padding: 8px;
+    }
+
+    .assignment-card {
+      padding: 8px 9px;
+      border-radius: 14px;
+      border: 1px solid #e2e8f0;
+      background: white;
+    }
+
+    .assignment-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .assignment-top strong {
+      font-size: 12px;
+      line-height: 1.25;
+      font-weight: 1000;
+    }
+
+    .assignment-top small {
+      display: inline-block;
+      margin-left: 5px;
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.25;
+      font-weight: 850;
+    }
+
+    .quick-move {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px;
+      margin-top: 6px;
+    }
+
+    .quick-move.three {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .move-btn {
+      min-height: 27px;
+      border-radius: 9px;
+      border: 1px solid var(--line);
+      background: #f8fbfe;
+      color: #48617a;
+      font-size: 10px;
+      font-weight: 1000;
+      padding: 0 4px;
+    }
+
+    .move-btn.active {
+      background: var(--navy);
+      border-color: var(--navy);
+      color: white;
+    }
+
+    .board-empty {
+      padding: 14px 8px;
+      border-radius: 14px;
+      border: 1px dashed #cbd5e1;
+      background: white;
+      color: #94a3b8;
+      text-align: center;
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .match-placeholder {
+      padding: 34px 16px;
+      border-radius: 22px;
+      border: 1px dashed #cbd5e1;
+      background: var(--panel-soft);
+      text-align: center;
+    }
+
+    .match-placeholder strong {
+      display: block;
+      font-size: 15px;
+      font-weight: 1000;
+    }
+
+    .match-placeholder span {
+      display: block;
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 750;
+    }
+
+    .match-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .match-card {
+      padding: 14px;
+      border-radius: 22px;
+      border: 1px solid var(--line);
+      background: var(--panel-soft);
+    }
+
+    .match-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 11px;
+      flex-wrap: wrap;
+    }
+
+    .match-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .tag {
+      min-height: 27px;
+      padding: 0 10px;
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: white;
+      color: #526a84;
+      font-size: 11px;
+      font-weight: 1000;
+    }
+
+    .tag.dark {
+      background: var(--navy);
+      border-color: var(--navy);
+      color: white;
+    }
+
+    .match-grid {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .side {
+      padding: 12px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: white;
+    }
+
+    .side-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .team-badge {
+      min-height: 28px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 1000;
+      border: 1px solid transparent;
+    }
+
+    .team-badge.a { background: #eaf4ff; color: #14569d; border-color: #cfe6ff; }
+    .team-badge.b { background: #e8fbf6; color: #0d7559; border-color: #c9f0e6; }
+    .team-badge.c { background: #fff4dd; color: #a05f00; border-color: #f3dcac; }
+
+    .score {
+      width: 70px;
+      min-height: 42px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      text-align: center;
+      font-size: 19px;
+      font-weight: 1000;
+      outline: none;
+      background: white;
+    }
+
+    .side-names {
+      font-size: 13px;
+      line-height: 1.52;
+      font-weight: 1000;
+    }
+
+    .vs {
+      color: #94a3b8;
+      font-size: 13px;
+      font-weight: 1000;
+      text-align: center;
+    }
+
+    .ranking-list {
+      display: grid;
+      gap: 9px;
+    }
+
+    .rank-card {
+      display: grid;
+      grid-template-columns: 52px 1fr auto;
+      gap: 10px;
+      align-items: center;
+      padding: 12px;
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      background: white;
+    }
+
+    .rank-no {
+      width: 52px;
+      height: 52px;
+      display: grid;
+      place-items: center;
+      border-radius: 17px;
+      background: #f2f6fb;
+      font-size: 22px;
+      font-weight: 1000;
+    }
+
+    .rank-name {
+      font-size: 15px;
+      font-weight: 1000;
+    }
+
+    .rank-meta {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .rank-score {
+      min-width: 70px;
+      text-align: right;
+      font-size: 25px;
+      letter-spacing: -0.04em;
+      font-weight: 1000;
+    }
+
+    .gift-form {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .winner-list {
+      display: grid;
+      gap: 9px;
+      margin-top: 10px;
+    }
+
+    .winner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding: 13px;
+      border-radius: 19px;
+      border: 1px solid #f4dfb3;
+      background: #fff6e4;
+    }
+
+    .winner small {
+      display: block;
+      color: #a96700;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      font-weight: 1000;
+    }
+
+    .winner strong {
+      display: block;
+      margin-top: 4px;
+      font-size: 15px;
+      font-weight: 1000;
+    }
+
+    .gift-chip {
+      padding: 8px 11px;
+      border-radius: 999px;
+      background: white;
+      color: #9b5e00;
+      font-size: 12px;
+      font-weight: 1000;
+      box-shadow: 0 8px 18px rgba(160,95,0,0.12);
+    }
+
+    .note {
+      padding: 14px;
+      border-radius: 18px;
+      border: 1px solid #e4edf6;
+      background: var(--panel-soft);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.65;
+      font-weight: 760;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      left: 50%;
+      bottom: calc(12px + var(--safe-bottom));
+      transform: translateX(-50%);
+      z-index: 30;
+      width: min(760px, calc(100% - 20px));
+      display: none;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      padding: 9px;
+      border-radius: 24px;
+      border: 1px solid rgba(217,228,239,0.96);
+      background: rgba(255,255,255,0.94);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 20px 48px rgba(15,23,42,0.20);
+    }
+
+    .bottom-nav button {
+      min-height: 56px;
+      border: 0;
+      border-radius: 17px;
+      background: transparent;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 1000;
+      line-height: 1.25;
+      display: grid;
+      place-items: center;
+      gap: 2px;
+    }
+
+    .bottom-nav button span:first-child {
+      font-size: 18px;
+    }
+
+    .bottom-nav button.active {
+      color: white;
+      background: var(--navy);
+    }
+
+    .empty-box {
+      padding: 20px 12px;
+      border-radius: 18px;
+      border: 1px dashed #cbd5e1;
+      background: white;
+      color: #94a3b8;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    @media (max-width: 1024px) {
+      body {
+        padding-bottom: calc(92px + var(--safe-bottom));
+      }
+
+      .desktop-page-tabs {
+        display: none;
+      }
+
+      .bottom-nav {
+        display: grid;
+      }
+
+      .summary-strip {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        overflow: visible;
+        gap: 8px;
+        padding-bottom: 0;
+      }
+
+      .summary-card {
+        min-width: 0;
+      }
+
+      .page-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .team-board.three {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 720px) {
+      .hero {
+        min-height: 265px;
+        background-position: 58% center;
+      }
+
+      .hero-inner {
+        width: calc(100% - 24px);
+        min-height: 265px;
+        padding: 14px 0 20px;
+      }
+
+      .hero-pill {
+        font-size: 11px;
+        padding: 8px 11px;
+      }
+
+      .hero-pill.gold {
+        display: none;
+      }
+
+      .eyebrow {
+        font-size: 11px;
+        padding: 6px 9px;
+        margin-bottom: 9px;
+      }
+
+      h1 {
+        font-size: 31px;
+      }
+
+      .hero-copy p {
+        display: none;
+      }
+
+      .wrap {
+        width: calc(100% - 20px);
+        margin-top: -18px;
+      }
+
+      .summary-strip {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .summary-card {
+        min-width: 0;
+        min-height: 72px;
+        padding: 10px 11px;
+      }
+
+      .summary-value {
+        font-size: 25px;
+      }
+
+      .summary-icon {
+        width: 38px;
+        height: 38px;
+        border-radius: 14px;
+        font-size: 18px;
+      }
+
+      .panel {
+        padding: 15px;
+        border-radius: 22px;
+      }
+
+      .section-head {
+        gap: 10px;
+        margin-bottom: 13px;
+      }
+
+      .section-icon {
+        width: 38px;
+        height: 38px;
+        border-radius: 13px;
+        font-size: 18px;
+      }
+
+      .section-head h2 {
+        font-size: 18px;
+      }
+
+      .section-head p {
+        font-size: 12px;
+      }
+
+      .status-row {
+        align-items: stretch;
+      }
+
+      .actions {
+        width: 100%;
+      }
+
+      .btn {
+        flex: 1;
+        min-height: 44px;
+        padding: 0 12px;
+        font-size: 12px;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+        padding: 10px;
+      }
+
+      .member-card {
+        grid-template-columns: 1fr;
+      }
+
+      .member-tools {
+        grid-template-columns: 1fr 1fr;
+        justify-items: stretch;
+      }
+
+      .mode-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .team-board {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .team-board.three {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .team-column.unassigned {
+        grid-column: 1 / -1;
+      }
+
+      .match-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .vs {
+        padding: 4px 0;
+      }
+
+      .rank-card {
+        grid-template-columns: 46px 1fr auto;
+        gap: 8px;
+        padding: 10px;
+      }
+
+      .rank-no {
+        width: 46px;
+        height: 46px;
+        border-radius: 15px;
+        font-size: 20px;
+      }
+
+      .rank-score {
+        min-width: 56px;
+        font-size: 22px;
+      }
+
+      .gift-form {
+        grid-template-columns: 1fr;
+      }
+
+      .winner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+  
+    @media (max-width: 520px) {
+      .team-board.three {
+        display: flex;
+        overflow-x: auto;
+        gap: 10px;
+        padding-bottom: 3px;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+      }
+
+      .team-board.three::-webkit-scrollbar {
+        display: none;
+      }
+
+      .team-board.three .team-column:not(.unassigned) {
+        min-width: 220px;
+        scroll-snap-align: start;
+      }
+
+      .team-board.three .team-column.unassigned {
+        min-width: 100%;
+        flex-basis: 100%;
+      }
+    }
+
+  
+    /* v4: 상단 메인 화면 압축 */
+    .hero {
+      min-height: 260px;
+    }
+
+    .hero-inner {
+      min-height: 260px;
+      padding: 14px 0 22px;
+    }
+
+    .hero-copy p {
+      margin-top: 10px;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .wrap {
+      margin-top: -18px;
+    }
+
+    .summary-strip {
+      gap: 9px;
+      margin-bottom: 12px;
+    }
+
+    .summary-card {
+      min-height: 86px;
+      padding: 12px 13px;
+      border-radius: 18px;
+    }
+
+    .summary-label {
+      font-size: 11px;
+    }
+
+    .summary-value {
+      margin-top: 4px;
+      font-size: 24px;
+    }
+
+    .summary-sub {
+      margin-top: 5px;
+      font-size: 11px;
+    }
+
+    .summary-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      font-size: 17px;
+    }
+
+    .desktop-page-tabs {
+      padding: 8px;
+      margin-bottom: 12px;
+      border-radius: 18px;
+    }
+
+    .page-tab {
+      min-height: 42px;
+      border-radius: 13px;
+      font-size: 13px;
+    }
+
+    /* v4: 참가자 탭 초밀도화 */
+    .participant-page-panel {
+      padding: 16px;
+    }
+
+    .compact-page-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+
+    .compact-section-head {
+      margin-bottom: 0;
+    }
+
+    .participant-top-actions {
+      display: grid;
+      justify-items: end;
+      gap: 8px;
+      flex: 0 0 auto;
+    }
+
+    .compact-actions {
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .compact-actions .btn {
+      min-height: 38px;
+      padding: 0 12px;
+    }
+
+    .compact-add-bar {
+      display: grid;
+      grid-template-columns: minmax(160px, 1.3fr) 72px 72px 92px;
+      gap: 8px;
+      padding: 9px;
+      margin-bottom: 9px;
+      border-radius: 18px;
+      border: 1px solid #e4edf6;
+      background: var(--panel-soft);
+    }
+
+    .compact-add-bar .field,
+    .compact-add-bar .btn {
+      min-height: 40px;
+    }
+
+    .participant-mini-summary {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+      margin-bottom: 9px;
+    }
+
+    .participant-mini-summary span {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 0 10px;
+      border-radius: 999px;
+      border: 1px solid #dbe7f3;
+      background: #f3f8fd;
+      color: #49637d;
+      font-size: 11px;
+      font-weight: 950;
+    }
+
+    .compact-member-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 7px;
+      max-height: min(57vh, 560px);
+      overflow: auto;
+      padding-right: 2px;
+    }
+
+    .member-card {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 8px;
+      align-items: center;
+      padding: 8px 9px;
+      border-radius: 15px;
+      min-height: 62px;
+    }
+
+    .join-toggle {
+      min-width: 48px;
+      min-height: 30px;
+      font-size: 10px;
+    }
+
+    .member-main {
+      min-width: 0;
+    }
+
+    .member-name-line {
+      display: block;
+    }
+
+    .name-edit {
+      width: 100%;
+      min-height: 30px;
+      padding: 0 8px;
+      border-radius: 10px;
+      font-size: 12px;
+    }
+
+    .member-meta {
+      margin-top: 4px;
+      gap: 4px;
+    }
+
+    .tiny-badge {
+      min-height: 21px;
+      padding: 0 7px;
+      font-size: 10px;
+    }
+
+    .member-tools {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 1fr 1fr 34px;
+      gap: 6px;
+      justify-items: stretch;
+    }
+
+    .compact-select {
+      min-width: 0;
+      min-height: 31px;
+      padding: 0 7px;
+      border-radius: 10px;
+      font-size: 10px;
+    }
+
+    .delete-mini {
+      width: 34px;
+      height: 31px;
+      border-radius: 10px;
+      font-size: 15px;
+    }
+
+    /* v4: 경기수 설정 */
+    .match-config-row {
+      display: grid;
+      grid-template-columns: minmax(180px, 230px) 1fr;
+      gap: 12px;
+      align-items: end;
+      margin-bottom: 12px;
+    }
+
+    .config-field {
+      display: grid;
+      gap: 6px;
+    }
+
+    .config-field span {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 950;
+    }
+
+    .compact-match-select {
+      min-height: 44px;
+    }
+
+    .match-actions {
+      justify-content: flex-start;
+      margin-bottom: 0;
+    }
+
+    .compact-note {
+      padding: 12px;
+      font-size: 12px;
+    }
+
+  
+    @media (max-width: 1024px) {
+      .hero {
+        min-height: 220px;
+      }
+
+      .hero-inner {
+        min-height: 220px;
+        padding: 12px 0 18px;
+      }
+
+      .hero-copy p {
+        display: none;
+      }
+
+      .wrap {
+        margin-top: -12px;
+      }
+
+      .participant-page-panel {
+        padding: 13px;
+      }
+
+      .compact-page-head {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .participant-top-actions {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .compact-member-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        max-height: calc(100vh - 360px);
+      }
+
+      .match-config-row {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .hero {
+        min-height: 190px;
+      }
+
+      .hero-inner {
+        min-height: 190px;
+        padding: 11px 0 16px;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+
+      .summary-value {
+        font-size: 21px;
+      }
+
+      .summary-sub {
+        font-size: 10px;
+      }
+
+      .compact-add-bar {
+        grid-template-columns: 1fr 62px 62px 78px;
+        gap: 6px;
+        padding: 7px;
+      }
+
+      .compact-add-bar .field,
+      .compact-add-bar .btn {
+        min-height: 36px;
+        font-size: 12px;
+      }
+
+      .participant-mini-summary {
+        margin-bottom: 7px;
+      }
+
+      .participant-mini-summary span {
+        min-height: 24px;
+        padding: 0 8px;
+        font-size: 10px;
+      }
+
+      .compact-member-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 6px;
+        max-height: calc(100vh - 335px);
+      }
+
+      .member-card {
+        padding: 7px;
+        gap: 6px;
+        border-radius: 13px;
+      }
+
+      .join-toggle {
+        min-width: 43px;
+        min-height: 28px;
+      }
+
+      .name-edit {
+        min-height: 28px;
+        font-size: 11px;
+      }
+
+      .tiny-badge {
+        min-height: 19px;
+        padding: 0 6px;
+        font-size: 9px;
+      }
+
+      .member-tools {
+        grid-template-columns: 1fr 1fr 30px;
+        gap: 5px;
+      }
+
+      .compact-select,
+      .delete-mini {
+        min-height: 28px;
+      }
+
+      .delete-mini {
+        width: 30px;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .compact-add-bar {
+        grid-template-columns: 1fr 56px 56px;
+      }
+
+      .compact-add-bar .btn {
+        grid-column: 1 / -1;
+      }
+
+      .compact-member-grid {
+        grid-template-columns: 1fr;
+        max-height: calc(100vh - 360px);
+      }
+    }
+
+  
+    .bottom-nav {
+      grid-template-columns: repeat(5, 1fr);
+    }
+
+    .participant-view-grid {
+      grid-template-columns: 1.1fr 0.9fr;
+    }
+
+    .participant-view-panel {
+      padding: 16px;
+    }
+
+    .public-participant-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      max-height: min(58vh, 560px);
+      overflow: auto;
+      padding-right: 2px;
+    }
+
+    .public-participant-card {
+      padding: 11px 12px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      min-height: 58px;
+    }
+
+    .public-participant-card strong {
+      display: block;
+      font-size: 14px;
+      font-weight: 1000;
+    }
+
+    .public-participant-card small {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 850;
+    }
+
+    .guest-badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 0 8px;
+      border-radius: 999px;
+      border: 1px solid #f3dcac;
+      background: #fff4dd;
+      color: #9c6100;
+      font-size: 10px;
+      font-weight: 1000;
+      white-space: nowrap;
+    }
+
+    .admin-page-grid {
+      grid-template-columns: 1.15fr 0.85fr;
+    }
+
+    .admin-status-row {
+      margin-bottom: 10px;
+    }
+
+    .admin-roster-summary {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-bottom: 10px;
+    }
+
+    .admin-roster-summary span {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 0 10px;
+      border-radius: 999px;
+      border: 1px solid #dbe7f3;
+      background: #f3f8fd;
+      color: #49637d;
+      font-size: 11px;
+      font-weight: 950;
+    }
+
+    .admin-member-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      max-height: min(62vh, 620px);
+      overflow: auto;
+      padding-right: 2px;
+    }
+
+    .admin-member-card {
+      padding: 10px;
+      border-radius: 17px;
+      border: 1px solid var(--line);
+      background: white;
+    }
+
+    .admin-member-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .admin-member-title {
+      min-width: 0;
+    }
+
+    .admin-member-title strong {
+      display: block;
+      font-size: 14px;
+      line-height: 1.3;
+      font-weight: 1000;
+    }
+
+    .admin-member-title small {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+
+    .admin-member-controls {
+      display: grid;
+      grid-template-columns: 1fr 1fr auto;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .admin-member-controls .compact-select {
+      width: 100%;
+    }
+
+    .admin-participation-btn {
+      min-width: 60px;
+      min-height: 36px;
+      border: 0;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 1000;
+    }
+
+    .admin-participation-btn.on {
+      background: var(--navy);
+      color: white;
+    }
+
+    .admin-participation-btn.off {
+      background: #edf2f7;
+      color: #64748b;
+    }
+
+    .guest-form,
+    .password-change-form {
+      display: grid;
+      gap: 8px;
+    }
+
+    .password-message {
+      min-height: 20px;
+      margin-top: 8px;
+      color: var(--rose);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .password-message.good {
+      color: #0c7559;
+    }
+
+    .security-note {
+      margin-top: 10px;
+    }
+
+    .admin-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      background: rgba(2, 8, 23, 0.54);
+      backdrop-filter: blur(10px);
+    }
+
+    .admin-modal.hidden {
+      display: none;
+    }
+
+    .admin-modal-card {
+      width: min(390px, 100%);
+      padding: 22px;
+      border-radius: 28px;
+      border: 1px solid rgba(255,255,255,0.92);
+      background: white;
+      box-shadow: 0 28px 70px rgba(2, 8, 23, 0.28);
+      text-align: center;
+    }
+
+    .admin-modal-icon {
+      width: 58px;
+      height: 58px;
+      margin: 0 auto 12px;
+      display: grid;
+      place-items: center;
+      border-radius: 20px;
+      background: var(--navy);
+      color: white;
+      font-size: 26px;
+    }
+
+    .admin-modal-card h3 {
+      margin: 0;
+      font-size: 24px;
+      letter-spacing: -0.04em;
+      font-weight: 1000;
+    }
+
+    .admin-modal-card p {
+      margin: 8px 0 14px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+      font-weight: 800;
+    }
+
+    .admin-modal-error {
+      min-height: 20px;
+      margin-top: 8px;
+      color: var(--rose);
+      font-size: 12px;
+      font-weight: 950;
+    }
+
+    .admin-modal-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    @media (max-width: 1024px) {
+      .participant-view-grid,
+      .admin-page-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .public-participant-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        max-height: min(58vh, 520px);
+      }
+
+      .admin-member-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        max-height: min(58vh, 560px);
+      }
+    }
+
+    @media (max-width: 720px) {
+      .public-participant-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 7px;
+        max-height: calc(100vh - 350px);
+      }
+
+      .public-participant-card {
+        min-height: 54px;
+        padding: 9px 10px;
+      }
+
+      .public-participant-card strong {
+        font-size: 13px;
+      }
+
+      .admin-member-list {
+        grid-template-columns: 1fr;
+        max-height: calc(100vh - 360px);
+      }
+
+      .admin-member-card {
+        padding: 9px;
+      }
+
+      .admin-member-controls {
+        grid-template-columns: 1fr 1fr 34px;
+      }
+
+      .bottom-nav button {
+        min-height: 54px;
+        font-size: 10px;
+      }
+
+      .bottom-nav button span:first-child {
+        font-size: 17px;
+      }
+    }
+
+  
+    /* v6: 대진표 한 줄 표시 + 경기 상태 */
+    .match-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .match-row {
+      display: grid;
+      grid-template-columns: 94px 1fr 84px 1fr 138px;
+      gap: 8px;
+      align-items: center;
+      padding: 10px 11px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: white;
+      transition: 0.18s ease;
+    }
+
+    .match-row.status-pending {
+      border-color: #d7e3ef;
+      background: #ffffff;
+    }
+
+    .match-row.status-playing {
+      border-color: #f6c451;
+      background: #fff8e8;
+      box-shadow: 0 0 0 2px rgba(246, 196, 81, 0.18);
+    }
+
+    .match-row.status-finished {
+      border-color: #ccecdf;
+      background: #f1fcf7;
+    }
+
+    .match-meta {
+      display: grid;
+      gap: 5px;
+    }
+
+    .match-round,
+    .match-court {
+      min-height: 24px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 1000;
+      white-space: nowrap;
+    }
+
+    .match-round {
+      background: var(--navy);
+      color: white;
+    }
+
+    .match-court {
+      border: 1px solid var(--line);
+      background: #f8fbfe;
+      color: #526a84;
+    }
+
+    .compact-side {
+      min-width: 0;
+      display: grid;
+      gap: 5px;
+    }
+
+    .compact-side-top {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      min-width: 0;
+    }
+
+    .compact-side-names {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 12px;
+      line-height: 1.35;
+      font-weight: 1000;
+      color: var(--text);
+    }
+
+    .compact-score-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .compact-score {
+      width: 52px;
+      min-height: 38px;
+      border-radius: 11px;
+      border: 1px solid var(--line);
+      background: white;
+      text-align: center;
+      font-size: 17px;
+      font-weight: 1000;
+      outline: none;
+    }
+
+    .compact-vs {
+      color: #94a3b8;
+      font-size: 11px;
+      font-weight: 1000;
+    }
+
+    .match-status-box {
+      display: grid;
+      gap: 6px;
+      justify-items: stretch;
+    }
+
+    .status-pill {
+      min-height: 31px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      padding: 0 10px;
+      font-size: 11px;
+      font-weight: 1000;
+      white-space: nowrap;
+    }
+
+    .status-pill.pending {
+      background: #edf2f7;
+      border-color: #dbe4ee;
+      color: #526579;
+    }
+
+    .status-pill.playing {
+      background: #ffdf8e;
+      border-color: #f3b52b;
+      color: #8a5200;
+      animation: playingBlink 1s ease-in-out infinite;
+    }
+
+    .status-pill.finished {
+      background: #dff8ed;
+      border-color: #bfe8d5;
+      color: #0c7559;
+    }
+
+    @keyframes playingBlink {
+      0%, 100% {
+        opacity: 1;
+        box-shadow: 0 0 0 0 rgba(243, 181, 43, 0.0);
+      }
+      50% {
+        opacity: 0.48;
+        box-shadow: 0 0 0 7px rgba(243, 181, 43, 0.12);
+      }
+    }
+
+    .status-select {
+      width: 100%;
+      min-height: 34px;
+      border-radius: 11px;
+      border: 1px solid var(--line);
+      background: white;
+      padding: 0 8px;
+      color: var(--text);
+      font-size: 11px;
+      font-weight: 950;
+      outline: none;
+    }
+
+    .status-count-strip {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .status-count-strip span {
+      min-height: 27px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 1000;
+      border: 1px solid var(--line);
+      background: white;
+    }
+
+    .status-count-strip .pending {
+      color: #526579;
+      background: #f2f6fa;
+    }
+
+    .status-count-strip .playing {
+      color: #8a5200;
+      background: #fff1c9;
+      border-color: #f3d58c;
+    }
+
+    .status-count-strip .finished {
+      color: #0c7559;
+      background: #e9fbf3;
+      border-color: #ccecdf;
+    }
+
+    @media (max-width: 1024px) {
+      .match-row {
+        grid-template-columns: 82px 1fr 76px 1fr 122px;
+        gap: 7px;
+        padding: 9px;
+      }
+
+      .compact-score {
+        width: 47px;
+        min-height: 36px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .match-row {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        padding: 10px;
+      }
+
+      .match-meta {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+      }
+
+      .compact-side {
+        padding: 8px;
+        border-radius: 14px;
+        background: #f8fbfe;
+        border: 1px solid #e5edf5;
+      }
+
+      .compact-score-wrap {
+        justify-content: flex-start;
+      }
+
+      .match-status-box {
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+      }
+
+      .status-pill,
+      .status-select {
+        min-height: 36px;
+      }
+    }
+
+  
+    /* v7: 경기 대진표 진짜 한 줄 압축형 */
+    #matchArea {
+      overflow: hidden;
+    }
+
+    .match-list {
+      display: grid;
+      gap: 7px;
+    }
+
+    .match-row {
+      display: grid;
+      grid-template-columns: 62px minmax(120px, 1.15fr) 102px minmax(120px, 1.15fr) 156px;
+      gap: 7px;
+      align-items: center;
+      min-height: 58px;
+      padding: 7px 8px;
+      border-radius: 16px;
+    }
+
+    .match-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .match-round,
+    .match-court {
+      min-height: 21px;
+      padding: 0 6px;
+      font-size: 9px;
+    }
+
+    .compact-side {
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+    }
+
+    .compact-side-top {
+      flex: 0 0 auto;
+      margin: 0;
+    }
+
+    .team-badge {
+      min-height: 25px;
+      padding: 0 8px;
+      font-size: 10px;
+    }
+
+    .compact-side-names {
+      flex: 1 1 auto;
+      min-width: 0;
+      font-size: 12px;
+      line-height: 1.3;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .compact-score-wrap {
+      display: grid;
+      grid-template-columns: 44px 10px 44px;
+      gap: 2px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .compact-score {
+      width: 44px;
+      min-height: 36px;
+      padding: 0;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    .compact-vs {
+      text-align: center;
+      font-size: 11px;
+    }
+
+    .match-status-box {
+      display: grid;
+      grid-template-columns: 72px 78px;
+      gap: 6px;
+      align-items: center;
+      justify-content: end;
+    }
+
+    .status-pill {
+      width: 72px;
+      min-height: 32px;
+      padding: 0 7px;
+      font-size: 10px;
+    }
+
+    .status-select {
+      width: 78px;
+      min-height: 32px;
+      padding: 0 6px;
+      font-size: 10px;
+    }
+
+    @media (max-width: 1024px) {
+      .match-row {
+        grid-template-columns: 58px minmax(104px, 1.05fr) 96px minmax(104px, 1.05fr) 148px;
+        gap: 6px;
+        min-height: 56px;
+        padding: 7px;
+      }
+
+      .compact-score-wrap {
+        grid-template-columns: 41px 10px 41px;
+      }
+
+      .compact-score {
+        width: 41px;
+        min-height: 34px;
+      }
+
+      .match-status-box {
+        grid-template-columns: 68px 74px;
+        gap: 5px;
+      }
+
+      .status-pill {
+        width: 68px;
+      }
+
+      .status-select {
+        width: 74px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .match-list {
+        overflow-x: auto;
+        padding-bottom: 3px;
+        scrollbar-width: none;
+      }
+
+      .match-list::-webkit-scrollbar {
+        display: none;
+      }
+
+      .match-row {
+        min-width: 560px;
+        grid-template-columns: 54px 118px 92px 118px 144px;
+        gap: 6px;
+        min-height: 54px;
+        padding: 6px 7px;
+      }
+
+      .match-meta {
+        gap: 3px;
+      }
+
+      .match-round,
+      .match-court {
+        min-height: 20px;
+      }
+
+      .compact-side {
+        gap: 5px;
+      }
+
+      .team-badge {
+        min-height: 23px;
+        padding: 0 7px;
+      }
+
+      .compact-side-names {
+        font-size: 11px;
+      }
+
+      .compact-score-wrap {
+        grid-template-columns: 39px 8px 39px;
+      }
+
+      .compact-score {
+        width: 39px;
+        min-height: 32px;
+        font-size: 15px;
+      }
+
+      .match-status-box {
+        grid-template-columns: 66px 72px;
+        gap: 4px;
+      }
+
+      .status-pill {
+        width: 66px;
+        min-height: 30px;
+        font-size: 9px;
+      }
+
+      .status-select {
+        width: 72px;
+        min-height: 30px;
+        font-size: 9px;
+      }
+    }
+
+  
+    /* v8: Premium Compact Density Pass - 전체 UI 밀도 재정비 */
+    :root {
+      --shadow: 0 10px 26px rgba(15, 23, 42, 0.08);
+      --radius-xl: 22px;
+      --radius-lg: 18px;
+      --radius-md: 14px;
+    }
+
+    body {
+      padding-bottom: calc(82px + var(--safe-bottom));
+    }
+
+    .hero {
+      min-height: 212px;
+    }
+
+    .hero-inner {
+      min-height: 212px;
+      padding: 12px 0 18px;
+    }
+
+    .hero-top {
+      gap: 8px;
+    }
+
+    .hero-pill {
+      padding: 7px 11px;
+      font-size: 11px;
+    }
+
+    .eyebrow {
+      margin-bottom: 8px;
+      padding: 5px 9px;
+      font-size: 11px;
+    }
+
+    h1 {
+      font-size: clamp(28px, 4vw, 48px);
+    }
+
+    .hero-copy p {
+      max-width: 680px;
+      margin-top: 8px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .wrap {
+      width: min(1180px, calc(100% - 24px));
+      margin-top: -12px;
+      margin-bottom: 24px;
+    }
+
+    .summary-strip {
+      gap: 7px;
+      margin-bottom: 10px;
+    }
+
+    .summary-card {
+      min-height: 70px;
+      padding: 10px 11px;
+      border-radius: 16px;
+    }
+
+    .summary-label {
+      font-size: 10px;
+    }
+
+    .summary-value {
+      margin-top: 3px;
+      font-size: 21px;
+    }
+
+    .summary-sub {
+      margin-top: 4px;
+      font-size: 10px;
+    }
+
+    .summary-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 11px;
+      font-size: 15px;
+    }
+
+    .desktop-page-tabs {
+      top: 8px;
+      gap: 7px;
+      padding: 7px;
+      margin-bottom: 10px;
+      border-radius: 16px;
+    }
+
+    .page-tab {
+      min-height: 38px;
+      border-radius: 12px;
+      font-size: 12px;
+    }
+
+    .page-grid,
+    .participant-view-grid,
+    .admin-page-grid {
+      gap: 12px;
+    }
+
+    .stack {
+      gap: 12px;
+    }
+
+    .panel {
+      padding: 14px;
+      border-radius: 20px;
+      box-shadow: 0 8px 22px rgba(15,23,42,0.06);
+    }
+
+    .panel[style*="margin-top:18px;"] {
+      margin-top: 12px !important;
+    }
+
+    .section-head {
+      gap: 9px;
+      margin-bottom: 11px;
+    }
+
+    .compact-section-head {
+      margin-bottom: 8px;
+    }
+
+    .section-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      font-size: 16px;
+    }
+
+    .section-head h2 {
+      font-size: 17px;
+      line-height: 1.22;
+    }
+
+    .section-head p {
+      margin-top: 3px;
+      font-size: 11px;
+      line-height: 1.45;
+    }
+
+    .status-row {
+      gap: 7px;
+      margin-bottom: 9px;
+    }
+
+    .save-status {
+      min-height: 32px;
+      padding: 0 10px;
+      font-size: 10px;
+    }
+
+    .actions {
+      gap: 7px;
+    }
+
+    .btn {
+      min-height: 38px;
+      padding: 0 12px;
+      border-radius: 12px;
+      font-size: 11px;
+    }
+
+    .field {
+      min-height: 38px;
+      border-radius: 12px;
+      padding: 0 10px;
+      font-size: 12px;
+    }
+
+    .note,
+    .compact-note {
+      padding: 10px 11px;
+      border-radius: 14px;
+      font-size: 11px;
+      line-height: 1.48;
+    }
+
+    /* 참가자 명단 */
+    .participant-view-panel,
+    .participant-page-panel {
+      padding: 13px;
+    }
+
+    .participant-mini-summary {
+      gap: 5px;
+      margin-bottom: 7px;
+    }
+
+    .participant-mini-summary span,
+    .admin-roster-summary span {
+      min-height: 23px;
+      padding: 0 8px;
+      font-size: 9px;
+    }
+
+    .public-participant-grid {
+      gap: 6px;
+      max-height: min(62vh, 590px);
+    }
+
+    .public-participant-card {
+      min-height: 46px;
+      padding: 7px 9px;
+      border-radius: 13px;
+    }
+
+    .public-participant-card strong {
+      font-size: 12px;
+    }
+
+    .public-participant-card small {
+      margin-top: 2px;
+      font-size: 10px;
+    }
+
+    .guest-badge {
+      min-height: 20px;
+      padding: 0 7px;
+      font-size: 9px;
+    }
+
+    /* 조 편성 방식 - 과대 카드 제거 */
+    .mode-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      gap: 7px;
+      margin-bottom: 9px;
+    }
+
+    .mode-card {
+      min-height: 62px;
+      padding: 9px 11px;
+      border-radius: 15px;
+    }
+
+    .mode-card small {
+      font-size: 10px;
+    }
+
+    .mode-card strong {
+      margin-top: 3px;
+      font-size: 19px;
+      line-height: 1;
+    }
+
+    .mode-card span {
+      margin-top: 4px;
+      font-size: 10px;
+    }
+
+    #page-teams .actions {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
+    #page-teams .actions .btn {
+      flex: 1;
+      min-height: 38px;
+    }
+
+    .team-board {
+      gap: 8px;
+    }
+
+    .team-column {
+      border-radius: 17px;
+    }
+
+    .team-head {
+      padding: 9px 10px;
+    }
+
+    .team-head h3 {
+      font-size: 16px;
+    }
+
+    .head-count {
+      padding: 3px 7px;
+      font-size: 9px;
+    }
+
+    .team-stat {
+      margin-top: 4px;
+      font-size: 10px;
+    }
+
+    .team-cards {
+      gap: 5px;
+      padding: 6px;
+    }
+
+    .assignment-card {
+      padding: 6px 7px;
+      border-radius: 12px;
+    }
+
+    .assignment-top strong {
+      font-size: 11px;
+    }
+
+    .assignment-top small {
+      margin-left: 4px;
+      font-size: 9px;
+    }
+
+    .quick-move {
+      gap: 3px;
+      margin-top: 5px;
+    }
+
+    .move-btn {
+      min-height: 24px;
+      border-radius: 8px;
+      font-size: 9px;
+    }
+
+    .board-empty {
+      padding: 10px 7px;
+      border-radius: 12px;
+      font-size: 10px;
+    }
+
+    /* 경기/대진표 */
+    .match-config-row {
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .config-field {
+      gap: 4px;
+    }
+
+    .config-field span {
+      font-size: 10px;
+    }
+
+    .compact-match-select {
+      min-height: 38px;
+    }
+
+    .status-count-strip {
+      gap: 5px;
+      margin-top: 7px;
+    }
+
+    .status-count-strip span {
+      min-height: 23px;
+      padding: 0 8px;
+      font-size: 9px;
+    }
+
+    .match-placeholder {
+      padding: 22px 12px;
+      border-radius: 16px;
+    }
+
+    .match-placeholder strong {
+      font-size: 13px;
+    }
+
+    .match-placeholder span {
+      margin-top: 5px;
+      font-size: 11px;
+    }
+
+    .match-list {
+      gap: 6px;
+    }
+
+    .match-row {
+      min-height: 50px;
+      grid-template-columns: 56px minmax(105px, 1.15fr) 94px minmax(105px, 1.15fr) 146px;
+      gap: 5px;
+      padding: 6px 7px;
+      border-radius: 14px;
+    }
+
+    .match-round,
+    .match-court {
+      min-height: 19px;
+      font-size: 8px;
+    }
+
+    .team-badge {
+      min-height: 22px;
+      padding: 0 7px;
+      font-size: 9px;
+    }
+
+    .compact-side-names {
+      font-size: 11px;
+    }
+
+    .compact-score-wrap {
+      grid-template-columns: 39px 8px 39px;
+    }
+
+    .compact-score {
+      width: 39px;
+      min-height: 31px;
+      border-radius: 9px;
+      font-size: 14px;
+    }
+
+    .match-status-box {
+      grid-template-columns: 64px 76px;
+      gap: 4px;
+    }
+
+    .status-pill {
+      width: 64px;
+      min-height: 29px;
+      font-size: 9px;
+    }
+
+    .status-select {
+      width: 76px;
+      min-height: 29px;
+      font-size: 9px;
+      border-radius: 9px;
+    }
+
+    /* 순위 */
+    .ranking-list {
+      gap: 6px;
+    }
+
+    .rank-card {
+      grid-template-columns: 40px 1fr auto;
+      gap: 7px;
+      padding: 8px;
+      border-radius: 15px;
+    }
+
+    .rank-no {
+      width: 40px;
+      height: 40px;
+      border-radius: 13px;
+      font-size: 17px;
+    }
+
+    .rank-name {
+      font-size: 13px;
+    }
+
+    .rank-meta {
+      margin-top: 2px;
+      font-size: 10px;
+    }
+
+    .rank-score {
+      min-width: 48px;
+      font-size: 20px;
+    }
+
+    /* 관리자 */
+    .admin-roster-summary {
+      gap: 5px;
+      margin-bottom: 7px;
+    }
+
+    .admin-member-list {
+      gap: 6px;
+      max-height: min(64vh, 640px);
+    }
+
+    .admin-member-card {
+      padding: 8px;
+      border-radius: 14px;
+    }
+
+    .admin-member-top {
+      margin-bottom: 6px;
+    }
+
+    .admin-member-title strong {
+      font-size: 12px;
+    }
+
+    .admin-member-title small {
+      gap: 4px;
+      margin-top: 3px;
+    }
+
+    .tiny-badge {
+      min-height: 19px;
+      padding: 0 6px;
+      font-size: 9px;
+    }
+
+    .admin-participation-btn {
+      min-width: 52px;
+      min-height: 30px;
+      font-size: 10px;
+    }
+
+    .admin-member-controls {
+      gap: 5px;
+    }
+
+    .compact-select {
+      min-height: 28px;
+      border-radius: 9px;
+      font-size: 10px;
+    }
+
+    .delete-mini {
+      width: 30px;
+      height: 28px;
+      border-radius: 9px;
+      font-size: 14px;
+    }
+
+    .guest-form,
+    .password-change-form {
+      gap: 6px;
+    }
+
+    .password-message {
+      min-height: 16px;
+      margin-top: 5px;
+      font-size: 10px;
+    }
+
+    .winner-list {
+      gap: 6px;
+      margin-top: 7px;
+    }
+
+    .winner {
+      gap: 7px;
+      padding: 9px;
+      border-radius: 14px;
+    }
+
+    .winner small {
+      font-size: 9px;
+    }
+
+    .winner strong {
+      margin-top: 2px;
+      font-size: 13px;
+    }
+
+    .gift-chip {
+      padding: 6px 9px;
+      font-size: 10px;
+    }
+
+    /* 모달 */
+    .admin-modal-card {
+      padding: 18px;
+      border-radius: 22px;
+    }
+
+    .admin-modal-icon {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 9px;
+      border-radius: 16px;
+      font-size: 22px;
+    }
+
+    .admin-modal-card h3 {
+      font-size: 20px;
+    }
+
+    .admin-modal-card p {
+      margin: 6px 0 10px;
+      font-size: 11px;
+    }
+
+    .admin-modal-actions {
+      gap: 6px;
+    }
+
+    .bottom-nav {
+      width: min(760px, calc(100% - 16px));
+      bottom: calc(8px + var(--safe-bottom));
+      gap: 6px;
+      padding: 7px;
+      border-radius: 20px;
+    }
+
+    .bottom-nav button {
+      min-height: 48px;
+      border-radius: 14px;
+      font-size: 9px;
+    }
+
+    .bottom-nav button span:first-child {
+      font-size: 15px;
+    }
+
+    @media (max-width: 1024px) {
+      body {
+        padding-bottom: calc(78px + var(--safe-bottom));
+      }
+
+      .hero {
+        min-height: 178px;
+      }
+
+      .hero-inner {
+        min-height: 178px;
+        padding: 10px 0 14px;
+      }
+
+      .hero-copy p {
+        display: none;
+      }
+
+      .wrap {
+        width: calc(100% - 18px);
+        margin-top: -10px;
+      }
+
+      .summary-strip {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 6px;
+      }
+
+      .summary-card {
+        min-height: 62px;
+        padding: 8px 9px;
+      }
+
+      .summary-value {
+        font-size: 18px;
+      }
+
+      .summary-icon {
+        width: 28px;
+        height: 28px;
+        font-size: 13px;
+      }
+
+      .panel {
+        padding: 12px;
+      }
+
+      .public-participant-grid {
+        max-height: min(64vh, 610px);
+      }
+
+      .admin-member-list {
+        max-height: min(62vh, 590px);
+      }
+    }
+
+    @media (max-width: 720px) {
+      body {
+        padding-bottom: calc(74px + var(--safe-bottom));
+      }
+
+      .hero {
+        min-height: 152px;
+      }
+
+      .hero-inner {
+        min-height: 152px;
+        padding: 9px 0 12px;
+      }
+
+      .hero-pill {
+        padding: 6px 9px;
+        font-size: 10px;
+      }
+
+      .eyebrow {
+        padding: 4px 8px;
+        font-size: 10px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      .wrap {
+        width: calc(100% - 14px);
+        margin-top: -8px;
+      }
+
+      .summary-strip {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 6px;
+        margin-bottom: 8px;
+      }
+
+      .summary-card {
+        min-height: 58px;
+        padding: 7px 8px;
+      }
+
+      .summary-value {
+        font-size: 17px;
+      }
+
+      .summary-label,
+      .summary-sub {
+        font-size: 9px;
+      }
+
+      .summary-icon {
+        width: 26px;
+        height: 26px;
+        font-size: 12px;
+      }
+
+      .panel {
+        padding: 10px;
+        border-radius: 17px;
+      }
+
+      .section-head {
+        margin-bottom: 8px;
+      }
+
+      .section-icon {
+        width: 30px;
+        height: 30px;
+        border-radius: 10px;
+        font-size: 14px;
+      }
+
+      .section-head h2 {
+        font-size: 15px;
+      }
+
+      .section-head p {
+        font-size: 10px;
+      }
+
+      .mode-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      }
+
+      .mode-card {
+        min-height: 55px;
+        padding: 8px 9px;
+      }
+
+      .mode-card strong {
+        font-size: 17px;
+      }
+
+      #page-teams .actions {
+        display: grid;
+        grid-template-columns: 1.18fr 0.82fr;
+      }
+
+      .public-participant-grid {
+        gap: 5px;
+        max-height: calc(100vh - 282px);
+      }
+
+      .public-participant-card {
+        min-height: 42px;
+        padding: 6px 8px;
+      }
+
+      .match-row {
+        min-width: 528px;
+        min-height: 48px;
+        grid-template-columns: 52px 110px 88px 110px 142px;
+        gap: 5px;
+      }
+
+      .admin-member-list {
+        max-height: calc(100vh - 300px);
+      }
+
+      .bottom-nav {
+        width: calc(100% - 12px);
+        bottom: calc(6px + var(--safe-bottom));
+        gap: 5px;
+        padding: 6px;
+        border-radius: 18px;
+      }
+
+      .bottom-nav button {
+        min-height: 44px;
+        border-radius: 12px;
+        font-size: 8px;
+      }
+
+      .bottom-nav button span:first-child {
+        font-size: 14px;
+      }
+    }
+
+  
+    /* v9: 게임 표기 / 참가자 가나다순 넘버링 / 성별 컬러 */
+    .match-row {
+      grid-template-columns: 76px minmax(105px, 1.15fr) 94px minmax(105px, 1.15fr) 96px;
+    }
+
+    .match-meta {
+      justify-content: center;
+    }
+
+    .match-round {
+      min-height: 28px;
+      padding: 0 8px;
+      font-size: 10px;
+      letter-spacing: -0.02em;
+    }
+
+    .match-court {
+      display: none !important;
+    }
+
+    .public-participant-card {
+      position: relative;
+      display: grid;
+      grid-template-columns: 28px 1fr auto;
+      gap: 8px;
+      align-items: center;
+      border-width: 1px;
+    }
+
+    .public-participant-card.male {
+      border-color: #cfe4ff;
+      background: linear-gradient(135deg, #f4f9ff 0%, #eaf4ff 100%);
+    }
+
+    .public-participant-card.female {
+      border-color: #ffd5e3;
+      background: linear-gradient(135deg, #fff6f9 0%, #ffeaf2 100%);
+    }
+
+    .participant-number {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: 1000;
+    }
+
+    .public-participant-card.male .participant-number {
+      color: #1559a8;
+      background: #dcebff;
+      border: 1px solid #c7ddfb;
+    }
+
+    .public-participant-card.female .participant-number {
+      color: #b6366a;
+      background: #ffe1ec;
+      border: 1px solid #ffc8dc;
+    }
+
+    .public-participant-card.male strong {
+      color: #113f77;
+    }
+
+    .public-participant-card.female strong {
+      color: #8f2852;
+    }
+
+    .public-participant-card.male small {
+      color: #3e6d9d;
+    }
+
+    .public-participant-card.female small {
+      color: #9b5773;
+    }
+
+    .gender-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 20px;
+      padding: 0 7px;
+      border-radius: 999px;
+      font-size: 9px;
+      font-weight: 1000;
+      white-space: nowrap;
+    }
+
+    .gender-chip.male {
+      color: #1559a8;
+      background: #dcebff;
+      border: 1px solid #c7ddfb;
+    }
+
+    .gender-chip.female {
+      color: #b6366a;
+      background: #ffe1ec;
+      border: 1px solid #ffc8dc;
+    }
+
+    .admin-member-card {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 8px;
+      align-items: start;
+    }
+
+    .admin-member-number {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      background: #eef4fb;
+      border: 1px solid #dbe7f3;
+      color: #49637d;
+      font-size: 11px;
+      font-weight: 1000;
+      margin-top: 1px;
+    }
+
+    .admin-member-content {
+      min-width: 0;
+    }
+
+    @media (max-width: 1024px) {
+      .match-row {
+        grid-template-columns: 72px minmax(104px, 1.05fr) 96px minmax(104px, 1.05fr) 92px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .match-row {
+        min-width: 488px;
+        grid-template-columns: 72px 110px 88px 110px 88px;
+      }
+
+      .match-round {
+        min-height: 26px;
+        font-size: 9px;
+      }
+
+      .public-participant-card {
+        grid-template-columns: 26px 1fr auto;
+        gap: 6px;
+      }
+
+      .participant-number,
+      .admin-member-number {
+        width: 26px;
+        height: 26px;
+        border-radius: 9px;
+        font-size: 10px;
+      }
+
+      .admin-member-card {
+        grid-template-columns: 26px 1fr;
+        gap: 7px;
+      }
+    }
+
+  
+    /* v10: 상단 팀 승패 대시보드 */
+    .team-record-dashboard {
+      display: grid;
+      grid-template-columns: 1.18fr 1fr;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .team-leader-banner {
+      min-height: 66px;
+      padding: 11px 13px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #071a33 0%, #123765 100%);
+      border: 1px solid rgba(255,255,255,0.14);
+      box-shadow: 0 10px 24px rgba(7,26,51,0.16);
+      color: white;
+      display: grid;
+      align-content: center;
+      gap: 2px;
+    }
+
+    .leader-label {
+      font-size: 10px;
+      color: rgba(255,255,255,0.68);
+      font-weight: 1000;
+      letter-spacing: 0.08em;
+    }
+
+    .team-leader-banner strong {
+      font-size: 22px;
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+      font-weight: 1000;
+    }
+
+    .leader-sub {
+      font-size: 10px;
+      color: rgba(255,255,255,0.78);
+      font-weight: 800;
+    }
+
+    .team-record-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 6px;
+    }
+
+    .team-record-card {
+      min-height: 66px;
+      padding: 9px 10px;
+      border-radius: 17px;
+      border: 1px solid var(--line);
+      background: white;
+      display: grid;
+      align-content: center;
+      gap: 3px;
+      box-shadow: 0 8px 18px rgba(15,23,42,0.05);
+    }
+
+    .team-record-card.team-a { background: linear-gradient(135deg, #f3f8ff 0%, #e8f3ff 100%); border-color: #cae0fb; }
+    .team-record-card.team-b { background: linear-gradient(135deg, #f0fcf7 0%, #e4f8ef 100%); border-color: #c9eadc; }
+    .team-record-card.team-c { background: linear-gradient(135deg, #fff8e9 0%, #fff0cc 100%); border-color: #f0d79d; }
+
+    .record-team-name {
+      font-size: 11px;
+      font-weight: 1000;
+    }
+
+    .team-a .record-team-name { color: #1559a8; }
+    .team-b .record-team-name { color: #0c7559; }
+    .team-c .record-team-name { color: #9a6200; }
+
+    .record-score {
+      font-size: 18px;
+      line-height: 1;
+      font-weight: 1000;
+      letter-spacing: -0.03em;
+    }
+
+    .record-sub {
+      font-size: 9px;
+      color: var(--muted);
+      font-weight: 850;
+    }
+
+    /* 조 편성 남녀 카드 색상 */
+    .assignment-card.male {
+      border-color: #cfe4ff;
+      background: linear-gradient(135deg, #f4f9ff 0%, #eaf4ff 100%);
+    }
+
+    .assignment-card.female {
+      border-color: #ffd5e3;
+      background: linear-gradient(135deg, #fff6f9 0%, #ffeaf2 100%);
+    }
+
+    .assignment-card.male .assignment-top strong { color: #1559a8; }
+    .assignment-card.female .assignment-top strong { color: #b6366a; }
+
+    .assignment-gender-pill {
+      min-height: 18px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 6px;
+      margin-left: 4px;
+      border-radius: 999px;
+      font-size: 8px;
+      font-weight: 1000;
+      vertical-align: middle;
+    }
+
+    .assignment-gender-pill.male {
+      color: #1559a8;
+      background: #dcebff;
+      border: 1px solid #c7ddfb;
+    }
+
+    .assignment-gender-pill.female {
+      color: #b6366a;
+      background: #ffe1ec;
+      border: 1px solid #ffc8dc;
+    }
+
+    /* 확인 팝업 */
+    .confirm-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 90;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      background: rgba(2, 8, 23, 0.55);
+      backdrop-filter: blur(10px);
+    }
+
+    .confirm-modal.hidden { display: none; }
+
+    .confirm-modal-card {
+      width: min(420px, 100%);
+      padding: 20px;
+      border-radius: 24px;
+      background: white;
+      border: 1px solid rgba(255,255,255,0.94);
+      box-shadow: 0 28px 70px rgba(2, 8, 23, 0.28);
+      text-align: center;
+    }
+
+    .confirm-modal-icon {
+      width: 50px;
+      height: 50px;
+      margin: 0 auto 10px;
+      display: grid;
+      place-items: center;
+      border-radius: 17px;
+      background: #fff2db;
+      color: #b26e00;
+      font-size: 22px;
+    }
+
+    .confirm-modal-card h3 {
+      margin: 0;
+      font-size: 21px;
+      font-weight: 1000;
+      letter-spacing: -0.04em;
+    }
+
+    .confirm-modal-card p {
+      margin: 8px 0 14px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.58;
+      font-weight: 820;
+      white-space: pre-line;
+    }
+
+    .confirm-modal-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    /* 돌림판 */
+    .raffle-panel { overflow: hidden; }
+
+    .raffle-controls {
+      display: grid;
+      grid-template-columns: minmax(150px, 1fr) auto 148px;
+      gap: 7px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .exclusion-toggle {
+      min-height: 38px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 0 10px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: white;
+      color: var(--text);
+      font-size: 11px;
+      font-weight: 1000;
+      white-space: nowrap;
+    }
+
+    .exclusion-toggle input {
+      width: 15px;
+      height: 15px;
+      margin: 0;
+      accent-color: var(--navy);
+    }
+
+    .raffle-select { min-height: 38px; }
+
+    .raffle-eligibility {
+      min-height: 28px;
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      max-width: 100%;
+      padding: 0 10px;
+      margin-bottom: 8px;
+      border-radius: 999px;
+      border: 1px solid #dbe7f3;
+      background: #f3f8fd;
+      color: #49637d;
+      font-size: 10px;
+      font-weight: 950;
+    }
+
+    .raffle-stage {
+      display: grid;
+      grid-template-columns: minmax(260px, 1fr) 168px;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .wheel-shell {
+      position: relative;
+      width: min(100%, 360px);
+      aspect-ratio: 1;
+      margin: 0 auto;
+      display: grid;
+      place-items: center;
+    }
+
+    .wheel-pointer {
+      position: absolute;
+      top: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 4;
+      color: #071a33;
+      font-size: 26px;
+      text-shadow: 0 4px 12px rgba(15,23,42,0.18);
+    }
+
+    .raffle-wheel {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: #eef4fb;
+      border: 10px solid white;
+      box-shadow: 0 18px 36px rgba(15,23,42,0.18);
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      transform: rotate(0deg);
+      transition: transform 5.2s cubic-bezier(.16,.84,.26,1);
+      will-change: transform;
+    }
+
+    .wheel-svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .wheel-empty {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 1000;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .raffle-action-column {
+      display: grid;
+      gap: 8px;
+      align-content: center;
+    }
+
+    .raffle-spin-btn {
+      min-height: 50px;
+      font-size: 13px;
+    }
+
+    .raffle-result-card {
+      min-height: 72px;
+      display: grid;
+      align-content: center;
+      gap: 3px;
+      padding: 11px;
+      border-radius: 16px;
+      border: 1px solid #f3dcac;
+      background: linear-gradient(135deg, #fff8e9 0%, #fff0cc 100%);
+    }
+
+    .raffle-result-card span {
+      color: #9a6200;
+      font-size: 10px;
+      font-weight: 1000;
+    }
+
+    .raffle-result-card strong {
+      font-size: 18px;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      font-weight: 1000;
+    }
+
+    /* 관리자 회원 한 줄형 */
+    .admin-member-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 5px;
+      max-height: min(64vh, 640px);
+    }
+
+    .admin-member-card {
+      display: grid;
+      grid-template-columns: 28px minmax(120px, 1fr) 62px 78px 78px 32px;
+      gap: 6px;
+      align-items: center;
+      min-height: 42px;
+      padding: 6px 7px;
+      border-radius: 13px;
+    }
+
+    .admin-member-content,
+    .admin-member-top,
+    .admin-member-controls {
+      display: contents;
+    }
+
+    .admin-member-title { min-width: 0; }
+
+    .admin-member-title strong {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      font-size: 12px;
+    }
+
+    .admin-member-title small { display: none; }
+
+    .admin-member-meta-inline {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 28px;
+      border-radius: 999px;
+      border: 1px solid #dbe7f3;
+      background: #f3f8fd;
+      color: #49637d;
+      font-size: 9px;
+      font-weight: 1000;
+      white-space: nowrap;
+    }
+
+    .admin-member-meta-inline.guest {
+      color: #9a6200;
+      background: #fff4dd;
+      border-color: #f3dcac;
+    }
+
+    .admin-participation-btn {
+      min-width: 62px;
+      min-height: 30px;
+    }
+
+    .admin-member-controls .compact-select {
+      min-width: 0;
+      width: 100%;
+      min-height: 30px;
+    }
+
+    .admin-member-controls .delete-mini {
+      width: 32px;
+      height: 30px;
+    }
+
+    @media (max-width: 1024px) {
+      .team-record-dashboard { grid-template-columns: 1fr; gap: 7px; }
+      .team-record-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .raffle-stage { grid-template-columns: minmax(240px, 1fr) 160px; }
+      .raffle-controls { grid-template-columns: 1fr auto 142px; }
+    }
+
+    @media (max-width: 720px) {
+      .team-leader-banner { min-height: 56px; padding: 9px 11px; }
+      .team-leader-banner strong { font-size: 18px; }
+      .team-record-card { min-height: 54px; padding: 7px 8px; }
+      .record-score { font-size: 16px; }
+
+      .raffle-controls { grid-template-columns: 1fr; }
+      .raffle-stage { grid-template-columns: 1fr; gap: 10px; }
+      .wheel-shell { width: min(100%, 320px); }
+      .raffle-action-column { grid-template-columns: 1fr 1fr; }
+      .raffle-result-card { grid-column: 1 / -1; }
+
+      .admin-member-card {
+        grid-template-columns: 26px minmax(88px, 1fr) 54px 66px 66px 30px;
+        gap: 4px;
+        padding: 5px 6px;
+      }
+
+      .admin-member-meta-inline { min-height: 26px; font-size: 8px; }
+      .admin-participation-btn { min-width: 54px; min-height: 28px; font-size: 9px; }
+      .admin-member-controls .compact-select { min-height: 28px; font-size: 9px; }
+      .admin-member-controls .delete-mini { width: 30px; height: 28px; }
+    }
+
+    @media (max-width: 540px) {
+      .admin-member-list {
+        overflow-x: auto;
+        padding-bottom: 3px;
+        scrollbar-width: none;
+      }
+
+      .admin-member-list::-webkit-scrollbar { display: none; }
+      .admin-member-card { min-width: 520px; }
+    }
+
+  
+    /* v11: 경기 상태는 버튼을 눌러 시작 전 → 경기 중 → 완료 순환 */
+    .match-status-box {
+      display: flex !important;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .status-cycle-btn {
+      width: 100% !important;
+      min-width: 86px;
+      min-height: 32px;
+      appearance: none;
+      cursor: pointer;
+      font-family: inherit;
+      transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .status-cycle-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .status-cycle-btn:active {
+      transform: translateY(0);
+    }
+
+    .status-select {
+      display: none !important;
+    }
+
+    /* v11: 남녀 구분은 블럭 배경색만, 글자색은 공통 */
+    .public-participant-card.male strong,
+    .public-participant-card.female strong,
+    .public-participant-card.male small,
+    .public-participant-card.female small,
+    .assignment-card.male .assignment-top strong,
+    .assignment-card.female .assignment-top strong {
+      color: var(--text) !important;
+    }
+
+    .participant-number,
+    .public-participant-card.male .participant-number,
+    .public-participant-card.female .participant-number {
+      color: var(--text) !important;
+      background: rgba(255,255,255,0.72) !important;
+      border-color: rgba(148,163,184,0.35) !important;
+    }
+
+    .gender-chip,
+    .gender-chip.male,
+    .gender-chip.female,
+    .assignment-gender-pill,
+    .assignment-gender-pill.male,
+    .assignment-gender-pill.female {
+      color: var(--text) !important;
+      background: rgba(255,255,255,0.68) !important;
+      border-color: rgba(148,163,184,0.35) !important;
+    }
+
+    @media (max-width: 1024px) {
+      .status-cycle-btn {
+        min-width: 82px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .status-cycle-btn {
+        min-width: 78px;
+        min-height: 30px;
+        font-size: 9px;
+      }
+    }
+
+  
+    /* v12: 경기별 남복 / 여복 / 혼복 배지 */
+    .match-meta {
+      gap: 3px;
+    }
+
+    .match-type-badge {
+      min-height: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 7px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-size: 8px;
+      font-weight: 1000;
+      white-space: nowrap;
+    }
+
+    .match-type-badge.men {
+      color: #1559a8;
+      background: #dcebff;
+      border-color: #c7ddfb;
+    }
+
+    .match-type-badge.women {
+      color: #b6366a;
+      background: #ffe1ec;
+      border-color: #ffc8dc;
+    }
+
+    .match-type-badge.mixed {
+      color: #6b4cb8;
+      background: #efe8ff;
+      border-color: #ddcffd;
+    }
+
+    @media (max-width: 720px) {
+      .match-type-badge {
+        min-height: 19px;
+        padding: 0 6px;
+        font-size: 8px;
+      }
+    }
+
+  
+    /* v13: 남/여 블럭은 블루/핑크 계열, 글자색은 공통 */
+    .public-participant-card.male,
+    .assignment-card.male {
+      border-color: #bcd9ff !important;
+      background: linear-gradient(135deg, #edf6ff 0%, #dcecff 100%) !important;
+    }
+
+    .public-participant-card.female,
+    .assignment-card.female {
+      border-color: #ffc4da !important;
+      background: linear-gradient(135deg, #fff0f6 0%, #ffddea 100%) !important;
+    }
+
+    .public-participant-card.male strong,
+    .public-participant-card.female strong,
+    .public-participant-card.male small,
+    .public-participant-card.female small,
+    .assignment-card.male .assignment-top strong,
+    .assignment-card.female .assignment-top strong {
+      color: var(--text) !important;
+    }
+
+    /* v13: 남복=블루, 여복=핑크, 혼복=그린 */
+    .match-type-badge.men {
+      color: #1559a8 !important;
+      background: #dcebff !important;
+      border-color: #bcd9ff !important;
+    }
+
+    .match-type-badge.women {
+      color: #b6366a !important;
+      background: #ffe1ec !important;
+      border-color: #ffc4da !important;
+    }
+
+    .match-type-badge.mixed {
+      color: #0f7b57 !important;
+      background: #ddf8ec !important;
+      border-color: #bdebd7 !important;
+    }
+
+    .match-plan-grid {
+      grid-template-columns: minmax(150px, 1fr) 110px 110px auto !important;
+      align-items: end;
+    }
+
+    .compact-match-count {
+      min-height: 38px;
+      text-align: center;
+      font-weight: 1000;
+    }
+
+    .match-plan-feedback {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      margin-top: 8px;
+      padding: 0 10px;
+      border-radius: 999px;
+      border: 1px solid #ccecdf;
+      background: #edfdf7;
+      color: #0c7559;
+      font-size: 10px;
+      font-weight: 950;
+    }
+
+    .match-plan-feedback:empty {
+      display: none;
+    }
+
+    .match-plan-feedback.warning {
+      border-color: #f3d58c;
+      background: #fff6dc;
+      color: #9a6200;
+    }
+
+    .player-name-token {
+      white-space: nowrap;
+    }
+
+    .player-game-ordinal {
+      position: relative;
+      top: -0.25em;
+      margin-left: 2px;
+      font-size: 8px;
+      line-height: 0;
+      font-weight: 1000;
+      color: #64748b;
+    }
+
+    @media (max-width: 1024px) {
+      .match-plan-grid {
+        grid-template-columns: minmax(150px, 1fr) 104px 104px auto !important;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .match-plan-grid {
+        grid-template-columns: 1fr 1fr !important;
+      }
+
+      .match-plan-grid .config-field:first-child {
+        grid-column: 1 / -1;
+      }
+
+      .match-plan-grid .match-actions {
+        grid-column: 1 / -1;
+      }
+
+      .compact-match-count {
+        min-height: 36px;
+      }
+
+      .player-game-ordinal {
+        font-size: 7px;
+      }
+    }
+
+  
+    /* v14: 대진표 선수명 잘림 방지 */
+    .match-row {
+      grid-template-columns: 76px minmax(160px, 1.45fr) 94px minmax(160px, 1.45fr) 96px !important;
+    }
+
+    .compact-side-names {
+      overflow: visible !important;
+      text-overflow: clip !important;
+      white-space: nowrap !important;
+      font-size: 11px;
+    }
+
+    .player-name-token {
+      display: inline-flex;
+      align-items: flex-start;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 1024px) {
+      .match-list {
+        overflow-x: auto;
+        padding-bottom: 4px;
+        scrollbar-width: thin;
+      }
+
+      .match-row {
+        min-width: 660px !important;
+        grid-template-columns: 76px 180px 94px 180px 96px !important;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .match-row {
+        min-width: 660px !important;
+        grid-template-columns: 76px 180px 94px 180px 96px !important;
+      }
+
+      .compact-side-names {
+        font-size: 11px;
+      }
+    }
+
+  
+    /* v15: 대진표 가로 스크롤 제거 + 화면폭 안에 맞춤 */
+    .match-list {
+      overflow-x: visible !important;
+      padding-bottom: 0 !important;
+    }
+
+    .match-row {
+      width: 100%;
+      min-width: 0 !important;
+      grid-template-columns:
+        62px
+        minmax(0, 1.35fr)
+        82px
+        minmax(0, 1.35fr)
+        78px !important;
+      gap: 4px !important;
+      padding: 6px !important;
+    }
+
+    .match-meta {
+      min-width: 0;
+    }
+
+    .match-round {
+      min-height: 25px;
+      padding: 0 6px;
+      font-size: 9px;
+    }
+
+    .match-type-badge {
+      min-height: 18px;
+      padding: 0 5px;
+      font-size: 7px;
+    }
+
+    .compact-side {
+      min-width: 0;
+      gap: 4px !important;
+    }
+
+    .team-badge {
+      flex: 0 0 auto;
+      min-height: 21px;
+      padding: 0 5px;
+      font-size: 8px;
+    }
+
+    .compact-side-names {
+      min-width: 0;
+      overflow: hidden !important;
+      text-overflow: clip !important;
+      white-space: normal !important;
+      display: block;
+      line-height: 1.12;
+      font-size: 10px !important;
+      font-weight: 1000;
+      word-break: keep-all;
+    }
+
+    .player-name-token {
+      display: inline;
+      white-space: nowrap;
+    }
+
+    .player-game-ordinal {
+      font-size: 7px;
+      margin-left: 1px;
+    }
+
+    .compact-score-wrap {
+      grid-template-columns: 34px 7px 34px !important;
+      gap: 1px !important;
+    }
+
+    .compact-score {
+      width: 34px !important;
+      min-height: 31px !important;
+      font-size: 13px !important;
+      border-radius: 8px !important;
+    }
+
+    .compact-vs {
+      font-size: 10px;
+    }
+
+    .match-status-box {
+      min-width: 0;
+      justify-content: stretch !important;
+    }
+
+    .status-cycle-btn {
+      min-width: 0 !important;
+      width: 100% !important;
+      min-height: 31px !important;
+      padding: 0 4px !important;
+      font-size: 8px !important;
+    }
+
+    @media (max-width: 1024px) {
+      .match-list {
+        overflow-x: visible !important;
+      }
+
+      .match-row {
+        min-width: 0 !important;
+        grid-template-columns:
+          60px
+          minmax(0, 1.35fr)
+          80px
+          minmax(0, 1.35fr)
+          76px !important;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .match-row {
+        min-width: 0 !important;
+        grid-template-columns:
+          58px
+          minmax(0, 1.32fr)
+          78px
+          minmax(0, 1.32fr)
+          72px !important;
+        gap: 3px !important;
+        padding: 5px !important;
+      }
+
+      .match-round {
+        min-height: 23px;
+        font-size: 8px;
+      }
+
+      .match-type-badge {
+        min-height: 17px;
+        font-size: 7px;
+      }
+
+      .team-badge {
+        min-height: 20px;
+        padding: 0 4px;
+        font-size: 8px;
+      }
+
+      .compact-side-names {
+        font-size: 9px !important;
+        line-height: 1.1;
+      }
+
+      .compact-score-wrap {
+        grid-template-columns: 32px 6px 32px !important;
+      }
+
+      .compact-score {
+        width: 32px !important;
+        min-height: 29px !important;
+        font-size: 12px !important;
+      }
+
+      .status-cycle-btn {
+        min-height: 29px !important;
+        font-size: 8px !important;
+      }
+    }
+
+  
+    /* v16: 관리자 회원 목록 진짜 한 줄 압축형 */
+    .admin-member-card {
+      display: grid !important;
+      grid-template-columns:
+        26px
+        minmax(84px, 1fr)
+        54px
+        54px
+        48px
+        58px
+        28px !important;
+      gap: 4px !important;
+      align-items: center !important;
+      min-height: 38px !important;
+      padding: 4px 6px !important;
+      border-radius: 12px !important;
+    }
+
+    .admin-member-content,
+    .admin-member-top,
+    .admin-member-controls {
+      display: contents !important;
+    }
+
+    .admin-member-number {
+      width: 26px !important;
+      height: 26px !important;
+      border-radius: 9px !important;
+      font-size: 10px !important;
+      margin-top: 0 !important;
+    }
+
+    .admin-member-title {
+      min-width: 0 !important;
+    }
+
+    .admin-member-title strong {
+      display: block !important;
+      overflow: hidden !important;
+      white-space: nowrap !important;
+      text-overflow: ellipsis !important;
+      font-size: 12px !important;
+      line-height: 1.15 !important;
+    }
+
+    .admin-member-title small {
+      display: none !important;
+    }
+
+    .admin-member-meta-inline {
+      min-height: 26px !important;
+      padding: 0 5px !important;
+      border-radius: 999px !important;
+      font-size: 8px !important;
+    }
+
+    .admin-participation-btn {
+      min-width: 54px !important;
+      min-height: 28px !important;
+      padding: 0 5px !important;
+      font-size: 9px !important;
+    }
+
+    .admin-member-controls .compact-select {
+      width: 100% !important;
+      min-width: 0 !important;
+      min-height: 28px !important;
+      padding: 0 5px !important;
+      border-radius: 9px !important;
+      font-size: 9px !important;
+    }
+
+    .admin-member-controls .delete-mini {
+      width: 28px !important;
+      height: 28px !important;
+      border-radius: 9px !important;
+      font-size: 13px !important;
+    }
+
+    .admin-member-list {
+      gap: 4px !important;
+    }
+
+    @media (max-width: 720px) {
+      .admin-member-card {
+        grid-template-columns:
+          24px
+          minmax(76px, 1fr)
+          50px
+          50px
+          44px
+          54px
+          26px !important;
+        gap: 3px !important;
+        min-height: 36px !important;
+        padding: 4px 5px !important;
+      }
+
+      .admin-member-number {
+        width: 24px !important;
+        height: 24px !important;
+        font-size: 9px !important;
+      }
+
+      .admin-member-title strong {
+        font-size: 11px !important;
+      }
+
+      .admin-member-meta-inline {
+        min-height: 24px !important;
+        font-size: 8px !important;
+      }
+
+      .admin-participation-btn,
+      .admin-member-controls .compact-select,
+      .admin-member-controls .delete-mini {
+        min-height: 26px !important;
+      }
+
+      .admin-member-controls .delete-mini {
+        width: 26px !important;
+      }
+    }
+
+    @media (max-width: 540px) {
+      .admin-member-list {
+        overflow-x: visible !important;
+      }
+
+      .admin-member-card {
+        min-width: 0 !important;
+      }
+    }
+
+  
+    /* v18: 팀 승패 대시보드는 경기·점수 탭에서만 표시 */
+    #page-matches .team-record-dashboard {
+      margin-bottom: 12px;
+    }
+
+    @media (max-width: 720px) {
+      #page-matches .team-record-dashboard {
+        margin-bottom: 10px;
+      }
+    }
+
+  
+    /* v19: 조 편성 안내 패널 제거 + 선수 이동 카드 한 줄형 */
+    #page-teams .page-grid {
+      grid-template-columns: 1fr !important;
+    }
+
+    .compact-assignment-row {
+      display: grid !important;
+      grid-template-columns: minmax(94px, 1fr) auto !important;
+      align-items: center !important;
+      gap: 8px !important;
+      min-height: 38px !important;
+      padding: 6px 8px !important;
+      border-radius: 13px !important;
+    }
+
+    .assignment-identity {
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .assignment-identity strong {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 12px !important;
+      line-height: 1.1;
+      font-weight: 1000;
+    }
+
+    .assignment-gender-pill {
+      flex: 0 0 auto;
+      min-height: 18px !important;
+      margin-left: 0 !important;
+      padding: 0 6px !important;
+      font-size: 8px !important;
+    }
+
+    .assignment-guest-pill {
+      flex: 0 0 auto;
+      min-height: 18px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 6px;
+      border-radius: 999px;
+      border: 1px solid #f3dcac;
+      background: #fff4dd;
+      color: var(--text);
+      font-size: 8px;
+      font-weight: 1000;
+    }
+
+    .compact-quick-move {
+      display: grid !important;
+      grid-template-columns: repeat(3, 62px) !important;
+      gap: 4px !important;
+      margin-top: 0 !important;
+      flex: 0 0 auto;
+    }
+
+    .compact-quick-move.three {
+      grid-template-columns: repeat(4, 54px) !important;
+    }
+
+    .compact-quick-move .move-btn {
+      min-height: 28px !important;
+      border-radius: 9px !important;
+      padding: 0 5px !important;
+      font-size: 9px !important;
+    }
+
+    .team-cards {
+      gap: 5px !important;
+    }
+
+    .team-column.unassigned .team-cards {
+      grid-template-columns: 1fr !important;
+    }
+
+    @media (max-width: 1024px) {
+      .compact-assignment-row {
+        grid-template-columns: minmax(82px, 1fr) auto !important;
+      }
+
+      .compact-quick-move {
+        grid-template-columns: repeat(3, 56px) !important;
+      }
+
+      .compact-quick-move.three {
+        grid-template-columns: repeat(4, 48px) !important;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .compact-assignment-row {
+        grid-template-columns: minmax(64px, 1fr) auto !important;
+        gap: 5px !important;
+        min-height: 34px !important;
+        padding: 5px 6px !important;
+      }
+
+      .assignment-identity {
+        gap: 4px;
+      }
+
+      .assignment-identity strong {
+        font-size: 11px !important;
+      }
+
+      .assignment-gender-pill,
+      .assignment-guest-pill {
+        min-height: 17px !important;
+        padding: 0 5px !important;
+        font-size: 7px !important;
+      }
+
+      .compact-quick-move {
+        grid-template-columns: repeat(3, 44px) !important;
+        gap: 3px !important;
+      }
+
+      .compact-quick-move.three {
+        grid-template-columns: repeat(4, 40px) !important;
+      }
+
+      .compact-quick-move .move-btn {
+        min-height: 25px !important;
+        font-size: 8px !important;
+        padding: 0 3px !important;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .compact-assignment-row {
+        grid-template-columns: minmax(58px, 1fr) auto !important;
+      }
+
+      .compact-quick-move {
+        grid-template-columns: repeat(3, 40px) !important;
+      }
+
+      .compact-quick-move.three {
+        grid-template-columns: repeat(4, 36px) !important;
+      }
+    }
+
+  
+    /* v20: Guest 표기 시에도 이름이 보이도록 조 편성 행 폭 재조정 */
+    .compact-assignment-row {
+      grid-template-columns: minmax(112px, 1fr) auto !important;
+      gap: 6px !important;
+    }
+
+    .assignment-identity {
+      gap: 4px !important;
+    }
+
+    .assignment-identity strong {
+      flex: 0 1 auto;
+      max-width: 100%;
+      min-width: 0;
+    }
+
+    .assignment-guest-pill {
+      min-width: 34px;
+      justify-content: center;
+      padding: 0 5px !important;
+      font-size: 7px !important;
+      letter-spacing: -0.01em;
+    }
+
+    .compact-quick-move {
+      display: flex !important;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 3px !important;
+      margin-top: 0 !important;
+    }
+
+    .compact-quick-move .move-btn {
+      width: 34px !important;
+      min-width: 34px !important;
+      min-height: 27px !important;
+      padding: 0 3px !important;
+      font-size: 8px !important;
+      border-radius: 9px !important;
+    }
+
+    .compact-quick-move .move-btn.target-unassigned {
+      width: 46px !important;
+      min-width: 46px !important;
+    }
+
+    .compact-quick-move.three .move-btn {
+      width: 31px !important;
+      min-width: 31px !important;
+    }
+
+    .compact-quick-move.three .move-btn.target-unassigned {
+      width: 42px !important;
+      min-width: 42px !important;
+    }
+
+    /* 선택된 팀 버튼은 각 팀 컬러와 동일하게 */
+    .move-btn.target-unassigned.active {
+      background: var(--navy) !important;
+      border-color: var(--navy) !important;
+      color: #fff !important;
+    }
+
+    .move-btn.target-a.active {
+      background: linear-gradient(135deg, #2582db, #164d92) !important;
+      border-color: #1c64b2 !important;
+      color: #fff !important;
+      box-shadow: 0 6px 14px rgba(37, 130, 219, 0.20);
+    }
+
+    .move-btn.target-b.active {
+      background: linear-gradient(135deg, #13aa81, #0c6c54) !important;
+      border-color: #0f8d67 !important;
+      color: #fff !important;
+      box-shadow: 0 6px 14px rgba(19, 170, 129, 0.20);
+    }
+
+    .move-btn.target-c.active {
+      background: linear-gradient(135deg, #e8a21b, #c16c04) !important;
+      border-color: #d98b08 !important;
+      color: #fff !important;
+      box-shadow: 0 6px 14px rgba(232, 162, 27, 0.20);
+    }
+
+    @media (max-width: 1024px) {
+      .compact-assignment-row {
+        grid-template-columns: minmax(96px, 1fr) auto !important;
+      }
+
+      .compact-quick-move .move-btn {
+        width: 32px !important;
+        min-width: 32px !important;
+      }
+
+      .compact-quick-move .move-btn.target-unassigned {
+        width: 44px !important;
+        min-width: 44px !important;
+      }
+
+      .compact-quick-move.three .move-btn {
+        width: 29px !important;
+        min-width: 29px !important;
+      }
+
+      .compact-quick-move.three .move-btn.target-unassigned {
+        width: 40px !important;
+        min-width: 40px !important;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .compact-assignment-row {
+        grid-template-columns: minmax(78px, 1fr) auto !important;
+        gap: 4px !important;
+      }
+
+      .assignment-identity {
+        gap: 3px !important;
+      }
+
+      .assignment-guest-pill {
+        min-width: 31px;
+        padding: 0 4px !important;
+        font-size: 7px !important;
+      }
+
+      .compact-quick-move {
+        gap: 2px !important;
+      }
+
+      .compact-quick-move .move-btn {
+        width: 29px !important;
+        min-width: 29px !important;
+        min-height: 25px !important;
+        font-size: 8px !important;
+      }
+
+      .compact-quick-move .move-btn.target-unassigned {
+        width: 40px !important;
+        min-width: 40px !important;
+      }
+
+      .compact-quick-move.three .move-btn {
+        width: 27px !important;
+        min-width: 27px !important;
+      }
+
+      .compact-quick-move.three .move-btn.target-unassigned {
+        width: 36px !important;
+        min-width: 36px !important;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .compact-assignment-row {
+        grid-template-columns: minmax(68px, 1fr) auto !important;
+      }
+
+      .compact-quick-move .move-btn {
+        width: 27px !important;
+        min-width: 27px !important;
+      }
+
+      .compact-quick-move .move-btn.target-unassigned {
+        width: 37px !important;
+        min-width: 37px !important;
+      }
+
+      .compact-quick-move.three .move-btn {
+        width: 25px !important;
+        min-width: 25px !important;
+      }
+
+      .compact-quick-move.three .move-btn.target-unassigned {
+        width: 34px !important;
+        min-width: 34px !important;
+      }
+    }
+
+  
+    /* v21: 순위탭 한 줄 압축 리스트 */
+    .ranking-list {
+      display: grid;
+      gap: 5px !important;
+    }
+
+    .compact-rank-row {
+      display: grid !important;
+      grid-template-columns: 38px minmax(0, 1fr) 62px !important;
+      gap: 8px !important;
+      align-items: center !important;
+      min-height: 42px !important;
+      padding: 6px 8px !important;
+      border-radius: 13px !important;
+    }
+
+    .compact-rank-row .rank-no {
+      width: 38px !important;
+      height: 32px !important;
+      border-radius: 11px !important;
+      font-size: 15px !important;
+      display: grid !important;
+      place-items: center !important;
+    }
+
+    .rank-name-cell {
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow: hidden;
+    }
+
+    .rank-name-cell .rank-name {
+      flex: 0 1 auto;
+      min-width: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      font-size: 13px !important;
+      line-height: 1.1;
+      font-weight: 1000;
+    }
+
+    .rank-submeta {
+      flex: 0 0 auto;
+      min-height: 22px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 8px;
+      border-radius: 999px;
+      background: #f3f8fd;
+      border: 1px solid #dbe7f3;
+      color: #49637d;
+      font-size: 9px;
+      font-weight: 950;
+      white-space: nowrap;
+    }
+
+    .rank-score-cell {
+      display: grid;
+      justify-items: end;
+      align-content: center;
+      gap: 1px;
+      min-width: 0;
+    }
+
+    .rank-score-cell span {
+      color: var(--muted);
+      font-size: 8px;
+      font-weight: 950;
+      line-height: 1;
+    }
+
+    .rank-score-cell strong {
+      font-size: 18px;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      font-weight: 1000;
+    }
+
+    .compact-rank-row.rank-first {
+      border-color: #f3dcac !important;
+      background: linear-gradient(135deg, #fff8e9 0%, #fff0cc 100%) !important;
+    }
+
+    .compact-rank-row.rank-second {
+      border-color: #d8e1eb !important;
+      background: linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%) !important;
+    }
+
+    .compact-rank-row.rank-third {
+      border-color: #edceb3 !important;
+      background: linear-gradient(135deg, #fff6ef 0%, #fbe8d8 100%) !important;
+    }
+
+    .compact-rank-row.rank-first .rank-no,
+    .compact-rank-row.rank-second .rank-no,
+    .compact-rank-row.rank-third .rank-no {
+      background: rgba(255,255,255,0.72) !important;
+    }
+
+    @media (max-width: 720px) {
+      .compact-rank-row {
+        grid-template-columns: 34px minmax(0, 1fr) 54px !important;
+        gap: 6px !important;
+        min-height: 38px !important;
+        padding: 5px 7px !important;
+      }
+
+      .compact-rank-row .rank-no {
+        width: 34px !important;
+        height: 29px !important;
+        border-radius: 10px !important;
+        font-size: 13px !important;
+      }
+
+      .rank-name-cell {
+        gap: 5px;
+      }
+
+      .rank-name-cell .rank-name {
+        font-size: 12px !important;
+      }
+
+      .rank-submeta {
+        min-height: 20px;
+        padding: 0 6px;
+        font-size: 8px;
+      }
+
+      .rank-score-cell span {
+        font-size: 7px;
+      }
+
+      .rank-score-cell strong {
+        font-size: 16px;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .compact-rank-row {
+        grid-template-columns: 32px minmax(0, 1fr) 50px !important;
+        gap: 5px !important;
+      }
+
+      .rank-name-cell {
+        gap: 4px;
+      }
+
+      .rank-submeta {
+        padding: 0 5px;
+      }
+    }
+
+  
+    /* v22: 경기탭 생성/현황을 초압축 콘솔형으로 변경 */
+    .match-console-panel {
+      margin-top: 12px;
+      margin-bottom: 12px;
+      padding: 12px 13px !important;
+    }
+
+    .match-console-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 9px;
+    }
+
+    .match-console-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 6px;
+      flex: 0 0 auto;
+    }
+
+    .match-console-actions .btn {
+      min-height: 34px !important;
+      padding: 0 10px !important;
+      font-size: 10px !important;
+    }
+
+    .match-console-actions .btn.active {
+      background: #0f67c8 !important;
+      border-color: #0f67c8 !important;
+      color: #fff !important;
+    }
+
+    .compact-match-config {
+      display: grid;
+      grid-template-columns: 138px 96px 96px minmax(280px, 1fr);
+      gap: 7px;
+      align-items: end;
+    }
+
+    .mini-config-field {
+      display: grid;
+      gap: 4px;
+    }
+
+    .mini-config-field span {
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 1000;
+    }
+
+    .mini-config-field .field {
+      min-height: 34px !important;
+      height: 34px !important;
+      padding: 0 9px !important;
+      font-size: 11px !important;
+    }
+
+    .match-console-summary {
+      min-height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 6px;
+      padding: 0 9px;
+      border-radius: 12px;
+      border: 1px solid #e4edf6;
+      background: #f8fbfe;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .match-console-summary strong {
+      min-width: 54px;
+      font-size: 14px;
+      font-weight: 1000;
+      color: var(--text);
+    }
+
+    .match-console-summary span {
+      min-height: 22px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 8px;
+      border-radius: 999px;
+      font-size: 9px;
+      font-weight: 1000;
+    }
+
+    .match-console-summary .pending {
+      color: #526579;
+      background: #edf2f7;
+    }
+
+    .match-console-summary .playing {
+      color: #8a5200;
+      background: #fff1c9;
+    }
+
+    .match-console-summary .finished {
+      color: #0c7559;
+      background: #e9fbf3;
+    }
+
+    #page-matches .match-plan-feedback {
+      margin-top: 8px;
+    }
+
+    /* 편집 모드 행 제어 */
+    .match-row.edit-mode {
+      grid-template-columns:
+        72px
+        minmax(0, 1.25fr)
+        82px
+        minmax(0, 1.25fr)
+        72px
+        116px !important;
+    }
+
+    .match-edit-actions {
+      display: none;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 3px;
+    }
+
+    .match-row.edit-mode .match-edit-actions {
+      display: flex;
+    }
+
+    .mini-edit-btn {
+      width: 35px;
+      min-width: 35px;
+      min-height: 29px;
+      border-radius: 9px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--text);
+      font-size: 11px;
+      font-weight: 1000;
+      cursor: pointer;
+    }
+
+    .mini-edit-btn.danger {
+      color: #c23b54;
+      border-color: #ffd3dc;
+      background: #fff2f5;
+    }
+
+    /* 편집 모달 */
+    .match-editor-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      background: rgba(2, 8, 23, 0.58);
+      backdrop-filter: blur(10px);
+    }
+
+    .match-editor-modal.hidden {
+      display: none;
+    }
+
+    .match-editor-card {
+      width: min(620px, 100%);
+      padding: 18px;
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255,0.94);
+      background: #fff;
+      box-shadow: 0 28px 70px rgba(2,8,23,0.28);
+    }
+
+    .match-editor-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .match-editor-head h3 {
+      margin: 0;
+      font-size: 21px;
+      line-height: 1.2;
+      letter-spacing: -0.04em;
+      font-weight: 1000;
+    }
+
+    .match-editor-head p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .editor-close-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--text);
+      font-size: 21px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .match-editor-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .editor-field {
+      display: grid;
+      gap: 5px;
+    }
+
+    .editor-field span {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 1000;
+    }
+
+    .match-editor-note {
+      margin-top: 11px;
+      padding: 10px 11px;
+      border-radius: 14px;
+      border: 1px solid #e4edf6;
+      background: #f8fbfe;
+      color: #526579;
+      font-size: 11px;
+      font-weight: 850;
+      line-height: 1.5;
+    }
+
+    .match-editor-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    @media (max-width: 1024px) {
+      .match-console-head {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .match-console-actions {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .compact-match-config {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .match-console-summary {
+        grid-column: 1 / -1;
+      }
+
+      .match-row.edit-mode {
+        grid-template-columns:
+          68px
+          minmax(0, 1.18fr)
+          80px
+          minmax(0, 1.18fr)
+          70px
+          112px !important;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .match-console-panel {
+        padding: 10px !important;
+      }
+
+      .match-console-actions {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .match-console-actions .btn {
+        width: 100%;
+      }
+
+      .compact-match-config {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .mini-config-field:first-child {
+        grid-column: 1 / -1;
+      }
+
+      .match-console-summary {
+        grid-column: 1 / -1;
+        min-height: 32px;
+        gap: 4px;
+        padding: 0 7px;
+        overflow-x: auto;
+      }
+
+      .match-console-summary strong {
+        font-size: 13px;
+      }
+
+      .match-row.edit-mode {
+        grid-template-columns:
+          58px
+          minmax(0, 1.1fr)
+          78px
+          minmax(0, 1.1fr)
+          68px
+          102px !important;
+      }
+
+      .mini-edit-btn {
+        width: 31px;
+        min-width: 31px;
+        min-height: 27px;
+        font-size: 10px;
+      }
+
+      .match-editor-card {
+        padding: 14px;
+        border-radius: 20px;
+      }
+
+      .match-editor-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      .match-editor-head h3 {
+        font-size: 18px;
+      }
+
+      .match-editor-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-top">
+        <div class="hero-pill">⛰️ 마테호른 · MATTERHORN TENNIS CLUB</div>
+        <div class="hero-pill gold">Monthly Gathering Manager</div>
+      </div>
+      <div class="hero-copy">
+        <div class="eyebrow">✨ 모바일·태블릿 운영형 월례회 시스템</div>
+        <h1>월례회 통합관리 시스템</h1>
+        <p>
+          참가자 등록, 조 편성, 경기 점수, 개인 순위, 경품 추첨까지
+          월례회 당일 운영 흐름을 기능별 페이지로 나눠 빠르게 관리합니다.
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+
+    <nav class="desktop-page-tabs">
+      <button class="page-tab active" data-page="members">1. 참가자 명단</button>
+      <button class="page-tab" data-page="teams">2. 조 편성</button>
+      <button class="page-tab" data-page="matches">3. 경기·점수</button>
+      <button class="page-tab" data-page="awards">4. 순위·추첨</button>
+      <button class="page-tab" data-page="admin">🔐 관리자</button>
+    </nav>
+
+    <section class="page active" id="page-members">
+      <div class="page-grid participant-view-grid">
+        <div class="panel participant-view-panel">
+          <div class="section-head compact-section-head">
+            <div class="section-icon">👥</div>
+            <div>
+              <h2>이번 월례회 참가자 명단</h2>
+              <p>관리자가 선택한 확정 참가자와 게스트만 표시됩니다.</p>
+            </div>
+          </div>
+
+          <div class="participant-mini-summary">
+            <span id="participantInlineSummary">참가 0명</span>
+            <span id="participantGenderInline">남 0 · 여 0</span>
+            <span id="guestInlineSummary">Guest 0명</span>
+          </div>
+
+          <div class="public-participant-grid" id="publicParticipantList"></div>
+        </div>
+
+        <div class="stack">
+          <div class="panel">
+            <div class="section-head compact-section-head">
+              <div class="section-icon">🔐</div>
+              <div>
+                <h2>참가자 관리는 관리자 전용</h2>
+                <p>전체 회원 중 참가자 선택, Guest 추가, 실력 확인은 관리자 페이지에서만 가능합니다.</p>
+              </div>
+            </div>
+            <div class="note compact-note">
+              하단 <strong>관리자</strong> 메뉴를 눌러 비밀번호를 입력하면 참가자 명단을 수정할 수 있습니다.
+              최초 관리자 비밀번호는 <strong>0000</strong>입니다.
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="section-head compact-section-head">
+              <div class="section-icon">🎾</div>
+              <div>
+                <h2>현재 운영 흐름</h2>
+                <p>확정 참가자를 기준으로 조 편성과 대진표가 생성됩니다.</p>
+              </div>
+            </div>
+            <div class="note compact-note">
+              참가자 명단이 바뀌면 기존 팀 편성이나 경기표는 현장 혼선을 막기 위해 자동으로 초기화됩니다.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page" id="page-teams">
+      <div class="page-grid">
+        <div class="panel">
+          <div class="section-head">
+            <div class="section-icon">🔀</div>
+            <div>
+              <h2>조 편성 방식 선택</h2>
+              <p>A/B 2개 팀 또는 A/B/C 3개 팀을 선택하고, 랜덤 편성 후 수동 보정합니다.</p>
+            </div>
+          </div>
+
+          <div class="mode-grid">
+            <button class="mode-card active" data-team-count="2">
+              <small>편성 방식</small>
+              <strong>2개 팀</strong>
+              <span>A / B 팀전</span>
+            </button>
+            <button class="mode-card" data-team-count="3">
+              <small>편성 방식</small>
+              <strong>3개 팀</strong>
+              <span>A / B / C 순환전</span>
+            </button>
+          </div>
+
+          <div class="actions">
+            <button class="btn btn-blue" id="randomizeBtn">🔀 남녀 균형 랜덤 편성</button>
+            <button class="btn btn-outline" id="resetTeamsBtn">↻ 팀 초기화</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top:18px;">
+        <div class="section-head">
+          <div class="section-icon">🧩</div>
+          <div>
+            <h2>터치형 수동 조 편성 보드</h2>
+            <p>미정 인원과 각 팀 인원을 한 화면에서 보고 바로 옮길 수 있습니다.</p>
+          </div>
+        </div>
+        <div class="team-board" id="teamBoard"></div>
+      </div>
+    </section>
+
+    <section class="page" id="page-matches">
+      <section class="team-record-dashboard">
+            <div class="team-leader-banner" id="teamLeaderBanner">
+              <span class="leader-label">현재 우세</span>
+              <strong id="leadingTeamText">기록 대기</strong>
+              <span class="leader-sub" id="leadingTeamSub">완료된 경기 결과가 반영됩니다.</span>
+            </div>
+            <div class="team-record-grid" id="teamRecordGrid"></div>
+          </section>
+      <div class="panel match-console-panel">
+        <div class="match-console-head">
+          <div class="section-head compact-section-head">
+            <div class="section-icon">⚔️</div>
+            <div>
+              <h2>대진표 생성 · 편집</h2>
+              <p>설정값으로 자동 생성하고, 필요하면 편집 모드에서 직접 수정합니다.</p>
+            </div>
+          </div>
+
+          <div class="match-console-actions">
+            <button class="btn btn-dark" id="generateMatchesBtn">🎾 생성</button>
+            <button class="btn btn-outline" id="clearMatchesBtn">초기화</button>
+            <button class="btn btn-blue" id="toggleMatchEditModeBtn">✏️ 대진 편집</button>
+            <button class="btn btn-outline" id="addCustomMatchBtn">＋ 경기 추가</button>
+          </div>
+        </div>
+
+        <div class="compact-match-config">
+          <label class="mini-config-field">
+            <span>1인당</span>
+            <select id="desiredGamesSelect" class="field compact-match-select">
+              <option value="1">1경기</option>
+              <option value="2" selected>2경기</option>
+              <option value="3">3경기</option>
+              <option value="4">4경기</option>
+              <option value="5">5경기</option>
+            </select>
+          </label>
+
+          <label class="mini-config-field">
+            <span>남복</span>
+            <input id="menDoublesCountInput" class="field compact-match-count" type="number" min="0" max="99" step="1" value="0" />
+          </label>
+
+          <label class="mini-config-field">
+            <span>여복</span>
+            <input id="womenDoublesCountInput" class="field compact-match-count" type="number" min="0" max="99" step="1" value="0" />
+          </label>
+
+          <div class="match-console-summary">
+            <strong id="matchCountInline">0경기</strong>
+            <span class="pending" id="pendingMatchCount">시작 전 0</span>
+            <span class="playing" id="playingMatchCount">경기 중 0</span>
+            <span class="finished" id="finishedMatchCount">완료 0</span>
+          </div>
+        </div>
+
+        <div class="match-plan-feedback" id="matchPlanFeedback"></div>
+      </div>
+
+      <div class="panel" style="margin-top:18px;">
+        <div class="section-head">
+          <div class="section-icon">📝</div>
+          <div>
+            <h2>경기별 점수 입력</h2>
+            <p>각 대진의 양쪽 점수를 기록합니다.</p>
+          </div>
+        </div>
+        <div id="matchArea"></div>
+      </div>
+    </section>
+
+    <section class="page" id="page-awards">
+      <div class="page-grid">
+        <div class="panel">
+          <div class="section-head">
+            <div class="section-icon">🏆</div>
+            <div>
+              <h2>실시간 개인 순위</h2>
+              <p>경기별 누적 획득 점수가 높은 사람부터 자동 정렬됩니다.</p>
+            </div>
+          </div>
+          <div class="ranking-list" id="rankingList"></div>
+        </div>
+
+        <div class="stack">
+          <div class="panel raffle-panel">
+            <div class="section-head">
+              <div class="section-icon">🎁</div>
+              <div>
+                <h2>시상식 경품 돌림판</h2>
+                <p>태블릿 화면으로 바로 보여줄 수 있는 실시간 추첨 모드입니다.</p>
+              </div>
+            </div>
+
+            <div class="raffle-controls">
+              <input id="giftName" class="field" value="월례회 행운상" placeholder="경품명 입력" />
+              <label class="exclusion-toggle">
+                <input type="checkbox" id="excludeRankersToggle" />
+                <span>순위권 제외</span>
+              </label>
+              <select id="excludeTopCountSelect" class="field raffle-select" disabled>
+                <option value="1">1위 제외</option>
+                <option value="2">상위 2명 제외</option>
+                <option value="3" selected>상위 3명 제외</option>
+                <option value="4">상위 4명 제외</option>
+                <option value="5">상위 5명 제외</option>
+              </select>
+            </div>
+
+            <div class="raffle-eligibility" id="raffleEligibilityText">추첨 대상 계산 중</div>
+
+            <div class="raffle-stage">
+              <div class="wheel-shell">
+                <div class="wheel-pointer">▼</div>
+                <div class="raffle-wheel" id="raffleWheel">
+                  <div class="wheel-empty">참가자를 선택해 주세요</div>
+                </div>
+              </div>
+
+              <div class="raffle-action-column">
+                <button class="btn btn-amber raffle-spin-btn" id="spinWheelBtn">🎡 돌림판 시작</button>
+                <button class="btn btn-outline" id="resetGiftBtn">당첨 기록 초기화</button>
+                <div class="raffle-result-card" id="raffleResultCard">
+                  <span>최근 당첨자</span>
+                  <strong>대기</strong>
+                </div>
+              </div>
+            </div>
+
+            <div class="winner-list" id="winnerList"></div>
+          </div>
+
+          <div class="panel">
+            <div class="section-head">
+              <div class="section-icon">✅</div>
+              <div>
+                <h2>순위 계산 기준</h2>
+                <p>현재 구현된 기준을 명시해 운영 중 혼선을 줄입니다.</p>
+              </div>
+            </div>
+            <div class="note">
+              한 선수가 여러 경기 출전할 경우, 각 경기에서 그 선수의 조가 얻은 점수를 개인에게 누적합니다.
+              합산 점수가 같으면 경기 수, 이후 이름순으로 표시됩니다.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page" id="page-admin">
+      <div class="page-grid admin-page-grid">
+        <div class="panel">
+          <div class="section-head">
+            <div class="section-icon">🔐</div>
+            <div>
+              <h2>관리자 페이지</h2>
+              <p>전체 회원 중 참가자를 터치로 선택하고, Guest 추가와 실력 정보를 관리합니다.</p>
+            </div>
+          </div>
+
+          <div class="status-row admin-status-row">
+            <div class="save-status" id="saveStatus">💾 로컬 저장 준비됨</div>
+            <div class="actions compact-actions">
+              <button class="btn btn-outline" id="manualSaveBtn">저장</button>
+              <button class="btn btn-rose" id="resetSampleBtn">샘플 초기화</button>
+              <button class="btn btn-outline" id="adminLogoutBtn">로그아웃</button>
+            </div>
+          </div>
+
+          <div class="admin-roster-summary">
+            <span id="adminTotalMemberSummary">전체 회원 0명</span>
+            <span id="adminSelectedSummary">참가 0명</span>
+            <span id="adminGuestSummary">Guest 0명</span>
+          </div>
+
+          <div class="admin-member-list" id="adminMemberList"></div>
+        </div>
+
+        <div class="stack">
+          <div class="panel">
+            <div class="section-head compact-section-head">
+              <div class="section-icon">➕</div>
+              <div>
+                <h2>Guest 추가</h2>
+                <p>당일 초대 회원도 참가자 명단에 바로 넣을 수 있습니다.</p>
+              </div>
+            </div>
+
+            <div class="guest-form">
+              <input id="guestName" class="field" placeholder="Guest 이름" />
+              <select id="guestGender" class="field">
+                <option value="남">남</option>
+                <option value="여">여</option>
+              </select>
+              <select id="guestSkill" class="field">
+                <option value="1">실력 1</option>
+                <option value="2">실력 2</option>
+                <option value="3" selected>실력 3</option>
+                <option value="4">실력 4</option>
+                <option value="5">실력 5</option>
+              </select>
+              <button class="btn btn-dark" id="addGuestBtn">Guest 추가</button>
+            </div>
+
+            <div class="note compact-note">
+              게스트는 추가 즉시 <strong>참가</strong> 상태로 들어갑니다.
+              실력은 관리자만 보며, 조 편성 균형을 잡는 참고용으로 사용합니다.
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="section-head compact-section-head">
+              <div class="section-icon">🔑</div>
+              <div>
+                <h2>관리자 비밀번호 변경</h2>
+                <p>최초 비밀번호는 0000이며, 이 화면에서 변경할 수 있습니다.</p>
+              </div>
+            </div>
+
+            <div class="password-change-form">
+              <input id="currentAdminPassword" type="password" class="field" placeholder="현재 비밀번호" />
+              <input id="newAdminPassword" type="password" class="field" placeholder="새 비밀번호" />
+              <input id="confirmAdminPassword" type="password" class="field" placeholder="새 비밀번호 확인" />
+              <button class="btn btn-blue" id="changeAdminPasswordBtn">비밀번호 변경</button>
+            </div>
+            <div class="password-message" id="passwordChangeMessage"></div>
+
+            <div class="note compact-note security-note">
+              이 HTML 단독 버전의 비밀번호 잠금은 <strong>화면 접근 제어용</strong>입니다.
+              실제 배포 시 DB와 연동할 때는 서버 인증 방식으로 바꾸는 게 안전합니다.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <nav class="bottom-nav">
+    <button class="active" data-page="members"><span>👥</span><span>참가자</span></button>
+    <button data-page="teams"><span>🔀</span><span>조 편성</span></button>
+    <button data-page="matches"><span>🎾</span><span>경기·점수</span></button>
+    <button data-page="awards"><span>🏆</span><span>순위</span></button>
+    <button data-page="admin"><span>🔐</span><span>관리자</span></button>
+  </nav>
+
+
+
+
+  <div class="match-editor-modal hidden" id="matchEditorModal">
+    <div class="match-editor-card">
+      <div class="match-editor-head">
+        <div>
+          <h3 id="matchEditorTitle">대진 편집</h3>
+          <p id="matchEditorSubtitle">선수를 직접 선택합니다.</p>
+        </div>
+        <button class="editor-close-btn" id="closeMatchEditorBtn">×</button>
+      </div>
+
+      <div class="match-editor-grid">
+        <label class="editor-field">
+          <span>왼쪽 팀</span>
+          <select id="editorSide1Team" class="field"></select>
+        </label>
+        <label class="editor-field">
+          <span>오른쪽 팀</span>
+          <select id="editorSide2Team" class="field"></select>
+        </label>
+
+        <label class="editor-field">
+          <span>왼쪽 선수 1</span>
+          <select id="editorSide1Player1" class="field"></select>
+        </label>
+        <label class="editor-field">
+          <span>왼쪽 선수 2</span>
+          <select id="editorSide1Player2" class="field"></select>
+        </label>
+
+        <label class="editor-field">
+          <span>오른쪽 선수 1</span>
+          <select id="editorSide2Player1" class="field"></select>
+        </label>
+        <label class="editor-field">
+          <span>오른쪽 선수 2</span>
+          <select id="editorSide2Player2" class="field"></select>
+        </label>
+      </div>
+
+      <div class="match-editor-note">
+        선수 변경 시 해당 경기 점수가 있으면 저장 전에 초기화 여부를 확인합니다.
+      </div>
+
+      <div class="match-editor-actions">
+        <button class="btn btn-outline" id="cancelMatchEditorBtn">취소</button>
+        <button class="btn btn-dark" id="saveMatchEditorBtn">저장</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="confirm-modal hidden" id="confirmActionModal">
+    <div class="confirm-modal-card">
+      <div class="confirm-modal-icon">⚠️</div>
+      <h3 id="confirmActionTitle">변경 확인</h3>
+      <p id="confirmActionMessage">기존 내용을 변경하시겠습니까?</p>
+      <div class="confirm-modal-actions">
+        <button class="btn btn-outline" id="cancelConfirmActionBtn">취소</button>
+        <button class="btn btn-dark" id="approveConfirmActionBtn">확인</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="admin-modal hidden" id="adminPasswordModal">
+    <div class="admin-modal-card">
+      <div class="admin-modal-icon">🔐</div>
+      <h3>관리자 비밀번호</h3>
+      <p>관리자 페이지로 들어가려면 비밀번호를 입력하세요.</p>
+      <input id="adminPasswordInput" type="password" class="field" inputmode="numeric" placeholder="비밀번호 입력" />
+      <div class="admin-modal-error" id="adminPasswordError"></div>
+      <div class="admin-modal-actions">
+        <button class="btn btn-outline" id="cancelAdminLoginBtn">취소</button>
+        <button class="btn btn-dark" id="confirmAdminLoginBtn">입장</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = "matterhorn_monthly_manager_v2";
+    const ADMIN_PASSWORD_KEY = "matterhorn_admin_password";
+    let adminUnlocked = false;
+    let pendingAdminNavigation = false;
+    let pendingConfirmAction = null;
+    let raffleSpinLocked = false;
+    let editingMatchId = null;
+    let editingMatchMode = "edit";
+
+    const defaultState = {
+      members: [
+        { id: "m1", name: "김민수", gender: "남", skill: 4, joined: true, team: "" , isGuest: false },
+        { id: "m2", name: "이서연", gender: "여", skill: 4, joined: true, team: "" , isGuest: false },
+        { id: "m3", name: "박준호", gender: "남", skill: 5, joined: true, team: "" , isGuest: false },
+        { id: "m4", name: "최지우", gender: "여", skill: 3, joined: true, team: "" , isGuest: false },
+        { id: "m5", name: "정우진", gender: "남", skill: 3, joined: true, team: "" , isGuest: false },
+        { id: "m6", name: "한예린", gender: "여", skill: 5, joined: true, team: "" , isGuest: false },
+        { id: "m7", name: "오세훈", gender: "남", skill: 2, joined: true, team: "" , isGuest: false },
+        { id: "m8", name: "강하나", gender: "여", skill: 2, joined: true, team: "" , isGuest: false },
+        { id: "m9", name: "윤태경", gender: "남", skill: 4, joined: true, team: "" , isGuest: false },
+        { id: "m10", name: "배수아", gender: "여", skill: 4, joined: true, team: "" , isGuest: false },
+        { id: "m11", name: "문지훈", gender: "남", skill: 3, joined: true, team: "" , isGuest: false },
+        { id: "m12", name: "송나래", gender: "여", skill: 3, joined: true, team: "" , isGuest: false },
+        { id: "m13", name: "임도윤", gender: "남", skill: 5, joined: true, team: "" , isGuest: false },
+        { id: "m14", name: "신유진", gender: "여", skill: 2, joined: true, team: "" , isGuest: false },
+        { id: "m15", name: "권민재", gender: "남", skill: 4, joined: true, team: "" , isGuest: false },
+        { id: "m16", name: "조아라", gender: "여", skill: 3, joined: true, team: "" , isGuest: false },
+        { id: "m17", name: "서기훈", gender: "남", skill: 3, joined: false, team: "" , isGuest: false },
+        { id: "m18", name: "김예나", gender: "여", skill: 4, joined: false, team: "" , isGuest: false },
+        { id: "m19", name: "이현우", gender: "남", skill: 2, joined: false, team: "" , isGuest: false },
+        { id: "m20", name: "박소희", gender: "여", skill: 5, joined: false, team: "" , isGuest: false }
+      ],
+      teamCount: 2,
+      desiredGamesPerPlayer: 2,
+      desiredMenDoublesCount: 0,
+      desiredWomenDoublesCount: 0,
+      matches: [],
+      giftWinners: [],
+      excludeRankersFromRaffle: false,
+      excludeTopRankCount: 3,
+      wheelRotation: 0,
+      matchEditMode: false,
+      activePage: "members",
+      updatedAt: null
+    };
+
+    const clone = (value) => JSON.parse(JSON.stringify(value));
+    let state = clone(defaultState);
+    let saveTimer = null;
+
+    const fallbackStorageAdapter = {
+      async loadMonthlyMeetupState() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          return raw ? JSON.parse(raw) : null;
+        } catch (error) {
+          console.warn("로컬 상태 불러오기 실패", error);
+          return null;
+        }
+      },
+      async saveMonthlyMeetupState(payload) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+        return { ok: true, storage: "localStorage" };
+      }
+    };
+
+    const dataAdapter = window.MATTERHORN_DB_ADAPTER || fallbackStorageAdapter;
+    const $ = (id) => document.getElementById(id);
+
+    function safeText(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function participants() {
+      return state.members.filter(member => member.joined);
+    }
+
+    function teamKeys() {
+      return state.teamCount === 3 ? ["A", "B", "C"] : ["A", "B"];
+    }
+
+    function allMoveTargets() {
+      return ["", ...teamKeys()];
+    }
+
+    function createId(prefix) {
+      return prefix + "_" + Date.now() + "_" + Math.random().toString(36).slice(2, 8);
+    }
+
+    function shuffle(items) {
+      const arr = [...items];
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function memberById(id) {
+      return state.members.find(member => member.id === id);
+    }
+
+    function sortByKoreanName(list) {
+      return [...list].sort((a, b) =>
+        String(a.name || "").localeCompare(String(b.name || ""), "ko-KR", {
+          sensitivity: "base",
+          numeric: true
+        })
+      );
+    }
+
+    function setSaveStatus(text, good = false) {
+      const el = $("saveStatus");
+      el.textContent = text;
+      el.classList.toggle("good", !!good);
+    }
+
+    function exportState() {
+      return {
+        members: state.members,
+        teamCount: state.teamCount,
+        desiredGamesPerPlayer: state.desiredGamesPerPlayer,
+        desiredMenDoublesCount: state.desiredMenDoublesCount,
+        desiredWomenDoublesCount: state.desiredWomenDoublesCount,
+        matches: state.matches,
+        giftWinners: state.giftWinners,
+        excludeRankersFromRaffle: state.excludeRankersFromRaffle,
+        excludeTopRankCount: state.excludeTopRankCount,
+        wheelRotation: state.wheelRotation,
+        matchEditMode: state.matchEditMode,
+        activePage: state.activePage,
+        updatedAt: new Date().toISOString()
+      };
+    }
+
+    async function saveNow() {
+      try {
+        setSaveStatus("💾 저장 중...");
+        state.updatedAt = new Date().toISOString();
+        await dataAdapter.saveMonthlyMeetupState(exportState());
+        setSaveStatus("✅ 저장됨 · " + new Date().toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" }), true);
+      } catch (error) {
+        console.error(error);
+        setSaveStatus("⚠️ 저장 실패");
+      }
+    }
+
+    function scheduleSave() {
+      setSaveStatus("💾 변경사항 저장 대기");
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(saveNow, 450);
+    }
+
+    async function bootstrap() {
+      try {
+        const loaded = await dataAdapter.loadMonthlyMeetupState();
+        if (loaded && typeof loaded === "object") {
+          state = {
+            ...clone(defaultState),
+            ...loaded,
+            members: Array.isArray(loaded.members) ? loaded.members : clone(defaultState.members),
+            matches: Array.isArray(loaded.matches)
+              ? loaded.matches.map(match => ({ ...match, status: match.status || "pending" }))
+              : [],
+            giftWinners: Array.isArray(loaded.giftWinners) ? loaded.giftWinners : [],
+            desiredGamesPerPlayer: Number(loaded.desiredGamesPerPlayer || 2),
+            desiredMenDoublesCount: Number(loaded.desiredMenDoublesCount || 0),
+            desiredWomenDoublesCount: Number(loaded.desiredWomenDoublesCount || 0),
+            excludeRankersFromRaffle: Boolean(loaded.excludeRankersFromRaffle),
+            excludeTopRankCount: Number(loaded.excludeTopRankCount || 3),
+            wheelRotation: Number(loaded.wheelRotation || 0),
+            matchEditMode: Boolean(loaded.matchEditMode)
+          };
+          setSaveStatus("✅ 저장 데이터 불러옴", true);
+        } else {
+          setSaveStatus("💾 로컬 저장 준비됨");
+        }
+      } catch (error) {
+        console.error(error);
+        setSaveStatus("⚠️ 저장 데이터 불러오기 실패");
+      }
+      renderAll();
+      if ($("desiredGamesSelect")) $("desiredGamesSelect").value = String(state.desiredGamesPerPlayer || 2);
+      if ($("menDoublesCountInput")) $("menDoublesCountInput").value = String(state.desiredMenDoublesCount || 0);
+      if ($("womenDoublesCountInput")) $("womenDoublesCountInput").value = String(state.desiredWomenDoublesCount || 0);
+      syncRaffleControls();
+      activatePage(state.activePage === "admin" ? "members" : (state.activePage || "members"), false);
+    }
+
+    function renderAll() {
+      renderSummary();
+      renderTeamRecords();
+      renderPublicParticipants();
+      renderAdminMembers();
+      renderTeamBoard();
+      renderMatches();
+      renderRankings();
+      renderWinners();
+      renderRaffleWheel();
+      syncModeCards();
+      syncRaffleControls();
+    }
+
+    function syncMatchEditModeButton() {
+      const button = $("toggleMatchEditModeBtn");
+      if (!button) return;
+      button.classList.toggle("active", Boolean(state.matchEditMode));
+      button.textContent = state.matchEditMode ? "✅ 편집 중" : "✏️ 대진 편집";
+    }
+
+    function renderSummary() {
+      const active = participants();
+      const male = active.filter(member => member.gender === "남").length;
+      const female = active.filter(member => member.gender === "여").length;
+      const guestCount = active.filter(member => member.isGuest).length;
+      const pendingCount = state.matches.filter(match => (match.status || "pending") === "pending").length;
+      const playingCount = state.matches.filter(match => (match.status || "pending") === "playing").length;
+      const finishedCount = state.matches.filter(match => (match.status || "pending") === "finished").length;
+
+      if ($("matchCountInline")) $("matchCountInline").textContent = state.matches.length + "경기";
+      if ($("pendingMatchCount")) $("pendingMatchCount").textContent = "시작 전 " + pendingCount;
+      if ($("playingMatchCount")) $("playingMatchCount").textContent = "경기 중 " + playingCount;
+      if ($("finishedMatchCount")) $("finishedMatchCount").textContent = "완료 " + finishedCount;
+      if ($("participantInlineSummary")) $("participantInlineSummary").textContent = "참가 " + active.length + "명";
+      if ($("participantGenderInline")) $("participantGenderInline").textContent = `남 ${male} · 여 ${female}`;
+      if ($("guestInlineSummary")) $("guestInlineSummary").textContent = "Guest " + guestCount + "명";
+      if ($("adminTotalMemberSummary")) $("adminTotalMemberSummary").textContent = "전체 회원 " + state.members.filter(member => !member.isGuest).length + "명";
+      if ($("adminSelectedSummary")) $("adminSelectedSummary").textContent = "참가 " + active.length + "명";
+      if ($("adminGuestSummary")) $("adminGuestSummary").textContent = "Guest " + state.members.filter(member => member.isGuest).length + "명";
+    }
+
+    function getTeamRecords() {
+      const keys = teamKeys();
+      const records = Object.fromEntries(keys.map(team => [team, {
+        team,
+        wins: 0,
+        losses: 0,
+        draws: 0,
+        pointsFor: 0,
+        pointsAgainst: 0
+      }]));
+
+      state.matches
+        .filter(match => (match.status || "pending") === "finished")
+        .forEach(match => {
+          const score1 = Number(match.score1 || 0);
+          const score2 = Number(match.score2 || 0);
+          const left = records[match.side1Team];
+          const right = records[match.side2Team];
+          if (!left || !right) return;
+
+          left.pointsFor += score1;
+          left.pointsAgainst += score2;
+          right.pointsFor += score2;
+          right.pointsAgainst += score1;
+
+          if (score1 > score2) {
+            left.wins += 1;
+            right.losses += 1;
+          } else if (score2 > score1) {
+            right.wins += 1;
+            left.losses += 1;
+          } else {
+            left.draws += 1;
+            right.draws += 1;
+          }
+        });
+
+      return keys.map(team => records[team]);
+    }
+
+    function renderTeamRecords() {
+      const grid = $("teamRecordGrid");
+      const leaderBanner = $("teamLeaderBanner");
+      const leaderText = $("leadingTeamText");
+      const leaderSub = $("leadingTeamSub");
+      if (!grid || !leaderText || !leaderSub || !leaderBanner) return;
+
+      const records = getTeamRecords();
+      grid.innerHTML = records.map(record => `
+        <article class="team-record-card team-${record.team.toLowerCase()}">
+          <span class="record-team-name">${record.team}팀</span>
+          <strong class="record-score">${record.wins}승 ${record.losses}패${record.draws ? " " + record.draws + "무" : ""}</strong>
+          <span class="record-sub">득실 ${record.pointsFor - record.pointsAgainst >= 0 ? "+" : ""}${record.pointsFor - record.pointsAgainst}</span>
+        </article>
+      `).join("");
+
+      const finishedMatches = state.matches.filter(match => (match.status || "pending") === "finished").length;
+      if (!finishedMatches) {
+        leaderText.textContent = "기록 대기";
+        leaderSub.textContent = "완료된 경기 결과가 반영됩니다.";
+        return;
+      }
+
+      const sorted = [...records].sort((a, b) => {
+        if (b.wins !== a.wins) return b.wins - a.wins;
+        const diffA = a.pointsFor - a.pointsAgainst;
+        const diffB = b.pointsFor - b.pointsAgainst;
+        if (diffB !== diffA) return diffB - diffA;
+        return b.pointsFor - a.pointsFor;
+      });
+
+      const best = sorted[0];
+      const second = sorted[1];
+      const tied =
+        second &&
+        best.wins === second.wins &&
+        (best.pointsFor - best.pointsAgainst) === (second.pointsFor - second.pointsAgainst) &&
+        best.pointsFor === second.pointsFor;
+
+      leaderText.textContent = tied ? "공동 우세" : `${best.team}팀 우세`;
+      leaderSub.textContent = tied
+        ? "승수와 득실이 동일합니다."
+        : `${best.wins}승 ${best.losses}패 · 득실 ${best.pointsFor - best.pointsAgainst >= 0 ? "+" : ""}${best.pointsFor - best.pointsAgainst}`;
+    }
+
+    function renderPublicParticipants() {
+      const list = $("publicParticipantList");
+      if (!list) return;
+
+      const active = sortByKoreanName(participants());
+      list.innerHTML = active.length
+        ? active.map((member, index) => {
+          const genderClass = member.gender === "여" ? "female" : "male";
+          return `
+            <article class="public-participant-card ${genderClass}">
+              <div class="participant-number">${index + 1}</div>
+              <div>
+                <strong>${safeText(member.name)}</strong>
+                <small>${member.team ? member.team + "팀" : "팀 미정"}${member.isGuest ? " · Guest" : ""}</small>
+              </div>
+              <span class="gender-chip ${genderClass}">${member.gender}</span>
+            </article>
+          `;
+        }).join("")
+        : `<div class="empty-box" style="grid-column:1/-1;">아직 확정된 참가자가 없습니다.</div>`;
+    }
+
+    function renderAdminMembers() {
+      const list = $("adminMemberList");
+      if (!list) return;
+
+      const sortedMembers = sortByKoreanName(state.members);
+
+      list.innerHTML = sortedMembers.length
+        ? sortedMembers.map((member, index) => `
+          <article class="admin-member-card">
+            <div class="admin-member-number">${index + 1}</div>
+            <div class="admin-member-content">
+              <div class="admin-member-top">
+                <div class="admin-member-title">
+                  <strong title="${safeText(member.name)}">${safeText(member.name)}</strong>
+                  <small></small>
+                </div>
+                <span class="admin-member-meta-inline ${member.isGuest ? "guest" : ""}">
+                  ${member.isGuest ? "Guest" : "정회원"}
+                </span>
+                <button class="admin-participation-btn ${member.joined ? "on" : "off"}" onclick="toggleJoin('${member.id}')">
+                  ${member.joined ? "참가" : "불참"}
+                </button>
+              </div>
+
+              <div class="admin-member-controls">
+                <select class="compact-select" onchange="updateMember('${member.id}','gender',this.value)">
+                  <option value="남" ${member.gender === "남" ? "selected" : ""}>남</option>
+                  <option value="여" ${member.gender === "여" ? "selected" : ""}>여</option>
+                </select>
+                <select class="compact-select" onchange="updateMember('${member.id}','skill',Number(this.value))">
+                  ${[1,2,3,4,5].map(level => `<option value="${level}" ${Number(member.skill) === level ? "selected" : ""}>실력 ${level}</option>`).join("")}
+                </select>
+                <button class="delete-mini" onclick="removeMember('${member.id}')" title="${member.isGuest ? "Guest 삭제" : "회원 삭제"}">×</button>
+              </div>
+            </div>
+          </article>
+        `).join("")
+        : `<div class="empty-box">회원이 없습니다.</div>`;
+    }
+
+    function teamStats(team) {
+      const rows = participants().filter(member => (member.team || "") === team);
+      const male = rows.filter(member => member.gender === "남").length;
+      const female = rows.filter(member => member.gender === "여").length;
+      const avgSkill = rows.length
+        ? (rows.reduce((sum, member) => sum + Number(member.skill || 0), 0) / rows.length).toFixed(1)
+        : "-";
+      return { rows, male, female, avgSkill };
+    }
+
+    function assignmentCard(member) {
+      const current = member.team || "";
+      const genderClass = member.gender === "여" ? "female" : "male";
+      return `
+        <div class="assignment-card compact-assignment-row ${genderClass}">
+          <div class="assignment-identity">
+            <strong>${safeText(member.name)}</strong>
+            <span class="assignment-gender-pill ${genderClass}">${member.gender}</span>
+            ${member.isGuest ? `<span class="assignment-guest-pill">Guest</span>` : ""}
+          </div>
+          <div class="quick-move compact-quick-move ${state.teamCount === 3 ? "three" : ""}">
+            ${allMoveTargets().map(target => {
+              const label = target || "미정";
+              const targetClass =
+                target === "A" ? "target-a" :
+                target === "B" ? "target-b" :
+                target === "C" ? "target-c" : "target-unassigned";
+              return `<button class="move-btn ${targetClass} ${current === target ? "active" : ""}" onclick="moveMember('${member.id}','${target}')">${label}</button>`;
+            }).join("")}
+          </div>
+        </div>
+      `;
+    }
+
+    function renderTeamBoard() {
+      const board = $("teamBoard");
+      board.className = "team-board" + (state.teamCount === 3 ? " three" : "");
+
+      const columns = [
+        { key: "", label: "미정", cls: "u", unassigned: true },
+        ...teamKeys().map(team => ({ key: team, label: team + "팀", cls: team.toLowerCase(), unassigned: false }))
+      ];
+
+      board.innerHTML = columns.map(column => {
+        const stats = teamStats(column.key);
+        return `
+          <article class="team-column ${column.unassigned ? "unassigned" : ""}">
+            <div class="team-head ${column.cls}">
+              <div class="team-head-top">
+                <h3>${column.label}</h3>
+                <span class="head-count">${stats.rows.length}명</span>
+              </div>
+              <div class="team-stat">${column.unassigned ? "아직 배정되지 않은 인원" : `평균 실력 ${stats.avgSkill} · 남 ${stats.male} · 여 ${stats.female}`}</div>
+            </div>
+            <div class="team-cards">
+              ${stats.rows.length ? stats.rows.map(assignmentCard).join("") : `<div class="board-empty">해당 인원이 없습니다.</div>`}
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function getTeamPlayerOptions(team, selectedIds = []) {
+      const selectedSet = new Set(selectedIds.filter(Boolean));
+      return sortByKoreanName(
+        participants().filter(member => member.team === team)
+      ).map(member => {
+        const selected = selectedSet.has(member.id) ? " selected" : "";
+        return `<option value="${member.id}"${selected}>${safeText(member.name)}${member.isGuest ? " · Guest" : ""}</option>`;
+      }).join("");
+    }
+
+    function getTeamOptions(selectedTeam = "") {
+      return teamKeys().map(team =>
+        `<option value="${team}" ${team === selectedTeam ? "selected" : ""}>${team}팀</option>`
+      ).join("");
+    }
+
+    function openMatchEditor(matchId = null, mode = "edit") {
+      editingMatchId = matchId;
+      editingMatchMode = mode;
+
+      const existing = matchId ? state.matches.find(match => match.id === matchId) : null;
+      const defaultTeams = getMatchupsForCurrentTeamCount()[0] || ["A", "B"];
+      const draft = existing || {
+        side1Team: defaultTeams[0],
+        side2Team: defaultTeams[1],
+        side1Players: [],
+        side2Players: []
+      };
+
+      $("matchEditorTitle").textContent = existing ? "대진 편집" : "경기 추가";
+      $("matchEditorSubtitle").textContent = existing
+        ? `${existing.round}게임 선수를 직접 수정합니다.`
+        : "새 경기를 직접 구성합니다.";
+
+      $("editorSide1Team").innerHTML = getTeamOptions(draft.side1Team);
+      $("editorSide2Team").innerHTML = getTeamOptions(draft.side2Team);
+
+      refreshMatchEditorPlayerOptions(draft.side1Players || [], draft.side2Players || []);
+      $("matchEditorModal").classList.remove("hidden");
+    }
+
+    function refreshMatchEditorPlayerOptions(side1Selected = [], side2Selected = []) {
+      const side1Team = $("editorSide1Team").value || "A";
+      const side2Team = $("editorSide2Team").value || "B";
+
+      $("editorSide1Player1").innerHTML = `<option value="">선수 선택</option>` + getTeamPlayerOptions(side1Team, [side1Selected[0]]);
+      $("editorSide1Player2").innerHTML = `<option value="">선수 선택</option>` + getTeamPlayerOptions(side1Team, [side1Selected[1]]);
+      $("editorSide2Player1").innerHTML = `<option value="">선수 선택</option>` + getTeamPlayerOptions(side2Team, [side2Selected[0]]);
+      $("editorSide2Player2").innerHTML = `<option value="">선수 선택</option>` + getTeamPlayerOptions(side2Team, [side2Selected[1]]);
+
+      $("editorSide1Player1").value = side1Selected[0] || "";
+      $("editorSide1Player2").value = side1Selected[1] || "";
+      $("editorSide2Player1").value = side2Selected[0] || "";
+      $("editorSide2Player2").value = side2Selected[1] || "";
+    }
+
+    function closeMatchEditor() {
+      editingMatchId = null;
+      editingMatchMode = "edit";
+      $("matchEditorModal").classList.add("hidden");
+    }
+
+    function getEditorDraftMatch() {
+      return {
+        side1Team: $("editorSide1Team").value,
+        side2Team: $("editorSide2Team").value,
+        side1Players: [$("editorSide1Player1").value, $("editorSide1Player2").value].filter(Boolean),
+        side2Players: [$("editorSide2Player1").value, $("editorSide2Player2").value].filter(Boolean)
+      };
+    }
+
+    function validateEditorDraft(draft) {
+      if (!draft.side1Team || !draft.side2Team) return "양쪽 팀을 선택해 주세요.";
+      if (draft.side1Team === draft.side2Team) return "서로 다른 팀끼리 경기를 구성해 주세요.";
+      if (draft.side1Players.length !== 2 || draft.side2Players.length !== 2) return "양쪽 팀 선수 2명씩 선택해 주세요.";
+      const allPlayers = [...draft.side1Players, ...draft.side2Players];
+      if (new Set(allPlayers).size !== allPlayers.length) return "같은 선수를 한 경기 안에 중복 선택할 수 없습니다.";
+      return "";
+    }
+
+    function applyMatchEditorSave(resetScore = false) {
+      const draft = getEditorDraftMatch();
+      const validation = validateEditorDraft(draft);
+      if (validation) {
+        alert(validation);
+        return;
+      }
+
+      if (editingMatchMode === "add") {
+        state.matches.push({
+          id: createId("match"),
+          round: state.matches.length + 1,
+          court: state.matches.length + 1,
+          side1Team: draft.side1Team,
+          side2Team: draft.side2Team,
+          side1Players: draft.side1Players,
+          side2Players: draft.side2Players,
+          score1: "",
+          score2: "",
+          status: "pending"
+        });
+      } else {
+        state.matches = state.matches.map(match => {
+          if (match.id !== editingMatchId) return match;
+          return {
+            ...match,
+            side1Team: draft.side1Team,
+            side2Team: draft.side2Team,
+            side1Players: draft.side1Players,
+            side2Players: draft.side2Players,
+            score1: resetScore ? "" : match.score1,
+            score2: resetScore ? "" : match.score2,
+            status: resetScore ? "pending" : match.status
+          };
+        });
+      }
+
+      renumberMatches();
+      closeMatchEditor();
+      renderAll();
+      scheduleSave();
+    }
+
+    function saveMatchEditor() {
+      const existing = editingMatchId ? state.matches.find(match => match.id === editingMatchId) : null;
+      const hasScore = existing && (String(existing.score1 || "") !== "" || String(existing.score2 || "") !== "");
+      if (existing && hasScore) {
+        requestConfirmation({
+          title: "점수를 초기화할까요?",
+          message: "선수 구성을 변경하면 기존 점수와 경기 상태를 초기화하는 것이 안전합니다.\n확인을 누르면 점수를 비우고 저장합니다.",
+          onConfirm: () => applyMatchEditorSave(true)
+        });
+        return;
+      }
+      applyMatchEditorSave(false);
+    }
+
+    function renumberMatches() {
+      state.matches = state.matches.map((match, index) => ({
+        ...match,
+        round: index + 1,
+        court: index + 1
+      }));
+    }
+
+    function moveMatchOrder(matchId, direction) {
+      const index = state.matches.findIndex(match => match.id === matchId);
+      if (index < 0) return;
+      const swapIndex = index + direction;
+      if (swapIndex < 0 || swapIndex >= state.matches.length) return;
+      const next = [...state.matches];
+      [next[index], next[swapIndex]] = [next[swapIndex], next[index]];
+      state.matches = next;
+      renumberMatches();
+      renderAll();
+      scheduleSave();
+    }
+
+    function deleteCustomMatch(matchId) {
+      requestConfirmation({
+        title: "이 경기를 삭제할까요?",
+        message: "해당 경기 점수와 상태가 함께 삭제됩니다.",
+        onConfirm: () => {
+          state.matches = state.matches.filter(match => match.id !== matchId);
+          renumberMatches();
+          renderAll();
+          scheduleSave();
+        }
+      });
+    }
+
+    function toggleMatchEditMode() {
+      state.matchEditMode = !state.matchEditMode;
+      renderAll();
+      scheduleSave();
+    }
+
+    function renderMatches() {
+      const area = $("matchArea");
+      if (!state.matches.length) {
+        area.innerHTML = `
+          <div class="match-placeholder">
+            <strong>아직 대진표가 없습니다.</strong>
+            <span>조 편성 후 대진표 생성 버튼을 누르면 여기에 나타납니다.</span>
+          </div>
+        `;
+        return;
+      }
+
+      const appearanceCounts = new Map();
+
+      const playerNamesWithOrdinals = (playerIds) => {
+        return playerIds.map(id => {
+          const member = memberById(id);
+          const ordinal = (appearanceCounts.get(id) || 0) + 1;
+          appearanceCounts.set(id, ordinal);
+          return `<span class="player-name-token">${safeText(member?.name || "-")}<sup class="player-game-ordinal">${ordinal}</sup></span>`;
+        }).join(" · ");
+      };
+
+      area.innerHTML = `<div class="match-list">` + state.matches.map(match => {
+        const status = match.status || "pending";
+        const statusLabel =
+          status === "playing" ? "경기 중" :
+          status === "finished" ? "완료" : "시작 전";
+        const matchType = getMatchType(match);
+        const matchTypeClass =
+          matchType === "남복" ? "men" :
+          matchType === "여복" ? "women" : "mixed";
+        const side1Display = playerNamesWithOrdinals(match.side1Players);
+        const side2Display = playerNamesWithOrdinals(match.side2Players);
+
+        return `
+          <article class="match-row status-${status} ${state.matchEditMode ? "edit-mode" : ""}">
+            <div class="match-meta">
+              <span class="match-round">${match.round}게임</span>
+              <span class="match-type-badge ${matchTypeClass}">${matchType}</span>
+            </div>
+
+            <div class="compact-side">
+              <div class="compact-side-top">
+                <span class="team-badge ${match.side1Team.toLowerCase()}">${match.side1Team}팀</span>
+              </div>
+              <div class="compact-side-names" title="${safeText(pairNames(match.side1Players))}">${side1Display}</div>
+            </div>
+
+            <div class="compact-score-wrap">
+              <input class="compact-score" type="number" min="0" value="${match.score1}" placeholder="0" onchange="updateScore('${match.id}','score1',this.value)" />
+              <span class="compact-vs">:</span>
+              <input class="compact-score" type="number" min="0" value="${match.score2}" placeholder="0" onchange="updateScore('${match.id}','score2',this.value)" />
+            </div>
+
+            <div class="compact-side">
+              <div class="compact-side-top">
+                <span class="team-badge ${match.side2Team.toLowerCase()}">${match.side2Team}팀</span>
+              </div>
+              <div class="compact-side-names" title="${safeText(pairNames(match.side2Players))}">${side2Display}</div>
+            </div>
+
+            <div class="match-status-box">
+              <button
+                type="button"
+                class="status-pill status-cycle-btn ${status}"
+                onclick="cycleMatchStatus('${match.id}')"
+                title="누르면 상태가 변경됩니다"
+              >
+                ${statusLabel}
+              </button>
+            </div>
+
+            <div class="match-edit-actions">
+              <button class="mini-edit-btn" onclick="moveMatchOrder('${match.id}', -1)" title="위로">↑</button>
+              <button class="mini-edit-btn" onclick="moveMatchOrder('${match.id}', 1)" title="아래로">↓</button>
+              <button class="mini-edit-btn" onclick="openMatchEditor('${match.id}', 'edit')" title="선수 편집">✎</button>
+              <button class="mini-edit-btn danger" onclick="deleteCustomMatch('${match.id}')" title="삭제">×</button>
+            </div>
+          </article>
+        `;
+      }).join("") + `</div>`;
+    }
+
+    function getMatchType(match) {
+      const side1 = match.side1Players.map(id => memberById(id)?.gender).filter(Boolean);
+      const side2 = match.side2Players.map(id => memberById(id)?.gender).filter(Boolean);
+      const allGenders = [...side1, ...side2];
+
+      if (allGenders.length === 4 && allGenders.every(gender => gender === "남")) return "남복";
+      if (allGenders.length === 4 && allGenders.every(gender => gender === "여")) return "여복";
+
+      const side1Mixed = side1.includes("남") && side1.includes("여");
+      const side2Mixed = side2.includes("남") && side2.includes("여");
+      if (side1Mixed && side2Mixed) return "혼복";
+
+      return "혼복";
+    }
+
+    function pairNames(ids) {
+      return ids.map(id => safeText(memberById(id)?.name || "-")).join(" · ");
+    }
+
+    function getRankings() {
+      const scoreMap = new Map();
+      participants().forEach(member => {
+        scoreMap.set(member.id, {
+          id: member.id,
+          name: member.name,
+          team: member.team || "-",
+          games: 0,
+          totalScore: 0
+        });
+      });
+
+      state.matches.forEach(match => {
+        const score1 = Number(match.score1 || 0);
+        const score2 = Number(match.score2 || 0);
+
+        match.side1Players.forEach(id => {
+          const row = scoreMap.get(id);
+          if (!row) return;
+          row.games += 1;
+          row.totalScore += score1;
+        });
+
+        match.side2Players.forEach(id => {
+          const row = scoreMap.get(id);
+          if (!row) return;
+          row.games += 1;
+          row.totalScore += score2;
+        });
+      });
+
+      return [...scoreMap.values()].sort((a, b) => {
+        if (b.totalScore !== a.totalScore) return b.totalScore - a.totalScore;
+        if (b.games !== a.games) return b.games - a.games;
+        return a.name.localeCompare(b.name, "ko");
+      });
+    }
+
+    function renderRankings() {
+      const rankings = getRankings();
+      const list = $("rankingList");
+      list.innerHTML = rankings.length
+        ? rankings.map((rank, index) => {
+          const rankLabel =
+            index === 0 ? "👑" :
+            index === 1 ? "🥈" :
+            index === 2 ? "🥉" : String(index + 1);
+          const topClass =
+            index === 0 ? "rank-first" :
+            index === 1 ? "rank-second" :
+            index === 2 ? "rank-third" : "";
+          return `
+            <article class="rank-card compact-rank-row ${topClass}">
+              <div class="rank-no">${rankLabel}</div>
+              <div class="rank-name-cell">
+                <strong class="rank-name">${safeText(rank.name)}</strong>
+                <span class="rank-submeta">${rank.team}팀 · ${rank.games}경기</span>
+              </div>
+              <div class="rank-score-cell">
+                <span>점수</span>
+                <strong>${rank.totalScore}</strong>
+              </div>
+            </article>
+          `;
+        }).join("")
+        : `<div class="empty-box">참가자가 없습니다.</div>`;
+    }
+
+    function renderWinners() {
+      const list = $("winnerList");
+      list.innerHTML = state.giftWinners.length
+        ? state.giftWinners.map((winner, index) => `
+          <article class="winner">
+            <div>
+              <small>WINNER ${state.giftWinners.length - index}</small>
+              <strong>${safeText(winner.memberName)}</strong>
+            </div>
+            <div class="gift-chip">${safeText(winner.giftName)}</div>
+          </article>
+        `).join("")
+        : `<div class="empty-box">아직 추첨 결과가 없습니다.</div>`;
+    }
+
+    function syncModeCards() {
+      document.querySelectorAll(".mode-card").forEach(card => {
+        card.classList.toggle("active", Number(card.dataset.teamCount) === state.teamCount);
+      });
+    }
+
+    function toggleJoin(id) {
+      state.members = state.members.map(member => {
+        if (member.id !== id) return member;
+        const nextJoined = !member.joined;
+        return { ...member, joined: nextJoined, team: nextJoined ? member.team : "" };
+      });
+      state.members = state.members.map(member => member.id === id ? { ...member, team: "" } : member);
+      state.members = state.members.map(member => member.joined ? member : { ...member, team: "" });
+      state.matches = [];
+      renderAll();
+      scheduleSave();
+    }
+
+    function updateMember(id, key, value) {
+      state.members = state.members.map(member => member.id === id ? { ...member, [key]: value } : member);
+      if (key === "team") state.matches = [];
+      renderAll();
+      scheduleSave();
+    }
+
+    function moveMember(id, team) {
+      state.members = state.members.map(member => member.id === id ? { ...member, team } : member);
+      state.matches = [];
+      renderAll();
+      scheduleSave();
+    }
+
+    function removeMember(id) {
+      state.members = state.members.filter(member => member.id !== id);
+      state.matches = state.matches.filter(match => ![...match.side1Players, ...match.side2Players].includes(id));
+      state.giftWinners = state.giftWinners.filter(winner => winner.memberId !== id);
+      renderAll();
+      scheduleSave();
+    }
+
+    function addGuest() {
+      const name = $("guestName").value.trim();
+      if (!name) return;
+      state.members.push({
+        id: createId("guest"),
+        name,
+        gender: $("guestGender").value,
+        skill: Number($("guestSkill").value),
+        joined: true,
+        team: "",
+        isGuest: true
+      });
+      $("guestName").value = "";
+      $("guestGender").value = "남";
+      $("guestSkill").value = "3";
+      state.matches = [];
+      renderAll();
+      scheduleSave();
+    }
+
+    function setTeamCount(count) {
+      if (Number(count) === Number(state.teamCount)) return;
+      requestConfirmation({
+        title: "조 편성 방식을 바꿀까요?",
+        message: "팀 수를 변경하면 현재 조 편성과 대진표가 초기화됩니다.",
+        onConfirm: () => {
+          state.teamCount = count;
+          state.members = state.members.map(member => ({
+            ...member,
+            team: teamKeys().includes(member.team) ? member.team : ""
+          }));
+          state.matches = [];
+          renderAll();
+          scheduleSave();
+        }
+      });
+    }
+
+    function randomizeTeams() {
+      requestConfirmation({
+        title: "조 편성을 새로 만들까요?",
+        message: "현재 조 편성과 대진표를 지우고\n남녀 균형 랜덤 편성을 다시 진행합니다.",
+        onConfirm: () => {
+          const active = participants();
+          const assignment = new Map();
+
+          ["남", "여"].forEach(gender => {
+            shuffle(active.filter(member => member.gender === gender)).forEach((member, index) => {
+              assignment.set(member.id, teamKeys()[index % teamKeys().length]);
+            });
+          });
+
+          state.members = state.members.map(member => ({
+            ...member,
+            team: member.joined ? (assignment.get(member.id) || "") : ""
+          }));
+          state.matches = [];
+          renderAll();
+          scheduleSave();
+        }
+      });
+    }
+
+    function resetTeams() {
+      requestConfirmation({
+        title: "팀 편성을 초기화할까요?",
+        message: "현재 배정된 모든 팀 정보와 대진표가 삭제됩니다.",
+        onConfirm: () => {
+          state.members = state.members.map(member => ({ ...member, team: "" }));
+          state.matches = [];
+          renderAll();
+          scheduleSave();
+        }
+      });
+    }
+
+    function chunkPairs(ids) {
+      const pairs = [];
+      for (let i = 0; i < ids.length - 1; i += 2) {
+        pairs.push([ids[i], ids[i + 1]]);
+      }
+      return pairs;
+    }
+
+    function eligiblePlayersForTeam(team, playCounts, desired, gender = null) {
+      return shuffle(
+        participants()
+          .filter(member => member.team === team)
+          .filter(member => gender ? member.gender === gender : true)
+          .filter(member => (playCounts.get(member.id) || 0) < desired)
+      ).sort((a, b) => {
+        const diff = (playCounts.get(a.id) || 0) - (playCounts.get(b.id) || 0);
+        if (diff !== 0) return diff;
+        return String(a.name || "").localeCompare(String(b.name || ""), "ko-KR");
+      });
+    }
+
+    function choosePair(team, playCounts, desired, matchType = "any") {
+      if (matchType === "men") {
+        const candidates = eligiblePlayersForTeam(team, playCounts, desired, "남");
+        if (candidates.length < 2) return null;
+        const pair = [candidates[0].id, candidates[1].id];
+        pair.forEach(id => playCounts.set(id, (playCounts.get(id) || 0) + 1));
+        return pair;
+      }
+
+      if (matchType === "women") {
+        const candidates = eligiblePlayersForTeam(team, playCounts, desired, "여");
+        if (candidates.length < 2) return null;
+        const pair = [candidates[0].id, candidates[1].id];
+        pair.forEach(id => playCounts.set(id, (playCounts.get(id) || 0) + 1));
+        return pair;
+      }
+
+      if (matchType === "mixed") {
+        const maleCandidates = eligiblePlayersForTeam(team, playCounts, desired, "남");
+        const femaleCandidates = eligiblePlayersForTeam(team, playCounts, desired, "여");
+        if (!maleCandidates.length || !femaleCandidates.length) return null;
+        const pair = [maleCandidates[0].id, femaleCandidates[0].id];
+        pair.forEach(id => playCounts.set(id, (playCounts.get(id) || 0) + 1));
+        return pair;
+      }
+
+      const candidates = eligiblePlayersForTeam(team, playCounts, desired);
+      if (candidates.length < 2) return null;
+      const pair = [candidates[0].id, candidates[1].id];
+      pair.forEach(id => playCounts.set(id, (playCounts.get(id) || 0) + 1));
+      return pair;
+    }
+
+    function remainingCapacity(team, playCounts, desired, matchType = "any") {
+      const active = participants().filter(member => member.team === team);
+      const remaining = member => Math.max(0, desired - (playCounts.get(member.id) || 0));
+
+      if (matchType === "men") {
+        return active
+          .filter(member => member.gender === "남")
+          .reduce((sum, member) => sum + remaining(member), 0);
+      }
+
+      if (matchType === "women") {
+        return active
+          .filter(member => member.gender === "여")
+          .reduce((sum, member) => sum + remaining(member), 0);
+      }
+
+      if (matchType === "mixed") {
+        const maleCapacity = active
+          .filter(member => member.gender === "남")
+          .reduce((sum, member) => sum + remaining(member), 0);
+        const femaleCapacity = active
+          .filter(member => member.gender === "여")
+          .reduce((sum, member) => sum + remaining(member), 0);
+        return Math.min(maleCapacity, femaleCapacity);
+      }
+
+      return active.reduce((sum, member) => sum + remaining(member), 0);
+    }
+
+    function teamPairCapacity(team, playCounts, desired, matchType) {
+      if (matchType === "mixed") {
+        const maleCandidates = eligiblePlayersForTeam(team, playCounts, desired, "남").length;
+        const femaleCandidates = eligiblePlayersForTeam(team, playCounts, desired, "여").length;
+        return Math.min(maleCandidates, femaleCandidates);
+      }
+      return Math.floor(remainingCapacity(team, playCounts, desired, matchType) / 2);
+    }
+
+    function getMatchupsForCurrentTeamCount() {
+      return state.teamCount === 2
+        ? [["A", "B"]]
+        : [["A", "B"], ["B", "C"], ["C", "A"]];
+    }
+
+    function chooseBestMatchupForType(playCounts, desired, matchType) {
+      return getMatchupsForCurrentTeamCount()
+        .map(([left, right]) => ({
+          left,
+          right,
+          capacity: Math.min(
+            teamPairCapacity(left, playCounts, desired, matchType),
+            teamPairCapacity(right, playCounts, desired, matchType)
+          )
+        }))
+        .filter(item => item.capacity > 0)
+        .sort((a, b) => b.capacity - a.capacity)[0] || null;
+    }
+
+    function pushGeneratedMatch(generated, courtCounter, selected, leftPair, rightPair) {
+      generated.push({
+        id: createId("match"),
+        round: generated.length + 1,
+        court: courtCounter,
+        side1Team: selected.left,
+        side2Team: selected.right,
+        side1Players: leftPair,
+        side2Players: rightPair,
+        score1: "",
+        score2: "",
+        status: "pending"
+      });
+    }
+
+    function scheduleMatchesByType(generated, playCounts, desired, matchType, targetCount = Infinity, courtCounterStart = 1) {
+      let created = 0;
+      let courtCounter = courtCounterStart;
+      let safety = 0;
+
+      while (created < targetCount && safety < 1000) {
+        safety += 1;
+        const selected = chooseBestMatchupForType(playCounts, desired, matchType);
+        if (!selected) break;
+
+        const leftPair = choosePair(selected.left, playCounts, desired, matchType);
+        const rightPair = choosePair(selected.right, playCounts, desired, matchType);
+        if (!leftPair || !rightPair) break;
+
+        pushGeneratedMatch(generated, courtCounter, selected, leftPair, rightPair);
+        created += 1;
+        courtCounter += 1;
+      }
+
+      return { created, nextCourtCounter: courtCounter };
+    }
+
+    function applyGenerateMatches() {
+      const desired = Number(state.desiredGamesPerPlayer || 2);
+      const requestedMen = Math.max(0, Number(state.desiredMenDoublesCount || 0));
+      const requestedWomen = Math.max(0, Number(state.desiredWomenDoublesCount || 0));
+      const playCounts = new Map(participants().map(member => [member.id, 0]));
+      const generated = [];
+      let courtCounter = 1;
+
+      const menResult = scheduleMatchesByType(generated, playCounts, desired, "men", requestedMen, courtCounter);
+      courtCounter = menResult.nextCourtCounter;
+
+      const womenResult = scheduleMatchesByType(generated, playCounts, desired, "women", requestedWomen, courtCounter);
+      courtCounter = womenResult.nextCourtCounter;
+
+      const mixedResult = scheduleMatchesByType(generated, playCounts, desired, "mixed", Infinity, courtCounter);
+      courtCounter = mixedResult.nextCourtCounter;
+
+      state.matches = generated;
+
+      const feedback = $("matchPlanFeedback");
+      if (feedback) {
+        const menText = menResult.created === requestedMen
+          ? `남복 ${menResult.created}경기`
+          : `남복 ${menResult.created}/${requestedMen}경기`;
+        const womenText = womenResult.created === requestedWomen
+          ? `여복 ${womenResult.created}경기`
+          : `여복 ${womenResult.created}/${requestedWomen}경기`;
+        feedback.textContent =
+          `생성 결과: ${menText} · ${womenText} · 혼복 ${mixedResult.created}경기 · 총 ${generated.length}경기`;
+        feedback.classList.toggle("warning", menResult.created !== requestedMen || womenResult.created !== requestedWomen);
+      }
+
+      renderAll();
+      scheduleSave();
+    }
+
+    function generateMatches() {
+      requestConfirmation({
+        title: "대진표를 새로 만들까요?",
+        message: "현재 경기표가 있으면 모두 교체됩니다.\n남복·여복 경기 수와 참가 경기 수 기준으로 다시 생성합니다.",
+        onConfirm: applyGenerateMatches
+      });
+    }
+
+
+    function clearMatches() {
+      requestConfirmation({
+        title: "대진표를 비울까요?",
+        message: "현재 입력된 경기 상태와 점수가 모두 사라집니다.",
+        onConfirm: () => {
+          state.matches = [];
+          renderAll();
+          scheduleSave();
+        }
+      });
+    }
+
+    function updateScore(id, key, value) {
+      state.matches = state.matches.map(match => match.id === id ? {
+        ...match,
+        [key]: value === "" ? "" : Math.max(0, Number(value))
+      } : match);
+      renderSummary();
+      renderTeamRecords();
+      renderMatches();
+      renderRankings();
+      renderRaffleWheel();
+      scheduleSave();
+    }
+
+    function updateMatchStatus(id, status) {
+      state.matches = state.matches.map(match =>
+        match.id === id ? { ...match, status } : match
+      );
+      renderSummary();
+      renderTeamRecords();
+      renderMatches();
+      scheduleSave();
+    }
+
+    function cycleMatchStatus(id) {
+      const current = state.matches.find(match => match.id === id)?.status || "pending";
+      const nextStatus =
+        current === "pending" ? "playing" :
+        current === "playing" ? "finished" : "pending";
+      updateMatchStatus(id, nextStatus);
+    }
+
+    function getExcludedRankerIds() {
+      if (!state.excludeRankersFromRaffle) return new Set();
+      return new Set(
+        getRankings()
+          .slice(0, Math.max(0, Number(state.excludeTopRankCount || 0)))
+          .map(rank => rank.id)
+      );
+    }
+
+    function getRafflePool() {
+      const excludedRankerIds = getExcludedRankerIds();
+      return sortByKoreanName(
+        participants().filter(member =>
+          !state.giftWinners.some(winner => winner.memberId === member.id) &&
+          !excludedRankerIds.has(member.id)
+        )
+      );
+    }
+
+    function buildWheelSvg(pool) {
+      if (!pool.length) return `<div class="wheel-empty">추첨 대상이 없습니다</div>`;
+
+      const cx = 200;
+      const cy = 200;
+      const radius = 188;
+      const slice = 360 / pool.length;
+      const palette = ["#dcebff", "#ffe1ec", "#e6f8ef", "#fff0cc", "#ede7ff", "#e8f5ff"];
+      const fontSize = pool.length > 18 ? 9 : pool.length > 12 ? 11 : 13;
+
+      const polar = (angleDeg) => {
+        const radians = (angleDeg - 90) * Math.PI / 180;
+        return [cx + radius * Math.cos(radians), cy + radius * Math.sin(radians)];
+      };
+
+      const paths = pool.map((member, index) => {
+        const start = index * slice;
+        const end = start + slice;
+        const [x1, y1] = polar(start);
+        const [x2, y2] = polar(end);
+        const largeArc = slice > 180 ? 1 : 0;
+        const mid = start + slice / 2;
+        const labelRadius = radius * 0.64;
+        const midRad = (mid - 90) * Math.PI / 180;
+        const tx = cx + labelRadius * Math.cos(midRad);
+        const ty = cy + labelRadius * Math.sin(midRad);
+        const fill = palette[index % palette.length];
+        const safeName = safeText(member.name);
+        const displayName = safeName.length > 8 ? safeName.slice(0, 8) + "…" : safeName;
+
+        return `
+          <path d="M ${cx} ${cy} L ${x1.toFixed(2)} ${y1.toFixed(2)} A ${radius} ${radius} 0 ${largeArc} 1 ${x2.toFixed(2)} ${y2.toFixed(2)} Z"
+                fill="${fill}" stroke="#ffffff" stroke-width="2"></path>
+          <text x="${tx.toFixed(2)}" y="${ty.toFixed(2)}"
+                text-anchor="middle"
+                dominant-baseline="middle"
+                transform="rotate(${mid} ${tx.toFixed(2)} ${ty.toFixed(2)})"
+                fill="#071a33"
+                font-size="${fontSize}"
+                font-weight="900">${displayName}</text>
+        `;
+      }).join("");
+
+      return `
+        <svg class="wheel-svg" viewBox="0 0 400 400" aria-label="경품 추첨 돌림판">
+          ${paths}
+          <circle cx="200" cy="200" r="38" fill="#071a33"></circle>
+          <text x="200" y="204" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="900">DRAW</text>
+        </svg>
+      `;
+    }
+
+    function renderRaffleWheel() {
+      const wheel = $("raffleWheel");
+      const eligibility = $("raffleEligibilityText");
+      if (!wheel || !eligibility) return;
+
+      const pool = getRafflePool();
+      const excludedCount = state.excludeRankersFromRaffle
+        ? Math.min(Number(state.excludeTopRankCount || 0), getRankings().length)
+        : 0;
+
+      eligibility.textContent =
+        `추첨 대상 ${pool.length}명` +
+        (excludedCount ? ` · 순위권 ${excludedCount}명 제외` : "") +
+        (state.giftWinners.length ? ` · 이미 당첨 ${state.giftWinners.length}명 제외` : "");
+
+      wheel.innerHTML = buildWheelSvg(pool);
+      wheel.style.transform = `rotate(${Number(state.wheelRotation || 0)}deg)`;
+    }
+
+    function syncRaffleControls() {
+      const toggle = $("excludeRankersToggle");
+      const select = $("excludeTopCountSelect");
+      if (!toggle || !select) return;
+      toggle.checked = Boolean(state.excludeRankersFromRaffle);
+      select.disabled = !state.excludeRankersFromRaffle;
+      select.value = String(state.excludeTopRankCount || 3);
+    }
+
+    function spinRaffleWheel() {
+      if (raffleSpinLocked) return;
+      const pool = getRafflePool();
+      if (!pool.length) return;
+
+      raffleSpinLocked = true;
+      const wheel = $("raffleWheel");
+      const button = $("spinWheelBtn");
+      if (button) button.disabled = true;
+
+      const winnerIndex = Math.floor(Math.random() * pool.length);
+      const winner = pool[winnerIndex];
+      const slice = 360 / pool.length;
+      const targetCenter = winnerIndex * slice + slice / 2;
+      const currentRotation = Number(state.wheelRotation || 0);
+      const normalized = ((currentRotation % 360) + 360) % 360;
+      const targetNormalized = (360 - targetCenter) % 360;
+      const delta = ((targetNormalized - normalized + 360) % 360) + 360 * 7;
+      const nextRotation = currentRotation + delta;
+
+      state.wheelRotation = nextRotation;
+      wheel.style.transform = `rotate(${nextRotation}deg)`;
+
+      window.setTimeout(() => {
+        const giftName = $("giftName").value.trim() || "행운상";
+        state.giftWinners.unshift({
+          id: createId("gift"),
+          memberId: winner.id,
+          memberName: winner.name,
+          giftName
+        });
+
+        const result = $("raffleResultCard");
+        if (result) {
+          result.innerHTML = `<span>최근 당첨자</span><strong>${safeText(winner.name)}</strong>`;
+        }
+
+        raffleSpinLocked = false;
+        if (button) button.disabled = false;
+        renderWinners();
+        renderRaffleWheel();
+        scheduleSave();
+      }, 5400);
+    }
+
+    function drawGift() {
+      spinRaffleWheel();
+    }
+
+    function resetGift() {
+      state.giftWinners = [];
+      const result = $("raffleResultCard");
+      if (result) result.innerHTML = `<span>최근 당첨자</span><strong>대기</strong>`;
+      renderWinners();
+      renderRaffleWheel();
+      scheduleSave();
+    }
+
+    function resetSample() {
+      state = clone(defaultState);
+      renderAll();
+      if ($("desiredGamesSelect")) $("desiredGamesSelect").value = String(state.desiredGamesPerPlayer || 2);
+      if ($("menDoublesCountInput")) $("menDoublesCountInput").value = String(state.desiredMenDoublesCount || 0);
+      if ($("womenDoublesCountInput")) $("womenDoublesCountInput").value = String(state.desiredWomenDoublesCount || 0);
+      activatePage("members", false);
+      saveNow();
+    }
+
+    function getAdminPassword() {
+      return localStorage.getItem(ADMIN_PASSWORD_KEY) || "0000";
+    }
+
+    function openAdminPasswordModal() {
+      pendingAdminNavigation = true;
+      $("adminPasswordModal").classList.remove("hidden");
+      $("adminPasswordInput").value = "";
+      $("adminPasswordError").textContent = "";
+      setTimeout(() => $("adminPasswordInput").focus(), 0);
+    }
+
+    function closeAdminPasswordModal() {
+      pendingAdminNavigation = false;
+      $("adminPasswordModal").classList.add("hidden");
+      $("adminPasswordInput").value = "";
+      $("adminPasswordError").textContent = "";
+    }
+
+    function confirmAdminLogin() {
+      const entered = $("adminPasswordInput").value;
+      if (entered !== getAdminPassword()) {
+        $("adminPasswordError").textContent = "비밀번호가 올바르지 않습니다.";
+        return;
+      }
+      adminUnlocked = true;
+      $("adminPasswordModal").classList.add("hidden");
+      $("adminPasswordInput").value = "";
+      $("adminPasswordError").textContent = "";
+      activatePage("admin");
+    }
+
+    function logoutAdmin() {
+      adminUnlocked = false;
+      activatePage("members");
+    }
+
+    function changeAdminPassword() {
+      const current = $("currentAdminPassword").value;
+      const next = $("newAdminPassword").value;
+      const confirm = $("confirmAdminPassword").value;
+      const message = $("passwordChangeMessage");
+
+      message.classList.remove("good");
+
+      if (current !== getAdminPassword()) {
+        message.textContent = "현재 비밀번호가 올바르지 않습니다.";
+        return;
+      }
+      if (!next || next.length < 4) {
+        message.textContent = "새 비밀번호는 4자리 이상으로 입력해 주세요.";
+        return;
+      }
+      if (next !== confirm) {
+        message.textContent = "새 비밀번호 확인이 일치하지 않습니다.";
+        return;
+      }
+
+      localStorage.setItem(ADMIN_PASSWORD_KEY, next);
+      $("currentAdminPassword").value = "";
+      $("newAdminPassword").value = "";
+      $("confirmAdminPassword").value = "";
+      message.textContent = "비밀번호가 변경되었습니다.";
+      message.classList.add("good");
+    }
+
+    function requestConfirmation({ title, message, onConfirm }) {
+      pendingConfirmAction = onConfirm;
+      $("confirmActionTitle").textContent = title;
+      $("confirmActionMessage").textContent = message;
+      $("confirmActionModal").classList.remove("hidden");
+    }
+
+    function closeConfirmation() {
+      pendingConfirmAction = null;
+      $("confirmActionModal").classList.add("hidden");
+    }
+
+    function approveConfirmation() {
+      const action = pendingConfirmAction;
+      closeConfirmation();
+      if (typeof action === "function") action();
+    }
+
+    function activatePage(page, persist = true) {
+      if (page === "admin" && !adminUnlocked) {
+        openAdminPasswordModal();
+        return;
+      }
+      state.activePage = page;
+      document.querySelectorAll(".page").forEach(section => {
+        section.classList.toggle("active", section.id === "page-" + page);
+      });
+      document.querySelectorAll("[data-page]").forEach(button => {
+        button.classList.toggle("active", button.dataset.page === page);
+      });
+      window.scrollTo({ top: window.innerWidth <= 1024 ? Math.max(0, document.querySelector(".summary-strip").offsetTop - 10) : 0, behavior: "smooth" });
+      if (persist) scheduleSave();
+    }
+
+    document.querySelectorAll("[data-page]").forEach(button => {
+      button.addEventListener("click", () => activatePage(button.dataset.page));
+    });
+
+    document.querySelectorAll(".mode-card").forEach(card => {
+      card.addEventListener("click", () => setTeamCount(Number(card.dataset.teamCount)));
+    });
+
+    $("addGuestBtn").addEventListener("click", addGuest);
+    $("guestName").addEventListener("keydown", event => {
+      if (event.key === "Enter") addGuest();
+    });
+    $("randomizeBtn").addEventListener("click", randomizeTeams);
+    $("resetTeamsBtn").addEventListener("click", resetTeams);
+    $("generateMatchesBtn").addEventListener("click", generateMatches);
+    $("clearMatchesBtn").addEventListener("click", clearMatches);
+    $("toggleMatchEditModeBtn").addEventListener("click", toggleMatchEditMode);
+    $("addCustomMatchBtn").addEventListener("click", () => openMatchEditor(null, "add"));
+    $("spinWheelBtn").addEventListener("click", spinRaffleWheel);
+    $("resetGiftBtn").addEventListener("click", resetGift);
+    $("manualSaveBtn").addEventListener("click", saveNow);
+    $("resetSampleBtn").addEventListener("click", resetSample);
+    $("adminLogoutBtn").addEventListener("click", logoutAdmin);
+    $("confirmAdminLoginBtn").addEventListener("click", confirmAdminLogin);
+    $("cancelConfirmActionBtn").addEventListener("click", closeConfirmation);
+    $("approveConfirmActionBtn").addEventListener("click", approveConfirmation);
+    $("cancelAdminLoginBtn").addEventListener("click", closeAdminPasswordModal);
+    $("adminPasswordInput").addEventListener("keydown", event => {
+      if (event.key === "Enter") confirmAdminLogin();
+    });
+    $("changeAdminPasswordBtn").addEventListener("click", changeAdminPassword);
+    $("closeMatchEditorBtn").addEventListener("click", closeMatchEditor);
+    $("cancelMatchEditorBtn").addEventListener("click", closeMatchEditor);
+    $("saveMatchEditorBtn").addEventListener("click", saveMatchEditor);
+    $("editorSide1Team").addEventListener("change", () => refreshMatchEditorPlayerOptions([], []));
+    $("editorSide2Team").addEventListener("change", () => refreshMatchEditorPlayerOptions([], []));
+    $("desiredGamesSelect").addEventListener("change", (event) => {
+      state.desiredGamesPerPlayer = Number(event.target.value || 2);
+      state.matches = [];
+      renderAll();
+      scheduleSave();
+    });
+
+    $("menDoublesCountInput").addEventListener("change", (event) => {
+      state.desiredMenDoublesCount = Math.max(0, Number(event.target.value || 0));
+      event.target.value = String(state.desiredMenDoublesCount);
+      state.matches = [];
+      renderAll();
+      scheduleSave();
+    });
+
+    $("womenDoublesCountInput").addEventListener("change", (event) => {
+      state.desiredWomenDoublesCount = Math.max(0, Number(event.target.value || 0));
+      event.target.value = String(state.desiredWomenDoublesCount);
+      state.matches = [];
+      renderAll();
+      scheduleSave();
+    });
+
+    $("excludeRankersToggle").addEventListener("change", (event) => {
+      state.excludeRankersFromRaffle = Boolean(event.target.checked);
+      renderRaffleWheel();
+      syncRaffleControls();
+      scheduleSave();
+    });
+
+    $("excludeTopCountSelect").addEventListener("change", (event) => {
+      state.excludeTopRankCount = Number(event.target.value || 3);
+      renderRaffleWheel();
+      scheduleSave();
+    });
+
+
+    window.toggleJoin = toggleJoin;
+    window.updateMember = updateMember;
+    window.moveMember = moveMember;
+    window.removeMember = removeMember;
+    window.updateScore = updateScore;
+    window.updateMatchStatus = updateMatchStatus;
+    window.cycleMatchStatus = cycleMatchStatus;
+    window.openMatchEditor = openMatchEditor;
+    window.moveMatchOrder = moveMatchOrder;
+    window.deleteCustomMatch = deleteCustomMatch;
+
+    bootstrap();
+  </script>
+</body>
+</html>
