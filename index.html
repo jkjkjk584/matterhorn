@@ -6760,7 +6760,7 @@
         <article class="team-record-card team-${record.team.toLowerCase()}">
           <span class="record-team-name">${record.team}팀</span>
           <strong class="record-score">${record.wins}승 ${record.losses}패${record.draws ? " " + record.draws + "무" : ""}</strong>
-          <span class="record-sub">득실 ${record.pointsFor - record.pointsAgainst >= 0 ? "+" : ""}${record.pointsFor - record.pointsAgainst}</span>
+          <span class="record-sub">총점 ${record.pointsFor}점</span>
         </article>
       `).join("");
 
@@ -6773,10 +6773,8 @@
 
       const sorted = [...records].sort((a, b) => {
         if (b.wins !== a.wins) return b.wins - a.wins;
-        const diffA = a.pointsFor - a.pointsAgainst;
-        const diffB = b.pointsFor - b.pointsAgainst;
-        if (diffB !== diffA) return diffB - diffA;
-        return b.pointsFor - a.pointsFor;
+        if (b.pointsFor !== a.pointsFor) return b.pointsFor - a.pointsFor;
+        return (b.pointsFor - b.pointsAgainst) - (a.pointsFor - a.pointsAgainst);
       });
 
       const best = sorted[0];
@@ -6784,13 +6782,13 @@
       const tied =
         second &&
         best.wins === second.wins &&
-        (best.pointsFor - best.pointsAgainst) === (second.pointsFor - second.pointsAgainst) &&
-        best.pointsFor === second.pointsFor;
+        best.pointsFor === second.pointsFor &&
+        (best.pointsFor - best.pointsAgainst) === (second.pointsFor - second.pointsAgainst);
 
       leaderText.textContent = tied ? "공동 우세" : `${best.team}팀 우세`;
       leaderSub.textContent = tied
-        ? "승수와 득실이 동일합니다."
-        : `${best.wins}승 ${best.losses}패 · 득실 ${best.pointsFor - best.pointsAgainst >= 0 ? "+" : ""}${best.pointsFor - best.pointsAgainst}`;
+        ? "승수와 총점이 동일합니다."
+        : `${best.wins}승 ${best.losses}패 · 총점 ${best.pointsFor}점`;
     }
 
     function renderPublicParticipants() {
@@ -7520,6 +7518,13 @@
         .length;
     }
 
+    function getFourPlayerSignature(playerIds) {
+      return [...new Set(playerIds || [])]
+        .map(id => String(id))
+        .sort()
+        .join("|");
+    }
+
     function hasGenerationCapacity(playCounts, targetGames, minGames, allowedTypes) {
       return Boolean(findBestNextMatch(playCounts, targetGames, minGames, allowedTypes, { men: 0, women: 0 }, 0, 0, true));
     }
@@ -7547,7 +7552,7 @@
       );
     }
 
-    function findBestNextMatch(playCounts, targetGames, minGames, allowedTypes, typeCounts, requestedMen, requestedWomen, fastOnly = false) {
+    function findBestNextMatch(playCounts, targetGames, minGames, allowedTypes, typeCounts, requestedMen, requestedWomen, fastOnly = false, usedFourSignatures = new Set(), allowDuplicateFour = false) {
       const candidateTypes = allowedTypes && allowedTypes.length ? allowedTypes : ["mixed", "men", "women"];
       const candidates = [];
 
@@ -7563,7 +7568,12 @@
               const uniqueIds = new Set(playerIds);
               if (uniqueIds.size !== playerIds.length) return;
 
+              const fourSignature = getFourPlayerSignature(playerIds);
+              const isDuplicateFour = usedFourSignatures.has(fourSignature);
+              if (isDuplicateFour && !allowDuplicateFour) return;
+
               let score = scoreCandidateMatch(playerIds, playCounts, minGames, targetGames);
+              if (isDuplicateFour) score += 18000;
 
               if (matchType === "men" && (typeCounts.men || 0) < requestedMen) score -= 4200;
               if (matchType === "women" && (typeCounts.women || 0) < requestedWomen) score -= 4200;
@@ -7576,6 +7586,8 @@
                 selected: { left, right },
                 leftPair,
                 rightPair,
+                fourSignature,
+                isDuplicateFour,
                 score
               });
             });
@@ -7603,11 +7615,14 @@
       });
     }
 
-    function applyMatchPick(generated, playCounts, pick, typeCounts, courtCounter) {
+    function applyMatchPick(generated, playCounts, pick, typeCounts, courtCounter, usedFourSignatures = null) {
       [...pick.leftPair, ...pick.rightPair].forEach(id => {
         playCounts.set(id, (playCounts.get(id) || 0) + 1);
       });
       typeCounts[pick.matchType] = (typeCounts[pick.matchType] || 0) + 1;
+      if (usedFourSignatures && pick.fourSignature) {
+        usedFourSignatures.add(pick.fourSignature);
+      }
       pushGeneratedMatch(generated, courtCounter, pick.selected, pick.leftPair, pick.rightPair);
     }
 
@@ -7617,6 +7632,7 @@
       const playCounts = new Map(activePlayers.map(member => [member.id, 0]));
       const generated = [];
       const typeCounts = { men: 0, women: 0, mixed: 0 };
+      const usedFourSignatures = new Set();
       let courtCounter = 1;
       let safety = 0;
 
@@ -7640,19 +7656,23 @@
           break;
         }
 
-        let pick = findBestNextMatch(playCounts, targetGames, minGames, allowedTypes, typeCounts, requestedMen, requestedWomen);
+        let pick = findBestNextMatch(playCounts, targetGames, minGames, allowedTypes, typeCounts, requestedMen, requestedWomen, false, usedFourSignatures, false);
 
         if (!pick && requiredTypes.length) {
-          pick = findBestNextMatch(playCounts, targetGames, minGames, requiredTypes, typeCounts, requestedMen, requestedWomen);
+          pick = findBestNextMatch(playCounts, targetGames, minGames, requiredTypes, typeCounts, requestedMen, requestedWomen, false, usedFourSignatures, false);
         }
 
         if (!pick && belowMin > 0) {
-          pick = findBestNextMatch(playCounts, targetGames, minGames, ["mixed", "men", "women"], typeCounts, requestedMen, requestedWomen);
+          pick = findBestNextMatch(playCounts, targetGames, minGames, ["mixed", "men", "women"], typeCounts, requestedMen, requestedWomen, false, usedFourSignatures, false);
+        }
+
+        if (!pick) {
+          pick = findBestNextMatch(playCounts, targetGames, minGames, allowedTypes, typeCounts, requestedMen, requestedWomen, false, usedFourSignatures, true);
         }
 
         if (!pick) break;
 
-        applyMatchPick(generated, playCounts, pick, typeCounts, courtCounter);
+        applyMatchPick(generated, playCounts, pick, typeCounts, courtCounter, usedFourSignatures);
         courtCounter += 1;
       }
 
