@@ -5354,8 +5354,7 @@
 
     body:not(.admin-mode) #page-teams > .page-grid,
     body:not(.admin-mode) #page-matches .match-console-panel,
-    body:not(.admin-mode) #page-awards .stack,
-    body:not(.admin-mode) .match-edit-actions,
+        body:not(.admin-mode) .match-edit-actions,
     body:not(.admin-mode) .quick-move,
     body:not(.admin-mode) .compact-quick-move {
       display: none !important;
@@ -5433,7 +5432,7 @@
 
     .bottom-nav-public,
     .bottom-nav-admin {
-      grid-template-columns: repeat(4, 1fr) !important;
+      grid-template-columns: repeat(5, 1fr) !important;
     }
 
     @media (max-width: 1024px) {
@@ -5864,6 +5863,756 @@
       color: #111827 !important;
     }
 
+  
+
+    /* v47: 관리자 대진표 편집 표 - 헤더/분류 컬럼 구분 강화 */
+    .match-table-editor-wrap {
+      border-radius: 18px;
+      border: 1px solid #efc6c6;
+      background: #fff7f7;
+      overflow: auto;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.65);
+    }
+
+    .match-table-editor {
+      width: 100%;
+      min-width: 520px;
+      border-collapse: separate;
+      border-spacing: 0;
+      background: #fff;
+      font-size: 13px;
+    }
+
+    .match-table-editor thead th {
+      min-height: 34px;
+      padding: 8px 7px;
+      border-right: 1px solid #f0c7c7;
+      border-bottom: 1px solid #efc6c6;
+      color: #5f1717;
+      font-weight: 1000;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .match-table-editor thead tr:first-child th {
+      background: linear-gradient(180deg, #9f2f2f, #7f2424);
+      color: #fff;
+      border-color: #7f2424;
+      font-size: 14px;
+    }
+
+    .match-table-editor thead tr:nth-child(2) th {
+      background: #fff0f0;
+      color: #7f2424;
+      font-size: 12px;
+    }
+
+    .match-table-editor thead th[rowspan="2"] {
+      background: linear-gradient(180deg, #15213a, #071a33) !important;
+      color: #fff !important;
+      border-color: #071a33 !important;
+    }
+
+    .match-table-editor tbody td {
+      padding: 5px 4px;
+      border-right: 1px solid #eef2f7;
+      border-bottom: 1px solid #eef2f7;
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    .match-table-editor tbody tr:nth-child(even) td {
+      background: #fffafa;
+    }
+
+    .match-table-editor .game-cell,
+    .match-table-editor .match-type-cell {
+      font-weight: 1000;
+      white-space: nowrap;
+    }
+
+    .match-table-editor .game-cell {
+      background: #071a33 !important;
+      color: #fff;
+      border-bottom-color: rgba(255,255,255,0.18);
+      border-right-color: #1d3558;
+    }
+
+    .match-table-editor .match-type-cell {
+      color: #9f2f2f;
+      background: #fff0f0 !important;
+      border-right: 2px solid #efc6c6;
+    }
+
+    .match-table-editor tbody td:nth-child(3),
+    .match-table-editor tbody td:nth-child(4) {
+      background: #f4f8ff;
+    }
+
+    .match-table-editor tbody td:nth-child(5),
+    .match-table-editor tbody td:nth-child(6) {
+      background: #f2fff9;
+    }
+
+    .match-table-editor-select {
+      width: 100%;
+      min-height: 34px;
+      border-radius: 10px;
+      border: 1px solid #d8e2ee;
+      background: #fff;
+      padding: 0 7px;
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 950;
+      outline: none;
+    }
+
+    .match-table-editor-select:focus {
+      border-color: #9f2f2f;
+      box-shadow: 0 0 0 3px rgba(159, 47, 47, 0.12);
+    }
+
+    @media (max-width: 720px) {
+      .match-table-editor-wrap {
+        border-radius: 16px;
+      }
+
+      .match-table-editor {
+        min-width: 500px;
+        font-size: 12px;
+      }
+
+      .match-table-editor thead th {
+        padding: 7px 5px;
+      }
+
+      .match-table-editor thead tr:first-child th {
+        font-size: 13px;
+      }
+
+      .match-table-editor thead tr:nth-child(2) th {
+        font-size: 11px;
+      }
+
+      .match-table-editor tbody td {
+        padding: 4px 3px;
+      }
+
+      .match-table-editor-select {
+        min-height: 32px;
+        font-size: 11px;
+        padding: 0 5px;
+      }
+    }
+
+
+    /* v48: 월별 월례회 보관/조회 관리 */
+    .monthly-admin-panel {
+      border-color: #f0c7c7;
+      background: linear-gradient(180deg, #fffafa 0%, #fff 100%);
+    }
+
+    .monthly-control-grid {
+      display: grid;
+      gap: 9px;
+    }
+
+    .monthly-current-badge {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 11px;
+      border-radius: 14px;
+      border: 1px solid #f0c7c7;
+      background: #fff1f1;
+      color: #8a2727;
+      font-size: 12px;
+      font-weight: 950;
+    }
+
+    .monthly-current-badge strong {
+      font-size: 13px;
+      font-weight: 1000;
+    }
+
+    .monthly-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .monthly-actions-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .archive-view-banner {
+      display: none;
+      margin-bottom: 10px;
+      padding: 11px 13px;
+      border-radius: 16px;
+      border: 1px solid #f0c7c7;
+      background: #fff1f1;
+      color: #8a2727;
+      font-size: 12px;
+      font-weight: 1000;
+      box-shadow: 0 8px 22px rgba(138,39,39,0.08);
+    }
+
+    body.archive-view-mode .archive-view-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    body.archive-view-mode .btn:not(#returnLiveMeetupBtn):not(#publicModeBtn):not(#enterAdminModeBtn),
+    body.archive-view-mode input,
+    body.archive-view-mode select {
+      filter: saturate(0.82);
+    }
+
+    @media (max-width: 720px) {
+      .monthly-row,
+      .monthly-actions-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+
+  
+    /* v49: 경기현황 점수 입력을 0~7 드롭다운으로 변경 */
+    select.compact-score-select {
+      appearance: none;
+      -webkit-appearance: none;
+      text-align: center;
+      text-align-last: center;
+      padding: 0 18px 0 8px;
+      background-image: linear-gradient(45deg, transparent 50%, #64748b 50%), linear-gradient(135deg, #64748b 50%, transparent 50%);
+      background-position: calc(100% - 12px) 50%, calc(100% - 8px) 50%;
+      background-size: 4px 4px, 4px 4px;
+      background-repeat: no-repeat;
+    }
+
+
+    /* v50: 점수 드롭다운 가독성 강화 + 관리자 버튼 명칭 정리 */
+    .compact-score-wrap {
+      grid-template-columns: 52px 10px 52px !important;
+      gap: 5px !important;
+    }
+
+    select.compact-score.compact-score-select {
+      width: 52px !important;
+      min-width: 52px !important;
+      min-height: 40px !important;
+      height: 40px !important;
+      padding: 0 14px 0 6px !important;
+      border-radius: 12px !important;
+      border: 2px solid #e7b7bd !important;
+      background-color: #fff !important;
+      background-image:
+        linear-gradient(45deg, transparent 50%, #8b2424 50%),
+        linear-gradient(135deg, #8b2424 50%, transparent 50%) !important;
+      background-position: calc(100% - 11px) 50%, calc(100% - 7px) 50% !important;
+      background-size: 5px 5px, 5px 5px !important;
+      background-repeat: no-repeat !important;
+      color: #111827 !important;
+      font-size: 18px !important;
+      font-weight: 1000 !important;
+      line-height: 1 !important;
+      text-align: center !important;
+      text-align-last: center !important;
+      box-shadow: 0 2px 8px rgba(139,36,36,0.06) !important;
+    }
+
+    select.compact-score.compact-score-select:focus {
+      outline: none !important;
+      border-color: #8b2424 !important;
+      box-shadow: 0 0 0 3px rgba(139,36,36,0.13) !important;
+    }
+
+    .compact-vs {
+      font-size: 16px !important;
+      color: #64748b !important;
+    }
+
+    @media (max-width: 720px) {
+      .compact-score-wrap {
+        grid-template-columns: 48px 9px 48px !important;
+        gap: 4px !important;
+      }
+
+      select.compact-score.compact-score-select {
+        width: 48px !important;
+        min-width: 48px !important;
+        min-height: 38px !important;
+        height: 38px !important;
+        padding-right: 13px !important;
+        font-size: 17px !important;
+        border-radius: 11px !important;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .compact-score-wrap {
+        grid-template-columns: 46px 8px 46px !important;
+      }
+
+      select.compact-score.compact-score-select {
+        width: 46px !important;
+        min-width: 46px !important;
+        min-height: 37px !important;
+        height: 37px !important;
+        font-size: 16px !important;
+      }
+    }
+
+
+
+    /* v51: 점수칸 소폭 축소 + 선수 이름 가독성 강화 */
+    .compact-score-wrap {
+      grid-template-columns: 48px 9px 48px !important;
+      gap: 4px !important;
+    }
+
+    select.compact-score.compact-score-select {
+      width: 48px !important;
+      min-width: 48px !important;
+      min-height: 37px !important;
+      height: 37px !important;
+      padding: 0 12px 0 5px !important;
+      border-radius: 11px !important;
+      font-size: 16px !important;
+      background-position: calc(100% - 10px) 50%, calc(100% - 6px) 50% !important;
+      background-size: 4px 4px, 4px 4px !important;
+    }
+
+    .compact-vs {
+      font-size: 14px !important;
+    }
+
+    .compact-side-names {
+      font-size: 13px !important;
+      line-height: 1.42 !important;
+      letter-spacing: -0.045em !important;
+      font-weight: 1000 !important;
+    }
+
+    .compact-side-names .player-order,
+    .compact-side-names sup,
+    .player-order {
+      font-size: 10px !important;
+      line-height: 1 !important;
+      vertical-align: super !important;
+    }
+
+    @media (max-width: 720px) {
+      .compact-score-wrap {
+        grid-template-columns: 45px 8px 45px !important;
+        gap: 3px !important;
+      }
+
+      select.compact-score.compact-score-select {
+        width: 45px !important;
+        min-width: 45px !important;
+        min-height: 35px !important;
+        height: 35px !important;
+        padding-right: 11px !important;
+        font-size: 15px !important;
+        border-radius: 10px !important;
+      }
+
+      .compact-side-names {
+        font-size: 12.5px !important;
+        line-height: 1.38 !important;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .compact-score-wrap {
+        grid-template-columns: 43px 7px 43px !important;
+      }
+
+      select.compact-score.compact-score-select {
+        width: 43px !important;
+        min-width: 43px !important;
+        min-height: 34px !important;
+        height: 34px !important;
+        font-size: 14px !important;
+      }
+
+      .compact-side-names {
+        font-size: 12px !important;
+        line-height: 1.36 !important;
+      }
+    }
+
+
+
+    /* v55: 모바일 탭 중복 제거 + 하단탭 한 줄화 + 수동편집 팀 색상 동기화 */
+    @media (max-width: 1024px) {
+      .desktop-page-tabs,
+      body.admin-mode .desktop-admin-tabs,
+      body:not(.admin-mode) .desktop-public-tabs {
+        display: none !important;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .bottom-nav-public,
+      .bottom-nav-admin,
+      .bottom-nav {
+        gap: 4px !important;
+        padding: 6px !important;
+        border-radius: 18px !important;
+      }
+
+      .bottom-nav button {
+        min-height: 44px !important;
+        padding: 0 4px !important;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 4px !important;
+        white-space: nowrap !important;
+        line-height: 1 !important;
+        font-size: 9px !important;
+      }
+
+      .bottom-nav button span:first-child {
+        font-size: 13px !important;
+      }
+
+      .bottom-nav button span:last-child {
+        display: inline-block !important;
+        white-space: nowrap !important;
+      }
+    }
+
+    .match-table-editor thead .team-head-a,
+    .match-table-editor thead .team-sub-a {
+      background: #eaf4ff !important;
+      color: #14569d !important;
+      border-color: #cfe6ff !important;
+    }
+
+    .match-table-editor thead .team-head-b,
+    .match-table-editor thead .team-sub-b {
+      background: #e8fbf6 !important;
+      color: #0d7559 !important;
+      border-color: #c9f0e6 !important;
+    }
+
+    .match-table-editor thead .team-head-c,
+    .match-table-editor thead .team-sub-c {
+      background: #fff4dd !important;
+      color: #a05f00 !important;
+      border-color: #f3dcac !important;
+    }
+
+    .match-table-editor td.team-edit-a {
+      background: #f4f8ff !important;
+      border-color: #d7eaff !important;
+    }
+
+    .match-table-editor td.team-edit-b {
+      background: #f2fff9 !important;
+      border-color: #d4f4e9 !important;
+    }
+
+    .match-table-editor td.team-edit-c {
+      background: #fff9ec !important;
+      border-color: #f4e0b6 !important;
+    }
+
+    .match-table-editor-select.team-select-a {
+      border-color: #b9dcff !important;
+      background: #ffffff;
+    }
+
+    .match-table-editor-select.team-select-b {
+      border-color: #b8eadf !important;
+      background: #ffffff;
+    }
+
+    .match-table-editor-select.team-select-c {
+      border-color: #eed096 !important;
+      background: #ffffff;
+    }
+
+
+
+    /* v56: 하단탭 한 줄 정렬 강제 보정 */
+    @media (max-width: 1024px) {
+      .desktop-page-tabs,
+      body.admin-mode .desktop-admin-tabs,
+      body:not(.admin-mode) .desktop-public-tabs {
+        display: none !important;
+      }
+
+      .bottom-nav-public,
+      .bottom-nav-admin,
+      .bottom-nav {
+        grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+        gap: 4px !important;
+        padding: 6px !important;
+        border-radius: 18px !important;
+      }
+
+      .bottom-nav-public {
+        grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+      }
+
+      .bottom-nav button {
+        min-width: 0 !important;
+        min-height: 44px !important;
+        padding: 0 4px !important;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 4px !important;
+        white-space: nowrap !important;
+        line-height: 1 !important;
+        font-size: 10px !important;
+      }
+
+      .bottom-nav button span:first-child {
+        font-size: 13px !important;
+        line-height: 1 !important;
+      }
+
+      .bottom-nav button span:last-child {
+        display: inline !important;
+        white-space: nowrap !important;
+        font-size: 10px !important;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .bottom-nav button {
+        gap: 3px !important;
+        font-size: 9px !important;
+        padding: 0 2px !important;
+      }
+      .bottom-nav button span:first-child { font-size: 12px !important; }
+      .bottom-nav button span:last-child { font-size: 9px !important; }
+    }
+
+
+    /* v57: 회원명부 좌우 분리 + 행운권/순위 표시 보정 */
+    .admin-roster-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      align-items: start;
+    }
+
+    .roster-column {
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255,255,255,0.72);
+      overflow: hidden;
+    }
+
+    .roster-column-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 10px 12px;
+      background: #fff7f7;
+      border-bottom: 1px solid #f2caca;
+      color: #7f1d1d;
+      font-size: 13px;
+      font-weight: 1000;
+    }
+
+    .roster-column.participating .roster-column-head {
+      background: #edfdf7;
+      border-bottom-color: #c9f0e6;
+      color: #0d7559;
+    }
+
+    .roster-column-body {
+      display: grid;
+      gap: 7px;
+      max-height: min(62vh, 620px);
+      overflow: auto;
+      padding: 8px;
+    }
+
+    .admin-roster-split .admin-member-card {
+      cursor: pointer;
+      min-height: auto;
+    }
+
+    .admin-roster-split .admin-member-card:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(15,23,42,0.08);
+    }
+
+    .roster-move-hint {
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 900;
+      margin-top: 3px;
+    }
+
+    body.admin-mode #page-awards .public-guide-panel,
+    body.admin-mode #publicLuckyNote {
+      display: none !important;
+    }
+
+    @media (max-width: 720px) {
+      .admin-roster-split {
+        grid-template-columns: 1fr;
+      }
+      .roster-column-body {
+        max-height: none;
+      }
+      .bottom-nav button span:last-child {
+        font-size: 9px !important;
+      }
+    }
+
+  
+
+    /* v58: 경기관리 설정 패널 압축 + 하단 운영 UI 개선 */
+    .match-console-panel {
+      padding: 10px 12px !important;
+    }
+
+    .match-console-head {
+      align-items: center !important;
+      margin-bottom: 6px !important;
+      gap: 8px !important;
+    }
+
+    .match-console-head .section-head {
+      margin-bottom: 0 !important;
+      align-items: center !important;
+    }
+
+    .match-console-head .section-icon {
+      width: 32px !important;
+      height: 32px !important;
+      border-radius: 11px !important;
+      font-size: 15px !important;
+    }
+
+    .match-console-head h2 {
+      font-size: 16px !important;
+      line-height: 1.15 !important;
+    }
+
+    .match-console-head p {
+      display: none !important;
+    }
+
+    .match-console-actions .btn {
+      min-height: 32px !important;
+      padding: 0 9px !important;
+      border-radius: 11px !important;
+      font-size: 10px !important;
+    }
+
+    .compact-match-config {
+      grid-template-columns: 112px 70px 70px minmax(190px, 1fr) !important;
+      gap: 6px !important;
+    }
+
+    .mini-config-field {
+      gap: 2px !important;
+    }
+
+    .mini-config-field span {
+      font-size: 9px !important;
+    }
+
+    .mini-config-field .field {
+      min-height: 30px !important;
+      height: 30px !important;
+      border-radius: 10px !important;
+      font-size: 11px !important;
+      text-align: center !important;
+    }
+
+    .match-console-summary {
+      min-height: 30px !important;
+      padding: 0 7px !important;
+      border-radius: 11px !important;
+      gap: 4px !important;
+    }
+
+    .match-console-summary strong {
+      min-width: 46px !important;
+      font-size: 13px !important;
+    }
+
+    .match-console-summary span {
+      min-height: 20px !important;
+      padding: 0 7px !important;
+      font-size: 9px !important;
+    }
+
+    .match-plan-feedback {
+      margin-top: 5px !important;
+      font-size: 10px !important;
+      line-height: 1.35 !important;
+    }
+
+    .raffle-stage {
+      display: grid;
+    }
+
+    .raffle-controls {
+      grid-template-columns: minmax(160px, 1fr) minmax(160px, 1.15fr) !important;
+    }
+
+    @media (max-width: 720px) {
+      .match-console-panel {
+        padding: 8px !important;
+      }
+
+      .match-console-head {
+        gap: 6px !important;
+      }
+
+      .match-console-actions {
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+        gap: 5px !important;
+      }
+
+      .match-console-actions .btn {
+        min-height: 31px !important;
+        padding: 0 4px !important;
+        font-size: 9px !important;
+        letter-spacing: -0.03em;
+      }
+
+      .compact-match-config {
+        grid-template-columns: 1.1fr 0.7fr 0.7fr !important;
+      }
+
+      .mini-config-field:first-child {
+        grid-column: auto !important;
+      }
+
+      .match-console-summary {
+        grid-column: 1 / -1 !important;
+      }
+
+      .raffle-controls {
+        grid-template-columns: 1fr !important;
+      }
+    }
+
   </style>
   <!-- matterhorn_v31: v30 + admin participant label + red admin background tone -->
 </head>
@@ -5880,7 +6629,7 @@
         </button>
         <button type="button" class="role-choice-btn" id="chooseAdminRoleBtn">
           <strong>관리자로 보기</strong>
-          <span>비밀번호 입력 후 회원관리, 경기관리, 추첨을 진행합니다.</span>
+          <span>비밀번호 입력 후 회원관리, 경기관리, 행운권을 진행합니다.</span>
         </button>
       </div>
     </div>
@@ -5899,19 +6648,25 @@
 
   <main class="wrap">
 
+    <div class="archive-view-banner" id="archiveViewBanner">
+      <span id="archiveViewText">과거 월례회 조회 중</span>
+      <button class="btn btn-outline" id="returnLiveMeetupBtn" type="button">현재 월례회로 돌아가기</button>
+    </div>
 
     <nav class="desktop-page-tabs desktop-public-tabs">
       <button class="page-tab active" data-page="matches">1. 경기현황</button>
-      <button class="page-tab" data-page="awards">2. 순위</button>
+      <button class="page-tab" data-page="ranking">2. 순위</button>
       <button class="page-tab" data-page="teams">3. 조 편성</button>
       <button class="page-tab" data-page="members">4. 참가자</button>
+      <button class="page-tab" data-page="awards">5. 행운권</button>
     </nav>
 
     <nav class="desktop-page-tabs desktop-admin-tabs admin-only">
-      <button class="page-tab" data-page="admin">1. 명단 관리</button>
+      <button class="page-tab" data-page="admin">1. 회원명부</button>
       <button class="page-tab" data-page="teams">2. 조 편성 관리</button>
       <button class="page-tab" data-page="matches">3. 경기 관리</button>
-      <button class="page-tab" data-page="awards">4. 추첨·순위</button>
+      <button class="page-tab" data-page="awards">4. 행운권</button>
+      <button class="page-tab" data-page="admin-tools">5. 운영관리</button>
     </nav>
 
     <section class="page" id="page-members">
@@ -5992,14 +6747,14 @@
           <div class="section-head compact-section-head">
             <div class="section-icon">⚔️</div>
             <div>
-              <h2>대진표 생성 · 편집</h2>
-              <p>관리자 전용: 설정값으로 자동 생성하고, 필요하면 직접 수정합니다.</p>
+              <h2>대진표 랜덤생성 · 수동편집</h2>
+              <p>관리자 전용: 설정값으로 랜덤생성하고, 필요하면 수동편집합니다.</p>
             </div>
           </div>
 
           <div class="match-console-actions">
-            <button class="btn btn-dark" id="generateMatchesBtn">🎾 생성</button>
-            <button class="btn btn-blue" id="toggleMatchEditModeBtn">✏️ 대진 편집</button>
+            <button class="btn btn-dark" id="generateMatchesBtn">🎲 랜덤생성</button>
+            <button class="btn btn-blue" id="toggleMatchEditModeBtn">✏️ 수동편집</button>
             <button class="btn btn-outline" id="addCustomMatchBtn">＋ 경기 추가</button>
             <button class="btn btn-outline" id="clearMatchesBtn">초기화</button>
           </div>
@@ -6050,82 +6805,66 @@
       </div>
     </section>
 
+    <section class="page" id="page-ranking">
+      <div class="public-guide-panel public-only"><strong>개인 순위</strong><span>상위 5명만 표시됩니다. 경기 점수 입력 후 자동으로 누적 순위가 계산됩니다.</span></div>
+      <div class="panel">
+        <div class="section-head">
+          <div class="section-icon">🏆</div>
+          <div>
+            <h2>실시간 개인 순위 TOP 5</h2>
+            <p>경기별 누적 획득 점수가 높은 상위 5명만 표시됩니다.</p>
+          </div>
+        </div>
+        <div class="ranking-list" id="rankingList"></div>
+      </div>
+    </section>
+
     <section class="page" id="page-awards">
-      <div class="public-guide-panel public-only"><strong>개인 순위</strong><span>경기 점수 입력 후 자동으로 누적 순위가 계산됩니다. 경품 추첨은 관리자 모드에서 진행합니다.</span></div>
-      <div class="page-grid">
-        <div class="panel">
-          <div class="section-head">
-            <div class="section-icon">🏆</div>
-            <div>
-              <h2>실시간 개인 순위</h2>
-              <p>경기별 누적 획득 점수가 높은 사람부터 자동 정렬됩니다.</p>
-            </div>
+      <div class="public-guide-panel public-only"><strong>행운권</strong><span>경품과 당첨 결과를 확인할 수 있습니다. 추첨 실행은 관리자모드에서만 가능합니다.</span></div>
+      <div class="panel raffle-panel">
+        <div class="section-head">
+          <div class="section-icon">🎁</div>
+          <div>
+            <h2>행운권</h2>
+            <p><span class="public-only">행운권 당첨 결과를 확인합니다.</span><span class="admin-only">경품 등록, 행운권 추첨, 당첨 결과 관리를 진행합니다.</span></p>
           </div>
-          <div class="ranking-list" id="rankingList"></div>
         </div>
 
-        <div class="stack">
-          <div class="panel raffle-panel">
-            <div class="section-head">
-              <div class="section-icon">🎁</div>
-              <div>
-                <h2>시상식 경품 돌림판</h2>
-                <p>태블릿 화면으로 바로 보여줄 수 있는 실시간 추첨 모드입니다.</p>
-              </div>
+        <div class="raffle-controls admin-only">
+          <input id="giftName" class="field" value="월례회 행운상" placeholder="경품명 입력" />
+          <select id="raffleExcludeModeSelect" class="field raffle-select">
+            <option value="none">제외 없음</option>
+            <option value="winningTop1">이긴팀 1위 제외</option>
+            <option value="winningTop2">이긴팀 상위 2명 제외</option>
+            <option value="winningTop3" selected>이긴팀 상위 3명 제외</option>
+            <option value="winningTop4">이긴팀 상위 4명 제외</option>
+            <option value="winningTop5">이긴팀 상위 5명 제외</option>
+            <option value="winningAll">이긴팀 전원 제외</option>
+          </select>
+        </div>
+
+        <div class="raffle-eligibility admin-only" id="raffleEligibilityText">추첨 대상 계산 중</div>
+
+        <div class="raffle-stage">
+          <div class="wheel-shell">
+            <div class="wheel-pointer">▼</div>
+            <div class="raffle-wheel" id="raffleWheel">
+              <div class="wheel-empty">참가자를 선택해 주세요</div>
             </div>
-
-            <div class="raffle-controls">
-              <input id="giftName" class="field" value="월례회 행운상" placeholder="경품명 입력" />
-              <label class="exclusion-toggle">
-                <input type="checkbox" id="excludeRankersToggle" />
-                <span>순위권 제외</span>
-              </label>
-              <select id="excludeTopCountSelect" class="field raffle-select" disabled>
-                <option value="1">1위 제외</option>
-                <option value="2">상위 2명 제외</option>
-                <option value="3" selected>상위 3명 제외</option>
-                <option value="4">상위 4명 제외</option>
-                <option value="5">상위 5명 제외</option>
-              </select>
-            </div>
-
-            <div class="raffle-eligibility" id="raffleEligibilityText">추첨 대상 계산 중</div>
-
-            <div class="raffle-stage">
-              <div class="wheel-shell">
-                <div class="wheel-pointer">▼</div>
-                <div class="raffle-wheel" id="raffleWheel">
-                  <div class="wheel-empty">참가자를 선택해 주세요</div>
-                </div>
-              </div>
-
-              <div class="raffle-action-column">
-                <button class="btn btn-amber raffle-spin-btn" id="spinWheelBtn">🎡 돌림판 시작</button>
-                <button class="btn btn-outline" id="resetGiftBtn">당첨 기록 초기화</button>
-                <div class="raffle-result-card" id="raffleResultCard">
-                  <span>최근 당첨자</span>
-                  <strong>대기</strong>
-                </div>
-              </div>
-            </div>
-
-            <div class="winner-list" id="winnerList"></div>
           </div>
 
-          <div class="panel">
-            <div class="section-head">
-              <div class="section-icon">✅</div>
-              <div>
-                <h2>순위 계산 기준</h2>
-                <p>현재 구현된 기준을 명시해 운영 중 혼선을 줄입니다.</p>
-              </div>
-            </div>
-            <div class="note">
-              한 선수가 여러 경기 출전할 경우, 각 경기에서 그 선수의 조가 얻은 점수를 개인에게 누적합니다.
-              합산 점수가 같으면 경기 수, 이후 이름순으로 표시됩니다.
+          <div class="raffle-action-column admin-only">
+            <button class="btn btn-amber raffle-spin-btn" id="spinWheelBtn">🎡 행운권 추첨</button>
+            <button class="btn btn-outline" id="resetGiftBtn">당첨 기록 초기화</button>
+            <div class="raffle-result-card" id="raffleResultCard">
+              <span>최근 당첨자</span>
+              <strong>대기</strong>
             </div>
           </div>
         </div>
+
+        <div class="winner-list" id="winnerList"></div>
+        <div class="empty-box public-only" id="publicLuckyNote">관리자가 추첨을 진행하면 이 화면에 당첨 결과가 표시됩니다.</div>
       </div>
     </section>
 
@@ -6135,17 +6874,8 @@
           <div class="section-head">
             <div class="section-icon">🔐</div>
             <div>
-              <h2>관리자 페이지</h2>
-              <p>전체 회원 중 참가자를 터치로 선택하고, Guest 추가와 실력 정보를 관리합니다.</p>
-            </div>
-          </div>
-
-          <div class="status-row admin-status-row">
-            <div class="save-status" id="saveStatus">💾 DB 저장 준비됨</div>
-            <div class="actions compact-actions">
-              <button class="btn btn-outline" id="manualSaveBtn">저장</button>
-              <button class="btn btn-rose" id="resetSampleBtn">샘플 초기화</button>
-              <button class="btn btn-outline" id="adminLogoutBtn">로그아웃</button>
+              <h2>회원명부</h2>
+              <p>전체 회원 중 참가자를 선택하고, 이름·성별·실력·회원구분을 관리합니다.</p>
             </div>
           </div>
 
@@ -6193,27 +6923,123 @@
               이름·성별·실력·회원구분은 관리자 화면에서 바로 수정할 수 있습니다.
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page" id="page-admin-tools">
+      <div class="page-grid admin-page-grid">
+        <div class="panel">
+          <div class="section-head">
+            <div class="section-icon">🛠️</div>
+            <div>
+              <h2>운영관리</h2>
+              <p>월례회 보관, CSV 백업, 비밀번호 변경 등 회원명부와 별도인 운영 기능을 관리합니다.</p>
+            </div>
+          </div>
+
+          <div class="status-row admin-status-row">
+            <div class="save-status" id="saveStatus">💾 DB 저장 준비됨</div>
+            <div class="actions compact-actions">
+              <button class="btn btn-outline" id="manualSaveBtn">저장</button>
+              <button class="btn btn-rose" id="resetSampleBtn">샘플 초기화</button>
+              <button class="btn btn-outline" id="adminLogoutBtn">로그아웃</button>
+            </div>
+          </div>
+
+          <div class="note compact-note security-note">
+            저장 상태 확인, 월별 데이터 관리, 백업 다운로드, 비밀번호 변경을 이 화면에서 처리합니다.
+          </div>
+        </div>
+
+        <div class="stack">
+          <div class="panel monthly-admin-panel">
+            <div class="section-head compact-section-head">
+              <div class="section-icon">🗓️</div>
+              <div>
+                <h2>월례회 관리</h2>
+                <p>현재 운영 데이터를 월별로 보관하고, 다음 달 월례회를 새로 시작합니다.</p>
+              </div>
+            </div>
+
+            <div class="monthly-control-grid">
+              <div class="monthly-current-badge">
+                <span>현재 운영월</span>
+                <strong id="currentMeetupLabel">현재 월례회</strong>
+              </div>
+
+              <div class="monthly-row">
+                <input id="archiveMonthInput" class="field" placeholder="보관 월 예: 2026-06" />
+                <button class="btn btn-outline" id="archiveCurrentMeetupBtn">현재 데이터 보관</button>
+              </div>
+
+              <div class="monthly-row">
+                <input id="newMeetupMonthInput" class="field" placeholder="새 월 예: 2026-07" />
+                <button class="btn btn-dark" id="startNewMeetupBtn">새 월례회 시작</button>
+              </div>
+
+              <div class="monthly-row">
+                <select id="archiveMonthSelect" class="field">
+                  <option value="">지난 월례회 불러오는 중</option>
+                </select>
+                <button class="btn btn-blue" id="viewArchiveMeetupBtn">지난 월례회 보기</button>
+              </div>
+            </div>
+
+            <div class="note compact-note security-note">
+              과거 월례회를 볼 때는 조회 모드로 전환됩니다. 현재 월례회 운영으로 돌아가려면 상단의 <strong>현재 월례회로 돌아가기</strong>를 누르세요.
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="section-head compact-section-head">
+              <div class="section-icon">📊</div>
+              <div>
+                <h2>CSV 백업 · 복구</h2>
+                <p>현재 불러온 월례회 데이터를 통합 CSV로 내려받고, 원본JSON이 포함된 백업 파일로 복구합니다.</p>
+              </div>
+            </div>
+            <div class="actions">
+              <button class="btn btn-dark" id="downloadExcelBackupBtn">통합 CSV 백업 다운로드</button>
+            </div>
+            <div class="actions" style="margin-top:8px;">
+              <input id="csvRestoreFileInput" class="field" type="file" accept=".csv,text/csv" />
+              <button class="btn btn-rose" id="restoreCsvBackupBtn">CSV 백업 복구</button>
+            </div>
+            <div class="note compact-note security-note">
+              백업에는 회원명부, 조편성, 대진표, 개인순위, 팀요약, 추첨결과, 원본JSON이 포함됩니다.
+              복구는 CSV 안의 원본JSON을 기준으로 현재 운영 데이터를 덮어씁니다.
+            </div>
+          </div>
 
           <div class="panel">
             <div class="section-head compact-section-head">
               <div class="section-icon">🔑</div>
               <div>
                 <h2>관리자 비밀번호 변경</h2>
-                <p>최초 비밀번호는 0000이며, 이 화면에서 변경할 수 있습니다.</p>
+                <p>관리자 비밀번호는 현장 운영용이고, 마스터키는 비밀번호 분실 시 복구용입니다.</p>
               </div>
             </div>
 
             <div class="password-change-form">
-              <input id="currentAdminPassword" type="password" class="field" placeholder="현재 비밀번호" />
-              <input id="newAdminPassword" type="password" class="field" placeholder="새 비밀번호" />
-              <input id="confirmAdminPassword" type="password" class="field" placeholder="새 비밀번호 확인" />
-              <button class="btn btn-blue" id="changeAdminPasswordBtn">비밀번호 변경</button>
+              <input id="currentAdminPassword" type="password" class="field" placeholder="현재 관리자 비밀번호 또는 마스터키" />
+              <input id="newAdminPassword" type="password" class="field" placeholder="새 관리자 비밀번호" />
+              <input id="confirmAdminPassword" type="password" class="field" placeholder="새 관리자 비밀번호 확인" />
+              <button class="btn btn-blue" id="changeAdminPasswordBtn">관리자 비밀번호 변경</button>
             </div>
             <div class="password-message" id="passwordChangeMessage"></div>
 
+            <div class="password-change-form" style="margin-top:12px;">
+              <input id="currentMasterKey" type="password" class="field" placeholder="현재 마스터키" />
+              <input id="newMasterKey" type="password" class="field" placeholder="새 마스터키" />
+              <input id="confirmMasterKey" type="password" class="field" placeholder="새 마스터키 확인" />
+              <button class="btn btn-amber" id="changeMasterKeyBtn">마스터키 변경</button>
+            </div>
+            <div class="password-message" id="masterKeyChangeMessage"></div>
+
             <div class="note compact-note security-note">
-              이 HTML 단독 버전의 비밀번호 잠금은 <strong>화면 접근 제어용</strong>입니다.
-              실제 배포 시 DB와 연동할 때는 서버 인증 방식으로 바꾸는 게 안전합니다.
+              기본 관리자 비밀번호는 <strong>0000</strong>, 기본 마스터키는 <strong>matterhorn</strong>입니다.
+              마스터키로도 관리자모드에 진입할 수 있고, 관리자 비밀번호를 재설정할 수 있습니다.
             </div>
           </div>
         </div>
@@ -6224,16 +7050,18 @@
 
   <nav class="bottom-nav bottom-nav-public">
     <button class="active" data-page="matches"><span>🎾</span><span>경기현황</span></button>
-    <button data-page="awards"><span>🏆</span><span>순위</span></button>
+    <button data-page="ranking"><span>🏆</span><span>순위</span></button>
     <button data-page="teams"><span>🔀</span><span>조편성</span></button>
     <button data-page="members"><span>👥</span><span>참가자</span></button>
+    <button data-page="awards"><span>🎁</span><span>행운권</span></button>
   </nav>
 
   <nav class="bottom-nav bottom-nav-admin admin-only">
-    <button data-page="admin"><span>🔐</span><span>명단</span></button>
+    <button data-page="admin"><span>📋</span><span>회원명부</span></button>
     <button data-page="teams"><span>🔀</span><span>조편성</span></button>
     <button data-page="matches"><span>🎾</span><span>경기관리</span></button>
-    <button data-page="awards"><span>🎁</span><span>추첨</span></button>
+    <button data-page="awards"><span>🎁</span><span>행운권</span></button>
+    <button data-page="admin-tools"><span>🛠️</span><span>운영관리</span></button>
   </nav>
 
 
@@ -6279,7 +7107,7 @@
       </div>
 
       <div class="match-editor-note">
-        선수 변경 시 해당 경기 점수가 있으면 저장 전에 초기화 여부를 확인합니다.
+        선수 변경 시에도 기존 점수와 경기상태는 유지됩니다. 완료된 경기의 잘못 지정된 선수도 수정할 수 있습니다.
       </div>
 
       <div class="match-editor-actions">
@@ -6321,6 +7149,7 @@
     const SUPABASE_URL = "https://fgbiyvfnkvbcijlvtlsg.supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_Mln3GFeJtAtblF1bnCqemQ_syZZ-CCc";
     const SUPABASE_STATE_TABLE = "matterhorn_state";
+    const SUPABASE_MONTHLY_TABLE = "matterhorn_monthly_state";
     const SUPABASE_STATE_ID = "main";
 
     window.MATTERHORN_DB_ADAPTER = (() => {
@@ -6359,6 +7188,39 @@
 
           if (error) throw error;
           return { ok: true, storage: "supabase" };
+        },
+
+        async loadMonthlyArchiveList() {
+          const { data, error } = await getClient()
+            .from(SUPABASE_MONTHLY_TABLE)
+            .select("id,title,status,updated_at")
+            .order("id", { ascending: false });
+          if (error) throw error;
+          return Array.isArray(data) ? data : [];
+        },
+
+        async loadMonthlyArchive(id) {
+          const { data, error } = await getClient()
+            .from(SUPABASE_MONTHLY_TABLE)
+            .select("id,title,payload,status,updated_at")
+            .eq("id", id)
+            .maybeSingle();
+          if (error) throw error;
+          return data || null;
+        },
+
+        async saveMonthlyArchive(id, title, payload, status = "archived") {
+          const { error } = await getClient()
+            .from(SUPABASE_MONTHLY_TABLE)
+            .upsert({
+              id,
+              title,
+              payload,
+              status,
+              updated_at: new Date().toISOString()
+            }, { onConflict: "id" });
+          if (error) throw error;
+          return { ok: true, storage: "supabase-monthly" };
         }
       };
     })();
@@ -6367,6 +7229,7 @@
   <script>
     const STORAGE_KEY = "matterhorn_monthly_manager_v2";
     const ADMIN_PASSWORD_KEY = "matterhorn_admin_password";
+    const MASTER_KEY_STORAGE_KEY = "matterhorn_master_key";
     const DEVICE_ROLE_KEY = "matterhorn_device_default_role";
     let adminUnlocked = false;
     let pendingAdminNavigation = false;
@@ -6374,6 +7237,8 @@
     let raffleSpinLocked = false;
     let editingMatchId = null;
     let editingMatchMode = "edit";
+    let archiveViewMode = false;
+    let archiveViewMeta = null;
 
 
     function getDeviceRole() {
@@ -6420,7 +7285,7 @@
       hideRoleSelectScreen();
       syncAccessMode();
       renderAll();
-      activatePage(state.activePage === "admin" ? "matches" : (state.activePage || "matches"), false);
+      activatePage(["admin", "admin-tools"].includes(state.activePage) ? "matches" : (state.activePage || "matches"), false);
       applyDeviceRoleAfterBootstrap();
     }
 
@@ -6493,6 +7358,8 @@
         { id: "m20", name: "박소희", gender: "여", skill: 5, joined: false, team: "" , isGuest: false }
       ],
       teamCount: 2,
+      currentMeetupId: getDefaultMonthId(),
+      currentMeetupTitle: getMonthTitle(getDefaultMonthId()),
       desiredGamesPerPlayer: 2,
       desiredMenDoublesCount: 0,
       desiredWomenDoublesCount: 0,
@@ -6500,6 +7367,8 @@
       giftWinners: [],
       excludeRankersFromRaffle: false,
       excludeTopRankCount: 3,
+      raffleExcludeMode: "none",
+      raffleWinningTeamTopCount: 3,
       wheelRotation: 0,
       matchEditMode: false,
       activePage: "matches",
@@ -6523,6 +7392,23 @@
       async saveMonthlyMeetupState(payload) {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
         return { ok: true, storage: "localStorage" };
+      },
+      async loadMonthlyArchiveList() {
+        const raw = localStorage.getItem(STORAGE_KEY + "_archives");
+        const parsed = raw ? JSON.parse(raw) : {};
+        return Object.keys(parsed).sort().reverse().map(id => ({ id, title: parsed[id].title || getMonthTitle(id), status: parsed[id].status || "archived", updated_at: parsed[id].updated_at || "" }));
+      },
+      async loadMonthlyArchive(id) {
+        const raw = localStorage.getItem(STORAGE_KEY + "_archives");
+        const parsed = raw ? JSON.parse(raw) : {};
+        return parsed[id] || null;
+      },
+      async saveMonthlyArchive(id, title, payload, status = "archived") {
+        const raw = localStorage.getItem(STORAGE_KEY + "_archives");
+        const parsed = raw ? JSON.parse(raw) : {};
+        parsed[id] = { id, title, payload, status, updated_at: new Date().toISOString() };
+        localStorage.setItem(STORAGE_KEY + "_archives", JSON.stringify(parsed));
+        return { ok: true, storage: "localStorage-monthly" };
       }
     };
 
@@ -6552,6 +7438,39 @@
 
     function createId(prefix) {
       return prefix + "_" + Date.now() + "_" + Math.random().toString(36).slice(2, 8);
+    }
+
+
+    function pad2(value) {
+      return String(value).padStart(2, "0");
+    }
+
+    function getDefaultMonthId() {
+      const now = new Date();
+      return `${now.getFullYear()}-${pad2(now.getMonth() + 1)}`;
+    }
+
+    function normalizeMonthId(value) {
+      const raw = String(value || "").trim();
+      const match = raw.match(/^(\d{4})[-.년\s]*(\d{1,2})/);
+      if (!match) return "";
+      const year = Number(match[1]);
+      const month = Number(match[2]);
+      if (!year || month < 1 || month > 12) return "";
+      return `${year}-${pad2(month)}`;
+    }
+
+    function getMonthTitle(monthId) {
+      const normalized = normalizeMonthId(monthId) || getDefaultMonthId();
+      const [year, month] = normalized.split("-");
+      return `${year}년 ${Number(month)}월 월례회`;
+    }
+
+    function getNextMonthId(monthId) {
+      const normalized = normalizeMonthId(monthId) || getDefaultMonthId();
+      const [year, month] = normalized.split("-").map(Number);
+      const next = new Date(year, month, 1);
+      return `${next.getFullYear()}-${pad2(next.getMonth() + 1)}`;
     }
 
     function shuffle(items) {
@@ -6584,6 +7503,8 @@
 
     function exportState() {
       return {
+        currentMeetupId: state.currentMeetupId || getDefaultMonthId(),
+        currentMeetupTitle: state.currentMeetupTitle || getMonthTitle(state.currentMeetupId || getDefaultMonthId()),
         members: state.members,
         teamCount: state.teamCount,
         desiredGamesPerPlayer: state.desiredGamesPerPlayer,
@@ -6593,6 +7514,8 @@
         giftWinners: state.giftWinners,
         excludeRankersFromRaffle: state.excludeRankersFromRaffle,
         excludeTopRankCount: state.excludeTopRankCount,
+        raffleExcludeMode: state.raffleExcludeMode || "none",
+        raffleWinningTeamTopCount: Number(state.raffleWinningTeamTopCount || 3),
         wheelRotation: state.wheelRotation,
         matchEditMode: state.matchEditMode,
         activePage: state.activePage,
@@ -6601,6 +7524,10 @@
     }
 
     async function saveNow() {
+      if (archiveViewMode) {
+        setSaveStatus("🔎 과거 데이터 조회 중 · 현재 DB 저장 안 함");
+        return;
+      }
       try {
         setSaveStatus("💾 저장 중...");
         state.updatedAt = new Date().toISOString();
@@ -6632,6 +7559,8 @@
             ...clone(defaultState),
             ...loaded,
             members: Array.isArray(loaded.members) ? loaded.members : clone(defaultState.members),
+            currentMeetupId: normalizeMonthId(loaded.currentMeetupId) || getDefaultMonthId(),
+            currentMeetupTitle: loaded.currentMeetupTitle || getMonthTitle(loaded.currentMeetupId || getDefaultMonthId()),
             matches: Array.isArray(loaded.matches)
               ? loaded.matches.map(match => ({ ...match, status: match.status || "pending" }))
               : [],
@@ -6641,6 +7570,8 @@
             desiredWomenDoublesCount: Number(loaded.desiredWomenDoublesCount || 0),
             excludeRankersFromRaffle: Boolean(loaded.excludeRankersFromRaffle),
             excludeTopRankCount: Number(loaded.excludeTopRankCount || 3),
+            raffleExcludeMode: loaded.raffleExcludeMode || (loaded.excludeRankersFromRaffle ? "winningTop" + Number(loaded.excludeTopRankCount || 3) : "none"),
+            raffleWinningTeamTopCount: Number(loaded.raffleWinningTeamTopCount || loaded.excludeTopRankCount || 3),
             wheelRotation: Number(loaded.wheelRotation || 0),
             matchEditMode: Boolean(loaded.matchEditMode)
           };
@@ -6657,11 +7588,166 @@
       if ($("menDoublesCountInput")) $("menDoublesCountInput").value = String(state.desiredMenDoublesCount || 0);
       if ($("womenDoublesCountInput")) $("womenDoublesCountInput").value = String(state.desiredWomenDoublesCount || 0);
       syncRaffleControls();
-      activatePage(state.activePage === "admin" ? "matches" : (state.activePage || "matches"), false);
+      activatePage(["admin", "admin-tools"].includes(state.activePage) ? "matches" : (state.activePage || "matches"), false);
+      refreshArchiveMonthList();
     }
 
-    function renderAll() {
-      syncAccessMode();
+
+
+    async function refreshArchiveMonthList() {
+      const select = $("archiveMonthSelect");
+      if (!select || !dataAdapter.loadMonthlyArchiveList) return;
+      try {
+        const list = await dataAdapter.loadMonthlyArchiveList();
+        if (!list.length) {
+          select.innerHTML = `<option value="">보관된 월례회 없음</option>`;
+          return;
+        }
+        select.innerHTML = list.map(item => `
+          <option value="${safeText(item.id)}">${safeText(item.title || getMonthTitle(item.id))}${item.status === "active" ? " · 운영" : ""}</option>
+        `).join("");
+      } catch (error) {
+        console.error(error);
+        select.innerHTML = `<option value="">지난 월례회 불러오기 실패</option>`;
+      }
+    }
+
+    function renderMonthlyControls() {
+      const currentId = normalizeMonthId(state.currentMeetupId) || getDefaultMonthId();
+      const title = state.currentMeetupTitle || getMonthTitle(currentId);
+      const label = $("currentMeetupLabel");
+      if (label) label.textContent = archiveViewMode && archiveViewMeta ? `조회 중: ${archiveViewMeta.title || getMonthTitle(archiveViewMeta.id)}` : title;
+      const archiveInput = $("archiveMonthInput");
+      if (archiveInput && !archiveInput.value) archiveInput.value = currentId;
+      const newInput = $("newMeetupMonthInput");
+      if (newInput && !newInput.value) newInput.value = getNextMonthId(currentId);
+      const bannerText = $("archiveViewText");
+      if (bannerText) bannerText.textContent = archiveViewMode && archiveViewMeta ? `과거 월례회 조회 중: ${archiveViewMeta.title || getMonthTitle(archiveViewMeta.id)}` : "과거 월례회 조회 중";
+      document.body.classList.toggle("archive-view-mode", Boolean(archiveViewMode));
+    }
+
+    async function archiveCurrentMeetup() {
+      if (!requireAdmin()) return;
+      const input = $("archiveMonthInput");
+      const monthId = normalizeMonthId(input?.value || state.currentMeetupId || getDefaultMonthId());
+      if (!monthId) {
+        alert("보관할 월을 2026-06 형식으로 입력하세요.");
+        return;
+      }
+      const title = getMonthTitle(monthId);
+      if (!confirm(`${title}로 현재 데이터를 보관할까요?\n기존 운영 데이터는 삭제되지 않습니다.`)) return;
+      try {
+        setSaveStatus("🗓️ 월별 데이터 보관 중...");
+        await dataAdapter.saveMonthlyArchive(monthId, title, { ...exportState(), currentMeetupId: monthId, currentMeetupTitle: title }, "archived");
+        setSaveStatus(`✅ ${title} 보관 완료`, true);
+        await refreshArchiveMonthList();
+      } catch (error) {
+        console.error(error);
+        alert("월별 보관 실패: " + (error?.message || error));
+        setSaveStatus("⚠️ 월별 보관 실패");
+      }
+    }
+
+    async function startNewMeetup() {
+      if (!requireAdmin()) return;
+      const input = $("newMeetupMonthInput");
+      const monthId = normalizeMonthId(input?.value || getNextMonthId(state.currentMeetupId));
+      if (!monthId) {
+        alert("새 월을 2026-07 형식으로 입력하세요.");
+        return;
+      }
+      const title = getMonthTitle(monthId);
+      const message = `${title} 새 월례회를 시작할까요?\n\n회원명단은 유지하고 참가여부, 조편성, 대진표, 점수, 추첨결과는 초기화됩니다.`;
+      if (!confirm(message)) return;
+      archiveViewMode = false;
+      archiveViewMeta = null;
+      state = {
+        ...state,
+        currentMeetupId: monthId,
+        currentMeetupTitle: title,
+        members: state.members.map(member => ({ ...member, joined: false, team: "" })),
+        matches: [],
+        giftWinners: [],
+        wheelRotation: 0,
+        matchEditMode: false,
+        activePage: "matches"
+      };
+      renderAll();
+      activatePage("matches", false);
+      await saveNow();
+      try {
+        await dataAdapter.saveMonthlyArchive(monthId, title, exportState(), "active");
+        await refreshArchiveMonthList();
+      } catch (error) {
+        console.warn("새 월례회 월별 목록 저장 실패", error);
+      }
+    }
+
+    async function viewArchiveMeetup() {
+      const select = $("archiveMonthSelect");
+      const monthId = normalizeMonthId(select?.value || "");
+      if (!monthId) {
+        alert("조회할 지난 월례회를 선택하세요.");
+        return;
+      }
+      try {
+        setSaveStatus("🔎 과거 월례회 불러오는 중...");
+        const item = await dataAdapter.loadMonthlyArchive(monthId);
+        if (!item || !item.payload) {
+          alert("해당 월례회 데이터를 찾지 못했습니다.");
+          return;
+        }
+        archiveViewMode = true;
+        archiveViewMeta = { id: item.id, title: item.title || getMonthTitle(item.id) };
+        const loaded = item.payload;
+        state = {
+          ...clone(defaultState),
+          ...loaded,
+          currentMeetupId: item.id,
+          currentMeetupTitle: item.title || getMonthTitle(item.id),
+          members: Array.isArray(loaded.members) ? loaded.members : clone(defaultState.members),
+          matches: Array.isArray(loaded.matches) ? loaded.matches.map(match => ({ ...match, status: match.status || "pending" })) : [],
+          giftWinners: Array.isArray(loaded.giftWinners) ? loaded.giftWinners : [],
+          matchEditMode: false,
+          activePage: "matches"
+        };
+        renderAll();
+        activatePage("matches", false);
+        setSaveStatus(`🔎 ${archiveViewMeta.title} 조회 중`);
+      } catch (error) {
+        console.error(error);
+        alert("지난 월례회 불러오기 실패: " + (error?.message || error));
+        setSaveStatus("⚠️ 지난 월례회 불러오기 실패");
+      }
+    }
+
+    async function returnLiveMeetup() {
+      archiveViewMode = false;
+      archiveViewMeta = null;
+      try {
+        const loaded = await dataAdapter.loadMonthlyMeetupState();
+        if (loaded && typeof loaded === "object") {
+          state = {
+            ...clone(defaultState),
+            ...loaded,
+            currentMeetupId: normalizeMonthId(loaded.currentMeetupId) || getDefaultMonthId(),
+            currentMeetupTitle: loaded.currentMeetupTitle || getMonthTitle(loaded.currentMeetupId || getDefaultMonthId()),
+            members: Array.isArray(loaded.members) ? loaded.members : clone(defaultState.members),
+            matches: Array.isArray(loaded.matches) ? loaded.matches.map(match => ({ ...match, status: match.status || "pending" })) : [],
+            giftWinners: Array.isArray(loaded.giftWinners) ? loaded.giftWinners : [],
+            matchEditMode: Boolean(loaded.matchEditMode)
+          };
+        }
+        renderAll();
+        activatePage(["admin", "admin-tools"].includes(state.activePage) ? "matches" : (state.activePage || "matches"), false);
+        setSaveStatus("✅ 현재 월례회로 돌아옴", true);
+      } catch (error) {
+        console.error(error);
+        setSaveStatus("⚠️ 현재 월례회 불러오기 실패");
+      }
+    }
+
+    function renderAll() {      syncAccessMode();
       renderSummary();
       renderTeamRecords();
       renderPublicParticipants();
@@ -6674,6 +7760,7 @@
       renderRaffleWheel();
       syncModeCards();
       syncRaffleControls();
+      renderMonthlyControls();
     }
 
     function syncMatchEditModeButton() {
@@ -6684,7 +7771,7 @@
       button.classList.toggle("btn-blue", !isEditing);
       button.classList.toggle("btn-amber", isEditing);
       button.classList.toggle("match-edit-active-btn", isEditing);
-      button.textContent = isEditing ? "🟡 편집모드" : "✏️ 대진 편집";
+      button.textContent = isEditing ? "🟡 수동편집모드" : "✏️ 수동편집";
     }
 
     function renderSummary() {
@@ -6925,6 +8012,124 @@
       }).join("");
     }
 
+    function getTeamPlayerOptionsForMatchTable(team, selectedId = "") {
+      return `<option value="">선택</option>` + sortByKoreanName(
+        participants().filter(member => member.team === team)
+      ).map(member => {
+        const selected = member.id === selectedId ? " selected" : "";
+        return `<option value="${member.id}"${selected}>${safeText(member.name)}${member.isGuest ? " · Guest" : ""}</option>`;
+      }).join("");
+    }
+
+    function renderMatchTableEditor() {
+      if (!state.matches.length) {
+        return `
+          <div class="match-placeholder">
+            <strong>아직 대진표가 없습니다.</strong>
+            <span>조 편성 후 대진표 생성 버튼을 누르면 여기에 나타납니다.</span>
+          </div>
+        `;
+      }
+
+      return `
+        <div class="match-table-editor-note">
+          편집모드에서는 선수만 수정합니다. 완료된 경기라도 선수 변경이 가능하며, 기존 점수와 경기상태는 그대로 유지됩니다.
+        </div>
+        <div class="match-table-editor-wrap">
+          <table class="match-table-editor">
+            <thead>
+              <tr>
+                <th rowspan="2">게임</th>
+                <th rowspan="2">종류</th>
+                <th class="team-head-a" colspan="2">A팀</th>
+                <th class="team-head-b" colspan="2">B팀</th>
+              </tr>
+              <tr>
+                <th class="team-sub-a">선수 1</th>
+                <th class="team-sub-a">선수 2</th>
+                <th class="team-sub-b">선수 1</th>
+                <th class="team-sub-b">선수 2</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${state.matches.map(match => {
+                const side1Label = `${safeText(match.side1Team || "A")}팀`;
+                const side2Label = `${safeText(match.side2Team || "B")}팀`;
+                return `
+                  <tr>
+                    <td class="game-cell">${match.round}게임</td>
+                    <td class="match-type-cell">${getMatchType(match)}</td>
+                    <td class="team-edit-${String(match.side1Team || "A").toLowerCase()}" title="${side1Label} 선수 1">
+                      <select class="match-table-editor-select team-select-${String(match.side1Team || "A").toLowerCase()}" onchange="updateMatchTablePlayer('${match.id}','side1',0,this.value)">
+                        ${getTeamPlayerOptionsForMatchTable(match.side1Team, match.side1Players?.[0] || "")}
+                      </select>
+                    </td>
+                    <td class="team-edit-${String(match.side1Team || "A").toLowerCase()}" title="${side1Label} 선수 2">
+                      <select class="match-table-editor-select team-select-${String(match.side1Team || "A").toLowerCase()}" onchange="updateMatchTablePlayer('${match.id}','side1',1,this.value)">
+                        ${getTeamPlayerOptionsForMatchTable(match.side1Team, match.side1Players?.[1] || "")}
+                      </select>
+                    </td>
+                    <td class="team-edit-${String(match.side2Team || "B").toLowerCase()}" title="${side2Label} 선수 1">
+                      <select class="match-table-editor-select team-select-${String(match.side2Team || "B").toLowerCase()}" onchange="updateMatchTablePlayer('${match.id}','side2',0,this.value)">
+                        ${getTeamPlayerOptionsForMatchTable(match.side2Team, match.side2Players?.[0] || "")}
+                      </select>
+                    </td>
+                    <td class="team-edit-${String(match.side2Team || "B").toLowerCase()}" title="${side2Label} 선수 2">
+                      <select class="match-table-editor-select team-select-${String(match.side2Team || "B").toLowerCase()}" onchange="updateMatchTablePlayer('${match.id}','side2',1,this.value)">
+                        ${getTeamPlayerOptionsForMatchTable(match.side2Team, match.side2Players?.[1] || "")}
+                      </select>
+                    </td>
+                  </tr>
+                `;
+              }).join("")}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    function updateMatchTablePlayer(matchId, side, index, playerId) {
+      if (!requireAdmin()) return;
+      const match = state.matches.find(row => row.id === matchId);
+      if (!match) return;
+
+      const sideKey = side === "side2" ? "side2Players" : "side1Players";
+      const teamKey = side === "side2" ? "side2Team" : "side1Team";
+      const nextSidePlayers = [...(match[sideKey] || [])];
+      nextSidePlayers[index] = playerId;
+
+      const nextAllPlayers = [
+        ...(sideKey === "side1Players" ? nextSidePlayers : (match.side1Players || [])),
+        ...(sideKey === "side2Players" ? nextSidePlayers : (match.side2Players || []))
+      ].filter(Boolean);
+
+      if (new Set(nextAllPlayers).size !== nextAllPlayers.length) {
+        alert("같은 선수를 한 경기 안에 중복 선택할 수 없습니다.");
+        renderAll();
+        return;
+      }
+
+      const selectedMember = playerId ? memberById(playerId) : null;
+      if (selectedMember && selectedMember.team !== match[teamKey]) {
+        alert(`${selectedMember.name}님은 ${match[teamKey]}팀 배정자가 아닙니다.`);
+        renderAll();
+        return;
+      }
+
+      state.matches = state.matches.map(row => {
+        if (row.id !== matchId) return row;
+        return {
+          ...row,
+          [sideKey]: nextSidePlayers
+        };
+      });
+
+      renderSummary();
+      renderTeamRecords();
+      renderRankings();
+      saveNow();
+    }
+
     function getTeamOptions(selectedTeam = "") {
       return teamKeys().map(team =>
         `<option value="${team}" ${team === selectedTeam ? "selected" : ""}>${team}팀</option>`
@@ -7041,16 +8246,7 @@
 
     function saveMatchEditor() {
       if (!requireAdmin()) return;
-      const existing = editingMatchId ? state.matches.find(match => match.id === editingMatchId) : null;
-      const hasScore = existing && (String(existing.score1 || "") !== "" || String(existing.score2 || "") !== "");
-      if (existing && hasScore) {
-        requestConfirmation({
-          title: "점수를 초기화할까요?",
-          message: "선수 구성을 변경하면 기존 점수와 경기 상태를 초기화하는 것이 안전합니다.\n확인을 누르면 점수를 비우고 저장합니다.",
-          onConfirm: () => applyMatchEditorSave(true)
-        });
-        return;
-      }
+      // v46: 관리자 선수 수정은 완료 경기라도 허용하고, 기존 점수/상태는 유지한다.
       applyMatchEditorSave(false);
     }
 
@@ -7120,6 +8316,18 @@
         }).join(" · ");
       };
 
+      const scoreOptions = (currentValue) => {
+        const valueNumber = Number(currentValue);
+        return Array.from({ length: 8 }, (_, score) =>
+          `<option value="${score}" ${valueNumber === score ? "selected" : ""}>${score}</option>`
+        ).join("");
+      };
+
+      if (adminUnlocked && state.matchEditMode) {
+        area.innerHTML = renderMatchTableEditor();
+        return;
+      }
+
       area.innerHTML = `<div class="match-list">` + state.matches.map(match => {
         const status = match.status || "pending";
         const statusLabel =
@@ -7149,9 +8357,13 @@
             </div>
 
             <div class="compact-score-wrap">
-              <input class="compact-score" type="number" min="0" value="${match.score1}" placeholder="0" ${scoreControlAttrs} onchange="updateScore('${match.id}','score1',this.value)" />
+              <select class="compact-score compact-score-select" ${scoreControlAttrs} onchange="updateScore('${match.id}','score1',this.value)" aria-label="${match.round}게임 ${match.side1Team}팀 점수">
+                ${scoreOptions(match.score1)}
+              </select>
               <span class="compact-vs">:</span>
-              <input class="compact-score" type="number" min="0" value="${match.score2}" placeholder="0" ${scoreControlAttrs} onchange="updateScore('${match.id}','score2',this.value)" />
+              <select class="compact-score compact-score-select" ${scoreControlAttrs} onchange="updateScore('${match.id}','score2',this.value)" aria-label="${match.round}게임 ${match.side2Team}팀 점수">
+                ${scoreOptions(match.score2)}
+              </select>
             </div>
 
             <div class="compact-side">
@@ -7240,8 +8452,9 @@
     }
 
     function renderRankings() {
-      const rankings = getRankings();
+      const rankings = getRankings().slice(0, 5);
       const list = $("rankingList");
+      if (!list) return;
       list.innerHTML = rankings.length
         ? rankings.map((rank, index) => {
           const rankLabel =
@@ -7292,16 +8505,9 @@
 
     function toggleJoin(id) {
       if (!requireAdmin()) return;
-      state.members = state.members.map(member => {
-        if (member.id !== id) return member;
-        const nextJoined = !member.joined;
-        return { ...member, joined: nextJoined, team: nextJoined ? member.team : "" };
-      });
-      state.members = state.members.map(member => member.id === id ? { ...member, team: "" } : member);
-      state.members = state.members.map(member => member.joined ? member : { ...member, team: "" });
-      state.matches = [];
-      renderAll();
-      scheduleSave();
+      const member = state.members.find(row => row.id === id);
+      if (!member) return;
+      setMemberParticipation(id, !member.joined);
     }
 
     function updateMember(id, key, value) {
@@ -7457,11 +8663,11 @@
       return pairs;
     }
 
-    function getPairOptions(team, playCounts, targetGames, minGames, matchType) {
+    function getPairOptions(team, playCounts, targetGames, minGames, matchType, softMaxGames = targetGames) {
       if (matchType === "men") {
         return pairCombinations(
           sortCandidatesByNeed(
-            activeTeamPlayers(team, "남").filter(member => (playCounts.get(member.id) || 0) < targetGames),
+            activeTeamPlayers(team, "남").filter(member => (playCounts.get(member.id) || 0) < softMaxGames),
             playCounts,
             minGames
           )
@@ -7471,7 +8677,7 @@
       if (matchType === "women") {
         return pairCombinations(
           sortCandidatesByNeed(
-            activeTeamPlayers(team, "여").filter(member => (playCounts.get(member.id) || 0) < targetGames),
+            activeTeamPlayers(team, "여").filter(member => (playCounts.get(member.id) || 0) < softMaxGames),
             playCounts,
             minGames
           )
@@ -7480,12 +8686,12 @@
 
       if (matchType === "mixed") {
         const males = sortCandidatesByNeed(
-          activeTeamPlayers(team, "남").filter(member => (playCounts.get(member.id) || 0) < targetGames),
+          activeTeamPlayers(team, "남").filter(member => (playCounts.get(member.id) || 0) < softMaxGames),
           playCounts,
           minGames
         ).slice(0, 12);
         const females = sortCandidatesByNeed(
-          activeTeamPlayers(team, "여").filter(member => (playCounts.get(member.id) || 0) < targetGames),
+          activeTeamPlayers(team, "여").filter(member => (playCounts.get(member.id) || 0) < softMaxGames),
           playCounts,
           minGames
         ).slice(0, 12);
@@ -7498,7 +8704,7 @@
 
       return pairCombinations(
         sortCandidatesByNeed(
-          activeTeamPlayers(team).filter(member => (playCounts.get(member.id) || 0) < targetGames),
+          activeTeamPlayers(team).filter(member => (playCounts.get(member.id) || 0) < softMaxGames),
           playCounts,
           minGames
         )
@@ -7525,11 +8731,29 @@
         .join("|");
     }
 
+    function getPairSignature(playerIds) {
+      return [...(playerIds || [])]
+        .map(id => String(id))
+        .sort()
+        .join("|");
+    }
+
+    function getPartnerRepeatCount(pair, partnerCounts) {
+      if (!partnerCounts || !pair || pair.length < 2) return 0;
+      return partnerCounts.get(getPairSignature(pair)) || 0;
+    }
+
+    function registerPartnerPair(pair, partnerCounts) {
+      if (!partnerCounts || !pair || pair.length < 2) return;
+      const signature = getPairSignature(pair);
+      partnerCounts.set(signature, (partnerCounts.get(signature) || 0) + 1);
+    }
+
     function hasGenerationCapacity(playCounts, targetGames, minGames, allowedTypes) {
       return Boolean(findBestNextMatch(playCounts, targetGames, minGames, allowedTypes, { men: 0, women: 0 }, 0, 0, true));
     }
 
-    function scoreCandidateMatch(playerIds, playCounts, minGames, targetGames) {
+    function scoreCandidateMatch(playerIds, playCounts, minGames, targetGames, leftPair = [], rightPair = [], partnerCounts = new Map()) {
       const counts = playerIds.map(id => playCounts.get(id) || 0);
       const afterCounts = counts.map(count => count + 1);
       const belowMinBefore = counts.filter(count => count < minGames).length;
@@ -7538,28 +8762,39 @@
       const minDeficitAfter = afterCounts.reduce((sum, count) => sum + Math.max(0, minGames - count), 0);
       const targetDeficitBefore = counts.reduce((sum, count) => sum + Math.max(0, targetGames - count), 0);
       const targetDeficitAfter = afterCounts.reduce((sum, count) => sum + Math.max(0, targetGames - count), 0);
+      const overTargetAfter = afterCounts.reduce((sum, count) => sum + Math.max(0, count - targetGames), 0);
+      const overTargetPlayers = afterCounts.filter(count => count > targetGames).length;
       const maxAfter = Math.max(...afterCounts);
       const minAfter = Math.min(...afterCounts);
+      const leftPartnerRepeats = getPartnerRepeatCount(leftPair, partnerCounts);
+      const rightPartnerRepeats = getPartnerRepeatCount(rightPair, partnerCounts);
+      const partnerRepeatPenalty = [leftPartnerRepeats, rightPartnerRepeats].reduce((sum, repeatCount) => {
+        if (!repeatCount) return sum;
+        return sum + repeatCount * 12000 + Math.max(0, repeatCount - 1) * 18000;
+      }, 0);
 
       return (
-        (belowMinAfter - belowMinBefore) * 9000 +
-        (minDeficitAfter - minDeficitBefore) * 2600 +
-        (targetDeficitAfter - targetDeficitBefore) * 260 +
-        maxAfter * 95 +
-        (maxAfter - minAfter) * 160 +
-        afterCounts.reduce((sum, count) => sum + count, 0) * 12 +
+        (belowMinAfter - belowMinBefore) * 9800 +
+        (minDeficitAfter - minDeficitBefore) * 3000 +
+        (targetDeficitAfter - targetDeficitBefore) * 220 +
+        overTargetAfter * 22000 +
+        overTargetPlayers * 8000 +
+        partnerRepeatPenalty +
+        maxAfter * 90 +
+        (maxAfter - minAfter) * 190 +
+        afterCounts.reduce((sum, count) => sum + count, 0) * 10 +
         Math.random() * 4
       );
     }
 
-    function findBestNextMatch(playCounts, targetGames, minGames, allowedTypes, typeCounts, requestedMen, requestedWomen, fastOnly = false, usedFourSignatures = new Set(), allowDuplicateFour = false) {
+    function findBestNextMatch(playCounts, targetGames, minGames, allowedTypes, typeCounts, requestedMen, requestedWomen, fastOnly = false, usedFourSignatures = new Set(), allowDuplicateFour = false, partnerCounts = new Map(), softMaxGames = targetGames) {
       const candidateTypes = allowedTypes && allowedTypes.length ? allowedTypes : ["mixed", "men", "women"];
       const candidates = [];
 
       candidateTypes.forEach(matchType => {
         getMatchupsForCurrentTeamCount().forEach(([left, right]) => {
-          const leftOptions = getPairOptions(left, playCounts, targetGames, minGames, matchType);
-          const rightOptions = getPairOptions(right, playCounts, targetGames, minGames, matchType);
+          const leftOptions = getPairOptions(left, playCounts, targetGames, minGames, matchType, softMaxGames);
+          const rightOptions = getPairOptions(right, playCounts, targetGames, minGames, matchType, softMaxGames);
           if (!leftOptions.length || !rightOptions.length) return;
 
           leftOptions.slice(0, 42).forEach(leftPair => {
@@ -7572,7 +8807,7 @@
               const isDuplicateFour = usedFourSignatures.has(fourSignature);
               if (isDuplicateFour && !allowDuplicateFour) return;
 
-              let score = scoreCandidateMatch(playerIds, playCounts, minGames, targetGames);
+              let score = scoreCandidateMatch(playerIds, playCounts, minGames, targetGames, leftPair, rightPair, partnerCounts);
               if (isDuplicateFour) score += 18000;
 
               if (matchType === "men" && (typeCounts.men || 0) < requestedMen) score -= 4200;
@@ -7615,7 +8850,7 @@
       });
     }
 
-    function applyMatchPick(generated, playCounts, pick, typeCounts, courtCounter, usedFourSignatures = null) {
+    function applyMatchPick(generated, playCounts, pick, typeCounts, courtCounter, usedFourSignatures = null, partnerCounts = null) {
       [...pick.leftPair, ...pick.rightPair].forEach(id => {
         playCounts.set(id, (playCounts.get(id) || 0) + 1);
       });
@@ -7623,6 +8858,8 @@
       if (usedFourSignatures && pick.fourSignature) {
         usedFourSignatures.add(pick.fourSignature);
       }
+      registerPartnerPair(pick.leftPair, partnerCounts);
+      registerPartnerPair(pick.rightPair, partnerCounts);
       pushGeneratedMatch(generated, courtCounter, pick.selected, pick.leftPair, pick.rightPair);
     }
 
@@ -7633,6 +8870,8 @@
       const generated = [];
       const typeCounts = { men: 0, women: 0, mixed: 0 };
       const usedFourSignatures = new Set();
+      const partnerCounts = new Map();
+      const softMaxGames = targetGames + 1;
       let courtCounter = 1;
       let safety = 0;
 
@@ -7644,6 +8883,7 @@
         const requiredTypes = [];
         if (typeCounts.men < requestedMen) requiredTypes.push("men");
         if (typeCounts.women < requestedWomen) requiredTypes.push("women");
+        const effectiveSoftMaxGames = belowMin > 0 ? softMaxGames : targetGames;
 
         let allowedTypes = [];
         if (belowMin > 0) {
@@ -7656,23 +8896,23 @@
           break;
         }
 
-        let pick = findBestNextMatch(playCounts, targetGames, minGames, allowedTypes, typeCounts, requestedMen, requestedWomen, false, usedFourSignatures, false);
+        let pick = findBestNextMatch(playCounts, targetGames, minGames, allowedTypes, typeCounts, requestedMen, requestedWomen, false, usedFourSignatures, false, partnerCounts, effectiveSoftMaxGames);
 
         if (!pick && requiredTypes.length) {
-          pick = findBestNextMatch(playCounts, targetGames, minGames, requiredTypes, typeCounts, requestedMen, requestedWomen, false, usedFourSignatures, false);
+          pick = findBestNextMatch(playCounts, targetGames, minGames, requiredTypes, typeCounts, requestedMen, requestedWomen, false, usedFourSignatures, false, partnerCounts, effectiveSoftMaxGames);
         }
 
         if (!pick && belowMin > 0) {
-          pick = findBestNextMatch(playCounts, targetGames, minGames, ["mixed", "men", "women"], typeCounts, requestedMen, requestedWomen, false, usedFourSignatures, false);
+          pick = findBestNextMatch(playCounts, targetGames, minGames, ["mixed", "men", "women"], typeCounts, requestedMen, requestedWomen, false, usedFourSignatures, false, partnerCounts, effectiveSoftMaxGames);
         }
 
         if (!pick) {
-          pick = findBestNextMatch(playCounts, targetGames, minGames, allowedTypes, typeCounts, requestedMen, requestedWomen, false, usedFourSignatures, true);
+          pick = findBestNextMatch(playCounts, targetGames, minGames, allowedTypes, typeCounts, requestedMen, requestedWomen, false, usedFourSignatures, true, partnerCounts, effectiveSoftMaxGames);
         }
 
         if (!pick) break;
 
-        applyMatchPick(generated, playCounts, pick, typeCounts, courtCounter, usedFourSignatures);
+        applyMatchPick(generated, playCounts, pick, typeCounts, courtCounter, usedFourSignatures, partnerCounts);
         courtCounter += 1;
       }
 
@@ -7893,11 +9133,44 @@
       updateMatchStatus(id, nextStatus);
     }
 
+    function getWinningTeamKey() {
+      const finishedMatches = state.matches.filter(match => (match.status || "pending") === "finished").length;
+      if (!finishedMatches) return "";
+
+      const sorted = [...getTeamRecords()].sort((a, b) => {
+        if (b.wins !== a.wins) return b.wins - a.wins;
+        if (b.pointsFor !== a.pointsFor) return b.pointsFor - a.pointsFor;
+        return (b.pointsFor - b.pointsAgainst) - (a.pointsFor - a.pointsAgainst);
+      });
+      const best = sorted[0];
+      const second = sorted[1];
+      if (!best) return "";
+      if (second &&
+          best.wins === second.wins &&
+          best.pointsFor === second.pointsFor &&
+          (best.pointsFor - best.pointsAgainst) === (second.pointsFor - second.pointsAgainst)) {
+        return "";
+      }
+      return best.team || "";
+    }
+
     function getExcludedRankerIds() {
-      if (!state.excludeRankersFromRaffle) return new Set();
+      const mode = state.raffleExcludeMode || (state.excludeRankersFromRaffle ? "winningTop" + Number(state.excludeTopRankCount || 3) : "none");
+      if (mode === "none") return new Set();
+
+      const winningTeam = getWinningTeamKey();
+      if (!winningTeam) return new Set();
+
+      if (mode === "winningAll") {
+        return new Set(participants().filter(member => member.team === winningTeam).map(member => member.id));
+      }
+
+      const topMatch = String(mode).match(/^winningTop(\d+)$/);
+      const topCount = topMatch ? Math.max(1, Number(topMatch[1])) : Number(state.raffleWinningTeamTopCount || state.excludeTopRankCount || 3);
       return new Set(
         getRankings()
-          .slice(0, Math.max(0, Number(state.excludeTopRankCount || 0)))
+          .filter(rank => rank.team === winningTeam)
+          .slice(0, topCount)
           .map(rank => rank.id)
       );
     }
@@ -7970,13 +9243,16 @@
       if (!wheel || !eligibility) return;
 
       const pool = getRafflePool();
-      const excludedCount = state.excludeRankersFromRaffle
-        ? Math.min(Number(state.excludeTopRankCount || 0), getRankings().length)
-        : 0;
+      const excludedRankerIds = getExcludedRankerIds();
+      const winningTeam = getWinningTeamKey();
+      const mode = state.raffleExcludeMode || "none";
+      const exclusionText = mode !== "none"
+        ? (winningTeam ? ` · ${winningTeam}팀 ${excludedRankerIds.size}명 제외` : " · 이긴팀 미확정")
+        : "";
 
       eligibility.textContent =
         `추첨 대상 ${pool.length}명` +
-        (excludedCount ? ` · 순위권 ${excludedCount}명 제외` : "") +
+        exclusionText +
         (state.giftWinners.length ? ` · 이미 당첨 ${state.giftWinners.length}명 제외` : "");
 
       wheel.innerHTML = buildWheelSvg(pool);
@@ -7984,12 +9260,9 @@
     }
 
     function syncRaffleControls() {
-      const toggle = $("excludeRankersToggle");
-      const select = $("excludeTopCountSelect");
-      if (!toggle || !select) return;
-      toggle.checked = Boolean(state.excludeRankersFromRaffle);
-      select.disabled = !state.excludeRankersFromRaffle;
-      select.value = String(state.excludeTopRankCount || 3);
+      const modeSelect = $("raffleExcludeModeSelect");
+      if (!modeSelect) return;
+      modeSelect.value = state.raffleExcludeMode || (state.excludeRankersFromRaffle ? "winningTop" + Number(state.excludeTopRankCount || 3) : "none");
     }
 
     function spinRaffleWheel() {
@@ -8067,6 +9340,14 @@
       return localStorage.getItem(ADMIN_PASSWORD_KEY) || "0000";
     }
 
+    function getMasterKey() {
+      return localStorage.getItem(MASTER_KEY_STORAGE_KEY) || "matterhorn";
+    }
+
+    function isValidAdminCredential(value) {
+      return value === getAdminPassword() || value === getMasterKey();
+    }
+
     function openAdminPasswordModal() {
       pendingAdminNavigation = true;
       $("adminPasswordModal").classList.remove("hidden");
@@ -8084,8 +9365,8 @@
 
     function confirmAdminLogin() {
       const entered = $("adminPasswordInput").value;
-      if (entered !== getAdminPassword()) {
-        $("adminPasswordError").textContent = "비밀번호가 올바르지 않습니다.";
+      if (!isValidAdminCredential(entered)) {
+        $("adminPasswordError").textContent = "비밀번호 또는 마스터키가 올바르지 않습니다.";
         return;
       }
       adminUnlocked = true;
@@ -8113,16 +9394,16 @@
 
       message.classList.remove("good");
 
-      if (current !== getAdminPassword()) {
-        message.textContent = "현재 비밀번호가 올바르지 않습니다.";
+      if (!isValidAdminCredential(current)) {
+        message.textContent = "현재 관리자 비밀번호 또는 마스터키가 올바르지 않습니다.";
         return;
       }
       if (!next || next.length < 4) {
-        message.textContent = "새 비밀번호는 4자리 이상으로 입력해 주세요.";
+        message.textContent = "새 관리자 비밀번호는 4자리 이상으로 입력해 주세요.";
         return;
       }
       if (next !== confirm) {
-        message.textContent = "새 비밀번호 확인이 일치하지 않습니다.";
+        message.textContent = "새 관리자 비밀번호 확인이 일치하지 않습니다.";
         return;
       }
 
@@ -8130,8 +9411,423 @@
       $("currentAdminPassword").value = "";
       $("newAdminPassword").value = "";
       $("confirmAdminPassword").value = "";
-      message.textContent = "비밀번호가 변경되었습니다.";
+      message.textContent = "관리자 비밀번호가 변경되었습니다.";
       message.classList.add("good");
+    }
+
+    function changeMasterKey() {
+      const current = $("currentMasterKey").value;
+      const next = $("newMasterKey").value;
+      const confirm = $("confirmMasterKey").value;
+      const message = $("masterKeyChangeMessage");
+
+      message.classList.remove("good");
+
+      if (current !== getMasterKey()) {
+        message.textContent = "현재 마스터키가 올바르지 않습니다.";
+        return;
+      }
+      if (!next || next.length < 6) {
+        message.textContent = "새 마스터키는 6자리 이상으로 입력해 주세요.";
+        return;
+      }
+      if (next !== confirm) {
+        message.textContent = "새 마스터키 확인이 일치하지 않습니다.";
+        return;
+      }
+
+      localStorage.setItem(MASTER_KEY_STORAGE_KEY, next);
+      $("currentMasterKey").value = "";
+      $("newMasterKey").value = "";
+      $("confirmMasterKey").value = "";
+      message.textContent = "마스터키가 변경되었습니다.";
+      message.classList.add("good");
+    }
+
+    function backupSafeArray(value) {
+      return Array.isArray(value) ? value : [];
+    }
+
+    function backupSafeMatches() {
+      return backupSafeArray(state.matches).map(match => ({
+        ...match,
+        side1Players: backupSafeArray(match?.side1Players),
+        side2Players: backupSafeArray(match?.side2Players),
+        side1Team: match?.side1Team || "A",
+        side2Team: match?.side2Team || "B",
+        score1: Number(match?.score1 || 0),
+        score2: Number(match?.score2 || 0),
+        status: match?.status || "pending"
+      }));
+    }
+
+    function csvEscape(value) {
+      const text = String(value ?? "");
+      if (/[",\n\r]/.test(text)) return '"' + text.replaceAll('"', '""') + '"';
+      return text;
+    }
+
+    function csvRow(values) {
+      return values.map(csvEscape).join(",");
+    }
+
+    function csvSection(title, rows) {
+      return [csvRow([`[${title}]`]), ...rows.map(csvRow), ""].join("\r\n");
+    }
+
+    function encodeBase64Utf8(text) {
+      const bytes = new TextEncoder().encode(String(text ?? ""));
+      let binary = "";
+      bytes.forEach(byte => { binary += String.fromCharCode(byte); });
+      return btoa(binary);
+    }
+
+    function decodeBase64Utf8(base64) {
+      const binary = atob(String(base64 || "").trim());
+      const bytes = new Uint8Array(binary.length);
+      for (let i = 0; i < binary.length; i += 1) bytes[i] = binary.charCodeAt(i);
+      return new TextDecoder("utf-8").decode(bytes);
+    }
+
+    function backupMemberName(id) {
+      const member = memberById(id);
+      return member ? member.name : "";
+    }
+
+    function backupTeamName(team) {
+      return team ? `${team}팀` : "미배정";
+    }
+
+    function backupStatusLabel(status) {
+      return status === "playing" ? "경기 중" :
+        status === "finished" ? "완료" : "시작 전";
+    }
+
+    function getBackupTeamRecords(matches) {
+      const keys = teamKeys();
+      const records = Object.fromEntries(keys.map(team => [team, {
+        team,
+        wins: 0,
+        losses: 0,
+        draws: 0,
+        pointsFor: 0,
+        pointsAgainst: 0
+      }]));
+
+      matches
+        .filter(match => (match.status || "pending") === "finished")
+        .forEach(match => {
+          const score1 = Number(match.score1 || 0);
+          const score2 = Number(match.score2 || 0);
+          const left = records[match.side1Team];
+          const right = records[match.side2Team];
+          if (!left || !right) return;
+
+          left.pointsFor += score1;
+          left.pointsAgainst += score2;
+          right.pointsFor += score2;
+          right.pointsAgainst += score1;
+
+          if (score1 > score2) {
+            left.wins += 1;
+            right.losses += 1;
+          } else if (score2 > score1) {
+            right.wins += 1;
+            left.losses += 1;
+          } else {
+            left.draws += 1;
+            right.draws += 1;
+          }
+        });
+
+      return keys.map(team => records[team]);
+    }
+
+    function getBackupRankings(matches) {
+      const scoreMap = new Map();
+      backupSafeArray(state.members).filter(member => member.joined).forEach(member => {
+        scoreMap.set(member.id, {
+          id: member.id,
+          name: member.name,
+          team: member.team || "-",
+          games: 0,
+          totalScore: 0
+        });
+      });
+
+      matches.forEach(match => {
+        const score1 = Number(match.score1 || 0);
+        const score2 = Number(match.score2 || 0);
+        backupSafeArray(match.side1Players).forEach(id => {
+          const row = scoreMap.get(id);
+          if (!row) return;
+          row.games += 1;
+          row.totalScore += score1;
+        });
+        backupSafeArray(match.side2Players).forEach(id => {
+          const row = scoreMap.get(id);
+          if (!row) return;
+          row.games += 1;
+          row.totalScore += score2;
+        });
+      });
+
+      return [...scoreMap.values()].sort((a, b) => {
+        if (b.totalScore !== a.totalScore) return b.totalScore - a.totalScore;
+        if (b.games !== a.games) return b.games - a.games;
+        return String(a.name || "").localeCompare(String(b.name || ""), "ko");
+      });
+    }
+
+    function getBackupCsvText() {
+      const payload = exportState();
+      const payloadJson = JSON.stringify(payload);
+      const payloadBase64 = encodeBase64Utf8(payloadJson);
+      const matches = backupSafeMatches();
+      const rankings = getBackupRankings(matches);
+      const teamRecords = getBackupTeamRecords(matches);
+      const memberGameCounts = new Map();
+
+      matches.forEach(match => {
+        [...backupSafeArray(match.side1Players), ...backupSafeArray(match.side2Players)].forEach(id => {
+          memberGameCounts.set(id, (memberGameCounts.get(id) || 0) + 1);
+        });
+      });
+
+      const infoRows = [
+        ["항목", "값"],
+        ["백업형식", "MATTERHORN_CSV_BACKUP_V1"],
+        ["백업시각", new Date().toISOString()],
+        ["월례회", state.currentMeetupTitle || getMonthTitle(state.currentMeetupId)],
+        ["운영월", state.currentMeetupId || ""]
+      ];
+
+      const membersRows = [
+        ["이름", "성별", "실력", "구분", "참가", "팀", "참가경기수"],
+        ...sortByKoreanName(backupSafeArray(state.members)).map(member => [
+          member.name,
+          member.gender,
+          member.skill,
+          member.isGuest ? "Guest" : "정회원",
+          member.joined ? "참가" : "불참",
+          backupTeamName(member.team),
+          memberGameCounts.get(member.id) || 0
+        ])
+      ];
+
+      const teamRows = [
+        ["팀", "이름", "성별", "실력", "구분", "참가경기수"],
+        ...teamKeys().flatMap(team => sortByKoreanName(backupSafeArray(state.members).filter(member => member.team === team)).map(member => [
+          backupTeamName(team),
+          member.name,
+          member.gender,
+          member.skill,
+          member.isGuest ? "Guest" : "정회원",
+          memberGameCounts.get(member.id) || 0
+        ])),
+        ...sortByKoreanName(backupSafeArray(state.members).filter(member => !member.team)).map(member => [
+          "미배정",
+          member.name,
+          member.gender,
+          member.skill,
+          member.isGuest ? "Guest" : "정회원",
+          memberGameCounts.get(member.id) || 0
+        ])
+      ];
+
+      const matchesRows = [
+        ["게임", "종류", "A팀 선수1", "A팀 선수2", "A점수", "B점수", "B팀 선수1", "B팀 선수2", "상태"],
+        ...matches.map((match, index) => [
+          index + 1,
+          match.typeLabel || match.type || "",
+          backupMemberName(match.side1Players[0]),
+          backupMemberName(match.side1Players[1]),
+          Number(match.score1 || 0),
+          Number(match.score2 || 0),
+          backupMemberName(match.side2Players[0]),
+          backupMemberName(match.side2Players[1]),
+          backupStatusLabel(match.status || "pending")
+        ])
+      ];
+
+      const rankingRows = [
+        ["순위", "이름", "팀", "경기수", "총점"],
+        ...rankings.map((rank, index) => [
+          index + 1,
+          rank.name,
+          backupTeamName(rank.team),
+          rank.games,
+          rank.totalScore
+        ])
+      ];
+
+      const teamSummaryRows = [
+        ["팀", "승", "패", "무", "총점", "실점", "득실"],
+        ...teamRecords.map(record => [
+          backupTeamName(record.team),
+          record.wins,
+          record.losses,
+          record.draws,
+          record.pointsFor,
+          record.pointsAgainst,
+          record.pointsFor - record.pointsAgainst
+        ])
+      ];
+
+      const giftRows = [
+        ["순서", "경품명", "당첨자", "추첨시각"],
+        ...backupSafeArray(state.giftWinners).map((winner, index) => [
+          index + 1,
+          winner.giftName || "",
+          winner.memberName || backupMemberName(winner.memberId),
+          winner.createdAt || winner.timestamp || ""
+        ])
+      ];
+
+      const rawRows = [
+        ["항목", "값"],
+        ["원본JSON_BASE64", payloadBase64]
+      ];
+
+      return [
+        csvSection("백업정보", infoRows),
+        csvSection("회원명부", membersRows),
+        csvSection("조편성", teamRows),
+        csvSection("대진표", matchesRows),
+        csvSection("개인순위", rankingRows),
+        csvSection("팀요약", teamSummaryRows),
+        csvSection("추첨결과", giftRows),
+        csvSection("원본JSON", rawRows)
+      ].join("\r\n");
+    }
+
+    function triggerFileDownload(blob, filename) {
+      if (window.navigator && typeof window.navigator.msSaveOrOpenBlob === "function") {
+        window.navigator.msSaveOrOpenBlob(blob, filename);
+        return true;
+      }
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = filename;
+      link.rel = "noopener";
+      link.style.display = "none";
+      document.body.appendChild(link);
+      link.click();
+      setTimeout(() => {
+        link.remove();
+        URL.revokeObjectURL(url);
+      }, 5000);
+      return true;
+    }
+
+    function downloadCsvBackup() {
+      if (!requireAdmin()) return;
+      try {
+        const monthId = normalizeMonthId(state.currentMeetupId) || getDefaultMonthId();
+        const stamp = new Date();
+        const filename = `matterhorn_backup_${monthId}_${stamp.getFullYear()}${pad2(stamp.getMonth() + 1)}${pad2(stamp.getDate())}_${pad2(stamp.getHours())}${pad2(stamp.getMinutes())}.csv`;
+        const csvText = getBackupCsvText();
+        const blob = new Blob(["\ufeff", csvText], { type: "text/csv;charset=utf-8" });
+        triggerFileDownload(blob, filename);
+      } catch (error) {
+        console.error("CSV 백업 생성 실패", error);
+        try {
+          const monthId = normalizeMonthId(state?.currentMeetupId) || getDefaultMonthId();
+          const stamp = new Date();
+          const filename = `matterhorn_backup_${monthId}_${stamp.getFullYear()}${pad2(stamp.getMonth() + 1)}${pad2(stamp.getDate())}_${pad2(stamp.getHours())}${pad2(stamp.getMinutes())}_minimal.csv`;
+          const fallbackPayload = typeof exportState === "function" ? exportState() : state;
+          const fallbackJson = JSON.stringify(fallbackPayload || {});
+          const fallbackBase64 = encodeBase64Utf8(fallbackJson);
+          const fallbackCsv = [
+            csvSection("백업정보", [["항목", "값"], ["백업형식", "MATTERHORN_CSV_BACKUP_V1"], ["백업시각", new Date().toISOString()], ["주의", "요약 시트 생성 중 오류가 있어 원본JSON 백업만 생성됨"]]),
+            csvSection("원본JSON", [["항목", "값"], ["원본JSON_BASE64", fallbackBase64]])
+          ].join("\r\n");
+          triggerFileDownload(new Blob(["\ufeff", fallbackCsv], { type: "text/csv;charset=utf-8" }), filename);
+          alert("요약 시트 생성 중 일부 오류가 있었지만, 복구 가능한 원본JSON CSV 백업을 다운로드했습니다.");
+        } catch (fallbackError) {
+          console.error("CSV 백업 fallback 실패", fallbackError);
+          alert("CSV 백업 파일을 만들지 못했습니다. 화면을 새로고침한 뒤 다시 시도해 주세요.");
+        }
+      }
+    }
+
+    function downloadExcelBackup() {
+      downloadCsvBackup();
+    }
+
+    function extractBackupPayloadFromCsv(text) {
+      const raw = String(text || "").replace(/^\ufeff/, "");
+      const lines = raw.split(/\r?\n/);
+      for (const line of lines) {
+        if (!line.includes("원본JSON_BASE64")) continue;
+        const firstComma = line.indexOf(",");
+        if (firstComma < 0) continue;
+        let encoded = line.slice(firstComma + 1).trim();
+        if (encoded.startsWith('"') && encoded.endsWith('"')) {
+          encoded = encoded.slice(1, -1).replaceAll('""', '"');
+        }
+        const jsonText = decodeBase64Utf8(encoded);
+        return JSON.parse(jsonText);
+      }
+      throw new Error("CSV 안에서 원본JSON_BASE64 항목을 찾지 못했습니다.");
+    }
+
+    function normalizeRestoredPayload(payload) {
+      if (!payload || typeof payload !== "object") throw new Error("복구 데이터 형식이 올바르지 않습니다.");
+      return {
+        ...clone(defaultState),
+        ...payload,
+        currentMeetupId: normalizeMonthId(payload.currentMeetupId) || getDefaultMonthId(),
+        currentMeetupTitle: payload.currentMeetupTitle || getMonthTitle(payload.currentMeetupId || getDefaultMonthId()),
+        members: Array.isArray(payload.members) ? payload.members : clone(defaultState.members),
+        matches: Array.isArray(payload.matches) ? payload.matches.map(match => ({ ...match, status: match.status || "pending" })) : [],
+        giftWinners: Array.isArray(payload.giftWinners) ? payload.giftWinners : [],
+        desiredGamesPerPlayer: Number(payload.desiredGamesPerPlayer || 2),
+        desiredMenDoublesCount: Number(payload.desiredMenDoublesCount || 0),
+        desiredWomenDoublesCount: Number(payload.desiredWomenDoublesCount || 0),
+        excludeRankersFromRaffle: Boolean(payload.excludeRankersFromRaffle),
+        excludeTopRankCount: Number(payload.excludeTopRankCount || 3),
+        raffleExcludeMode: payload.raffleExcludeMode || (payload.excludeRankersFromRaffle ? "winningTop" + Number(payload.excludeTopRankCount || 3) : "none"),
+        raffleWinningTeamTopCount: Number(payload.raffleWinningTeamTopCount || payload.excludeTopRankCount || 3),
+        wheelRotation: Number(payload.wheelRotation || 0),
+        matchEditMode: Boolean(payload.matchEditMode)
+      };
+    }
+
+    async function restoreCsvBackup() {
+      if (!requireAdmin()) return;
+      if (archiveViewMode) {
+        alert("과거 월례회 조회 중에는 복구할 수 없습니다. 현재 월례회로 돌아간 뒤 복구해 주세요.");
+        return;
+      }
+      const input = $("csvRestoreFileInput");
+      const file = input?.files?.[0];
+      if (!file) {
+        alert("복구할 CSV 백업 파일을 선택하세요.");
+        return;
+      }
+      if (!confirm("현재 운영 데이터가 선택한 백업 파일 내용으로 덮어쓰기 됩니다. 계속하시겠습니까?")) return;
+      if (!confirm("복구 전 마지막 확인입니다. 현재 데이터를 백업 파일로 교체할까요?")) return;
+      try {
+        const text = await file.text();
+        const restored = normalizeRestoredPayload(extractBackupPayloadFromCsv(text));
+        try {
+          localStorage.setItem(STORAGE_KEY + "_before_csv_restore", JSON.stringify(exportState()));
+        } catch (backupError) {
+          console.warn("복구 전 로컬 임시백업 실패", backupError);
+        }
+        archiveViewMode = false;
+        archiveViewMeta = null;
+        state = restored;
+        renderAll();
+        activatePage(state.activePage || "matches", false);
+        await saveNow();
+        alert("CSV 백업 복구가 완료되었습니다.");
+      } catch (error) {
+        console.error("CSV 복구 실패", error);
+        alert("CSV 복구 실패: " + (error?.message || error));
+      }
     }
 
     function requestConfirmation({ title, message, onConfirm }) {
@@ -8153,11 +9849,12 @@
     }
 
     function activatePage(page, persist = true) {
-      if (page === "admin" && !adminUnlocked) {
+      const adminPages = new Set(["admin", "admin-tools"]);
+      if (adminPages.has(page) && !adminUnlocked) {
         openAdminPasswordModal();
         return;
       }
-      if (!adminUnlocked && page === "admin") page = "matches";
+      if (!adminUnlocked && adminPages.has(page)) page = "matches";
       state.activePage = page;
       syncAccessMode();
       document.querySelectorAll(".page").forEach(section => {
@@ -8200,6 +9897,10 @@
     $("spinWheelBtn").addEventListener("click", spinRaffleWheel);
     $("resetGiftBtn").addEventListener("click", resetGift);
     $("manualSaveBtn").addEventListener("click", saveNow);
+    if ($("archiveCurrentMeetupBtn")) $("archiveCurrentMeetupBtn").addEventListener("click", archiveCurrentMeetup);
+    if ($("startNewMeetupBtn")) $("startNewMeetupBtn").addEventListener("click", startNewMeetup);
+    if ($("viewArchiveMeetupBtn")) $("viewArchiveMeetupBtn").addEventListener("click", viewArchiveMeetup);
+    if ($("returnLiveMeetupBtn")) $("returnLiveMeetupBtn").addEventListener("click", returnLiveMeetup);
     $("resetSampleBtn").addEventListener("click", resetSample);
     $("adminLogoutBtn").addEventListener("click", logoutAdmin);
     $("confirmAdminLoginBtn").addEventListener("click", confirmAdminLogin);
@@ -8210,6 +9911,9 @@
       if (event.key === "Enter") confirmAdminLogin();
     });
     $("changeAdminPasswordBtn").addEventListener("click", changeAdminPassword);
+    if ($("changeMasterKeyBtn")) $("changeMasterKeyBtn").addEventListener("click", changeMasterKey);
+    if ($("downloadExcelBackupBtn")) $("downloadExcelBackupBtn").addEventListener("click", downloadCsvBackup);
+    if ($("restoreCsvBackupBtn")) $("restoreCsvBackupBtn").addEventListener("click", restoreCsvBackup);
     $("closeMatchEditorBtn").addEventListener("click", closeMatchEditor);
     $("cancelMatchEditorBtn").addEventListener("click", closeMatchEditor);
     $("saveMatchEditorBtn").addEventListener("click", saveMatchEditor);
@@ -8238,16 +9942,16 @@
       scheduleSave();
     });
 
-    $("excludeRankersToggle").addEventListener("change", (event) => {
-      state.excludeRankersFromRaffle = Boolean(event.target.checked);
+    if ($("raffleExcludeModeSelect")) $("raffleExcludeModeSelect").addEventListener("change", (event) => {
+      state.raffleExcludeMode = event.target.value || "none";
+      const topMatch = String(state.raffleExcludeMode).match(/^winningTop(\d+)$/);
+      state.excludeRankersFromRaffle = state.raffleExcludeMode !== "none";
+      if (topMatch) {
+        state.excludeTopRankCount = Number(topMatch[1]);
+        state.raffleWinningTeamTopCount = Number(topMatch[1]);
+      }
       renderRaffleWheel();
       syncRaffleControls();
-      scheduleSave();
-    });
-
-    $("excludeTopCountSelect").addEventListener("change", (event) => {
-      state.excludeTopRankCount = Number(event.target.value || 3);
-      renderRaffleWheel();
       scheduleSave();
     });
 
