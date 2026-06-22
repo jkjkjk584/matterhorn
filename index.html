@@ -981,6 +981,10 @@
       font-weight: 900;
     }
 
+    .admin-hidden-danger-actions {
+      display: none !important;
+    }
+
     @media (max-width: 1024px) {
       body {
         padding-bottom: calc(92px + var(--safe-bottom));
@@ -3416,6 +3420,238 @@
       font-size: 9px;
       color: var(--muted);
       font-weight: 850;
+    }
+
+    /* v66: 스코어보드형 팀 현황 */
+    #page-matches .team-record-dashboard {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+      overflow: hidden;
+      border-radius: 18px;
+      border: 1px solid rgba(7,26,51,0.14);
+      background: rgba(255,255,255,0.96);
+      box-shadow: 0 12px 26px rgba(15,23,42,0.08);
+    }
+
+    #page-matches .team-leader-banner {
+      position: relative;
+      min-height: 76px;
+      margin: 0;
+      border-radius: 0;
+      border: 0;
+      box-shadow: none;
+      padding: 13px 18px;
+      background: linear-gradient(135deg, #071a33 0%, #1f3864 100%);
+    }
+
+    #page-matches .team-leader-banner::before {
+      content: "";
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      transform: translateY(-50%);
+      background: #65c883;
+      box-shadow: 0 0 0 4px rgba(101,200,131,0.14);
+    }
+
+    #page-matches .team-leader-banner::after {
+      content: "🏆";
+      position: absolute;
+      right: 20px;
+      bottom: 13px;
+      font-size: 27px;
+      opacity: 0.96;
+    }
+
+    #page-matches .team-leader-banner .leader-label,
+    #page-matches .team-leader-banner strong,
+    #page-matches .team-leader-banner .leader-sub {
+      margin-left: 24px;
+      max-width: calc(100% - 78px);
+    }
+
+    #page-matches .team-leader-banner strong {
+      font-size: 25px;
+      line-height: 1.05;
+    }
+
+    .team-record-grid.scoreboard-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+      padding: 13px 18px 14px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(246,250,255,0.96));
+    }
+
+    .scoreboard-mini-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .scoreboard-mini-card {
+      min-height: 78px;
+      padding: 12px 13px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      display: grid;
+      align-content: center;
+      gap: 4px;
+    }
+
+    .scoreboard-mini-card.team-a { background: linear-gradient(135deg, #f2f7ff 0%, #e9f2ff 100%); border-color: #c9defb; }
+    .scoreboard-mini-card.team-b { background: linear-gradient(135deg, #effbf6 0%, #e3f8ee 100%); border-color: #c6ead9; }
+    .scoreboard-mini-card.team-c { background: linear-gradient(135deg, #fff8e8 0%, #fff0ca 100%); border-color: #efd592; }
+
+    .scoreboard-mini-card .record-team-name {
+      font-size: 13px;
+      font-weight: 1000;
+    }
+
+    .scoreboard-mini-card .record-score {
+      font-size: 22px;
+      line-height: 1;
+      color: #0f172a;
+    }
+
+    .scoreboard-bars {
+      display: grid;
+      gap: 9px;
+      padding: 12px 0;
+      border-top: 1px solid #dbe4ee;
+      border-bottom: 1px solid #dbe4ee;
+    }
+
+    .scoreboard-bar-row {
+      display: grid;
+      grid-template-columns: 42px 1fr 52px;
+      gap: 10px;
+      align-items: center;
+      color: #526579;
+      font-size: 12px;
+      font-weight: 1000;
+    }
+
+    .scoreboard-team-dot {
+      width: 10px;
+      height: 10px;
+      display: inline-block;
+      margin-right: 5px;
+      border-radius: 999px;
+      vertical-align: -1px;
+    }
+
+    .scoreboard-team-dot.team-a { background: #5f8df2; }
+    .scoreboard-team-dot.team-b { background: #69bd84; }
+    .scoreboard-team-dot.team-c { background: #e6a72d; }
+
+    .scoreboard-track {
+      position: relative;
+      height: 30px;
+      overflow: hidden;
+      border-radius: 7px;
+      background: #e8edf4;
+      display: flex;
+      box-shadow: inset 0 0 0 1px rgba(15,23,42,0.04);
+    }
+
+    .scoreboard-seg {
+      min-width: 0;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 12px;
+      font-weight: 1000;
+      white-space: nowrap;
+    }
+
+    .scoreboard-seg.win.team-a { background: #638cf0; }
+    .scoreboard-seg.win.team-b { background: #66ba81; }
+    .scoreboard-seg.win.team-c { background: #e0a22f; }
+    .scoreboard-seg.loss { background: rgba(15,23,42,0.44); }
+    .scoreboard-seg.draw { background: #d98b08; }
+
+    .scoreboard-total {
+      text-align: right;
+      color: #0f172a;
+      font-size: 13px;
+      font-weight: 1000;
+    }
+
+    .scoreboard-footer {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 8px;
+      padding-top: 12px;
+    }
+
+    .scoreboard-footer-item {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 6px;
+      color: #64748b;
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .scoreboard-footer-item strong {
+      font-size: 23px;
+      letter-spacing: -0.05em;
+    }
+
+    .scoreboard-footer-item.team-a strong { color: #5279dd; }
+    .scoreboard-footer-item.team-b strong { color: #39a367; }
+    .scoreboard-footer-item.team-c strong { color: #d98b08; }
+
+    @media (max-width: 720px) {
+      #page-matches .team-leader-banner {
+        min-height: 68px;
+        padding: 11px 14px;
+      }
+
+      #page-matches .team-leader-banner strong {
+        font-size: 21px;
+      }
+
+      .team-record-grid.scoreboard-grid {
+        padding: 10px 12px 12px;
+      }
+
+      .scoreboard-mini-cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        margin-bottom: 10px;
+      }
+
+      .scoreboard-mini-card {
+        min-height: 66px;
+        padding: 10px 11px;
+      }
+
+      .scoreboard-mini-card .record-score {
+        font-size: 20px;
+      }
+
+      .scoreboard-bar-row {
+        grid-template-columns: 36px 1fr 42px;
+        gap: 7px;
+      }
+
+      .scoreboard-track {
+        height: 27px;
+      }
+
+      .scoreboard-footer-item strong {
+        font-size: 20px;
+      }
     }
 
     /* 조 편성 남녀 카드 색상 */
@@ -6771,6 +7007,1537 @@
       }
     }
 
+
+    /* v60: 경기현황 스코어 팀 배지 전 화면 적용 + 모바일 이름 2줄 + 수동편집 색상/순번 보강 */
+    #matchArea .match-row:not(.edit-mode) .compact-score-wrap.score-team-symmetric {
+      display: grid !important;
+      grid-template-columns: 34px 44px 9px 44px 34px !important;
+      gap: 4px !important;
+      align-items: center !important;
+      justify-content: center !important;
+      min-width: 0 !important;
+    }
+
+    #matchArea .match-row:not(.edit-mode) .score-team-badge {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      height: 25px !important;
+      min-width: 30px !important;
+      padding: 0 6px !important;
+      border-radius: 999px !important;
+      font-size: 10px !important;
+      line-height: 1 !important;
+      font-weight: 1000 !important;
+      white-space: nowrap !important;
+    }
+
+    #matchArea .match-row:not(.edit-mode) .score-team-badge.a {
+      background: #eaf4ff !important;
+      color: #14569d !important;
+      border: 1px solid #cfe6ff !important;
+    }
+
+    #matchArea .match-row:not(.edit-mode) .score-team-badge.b {
+      background: #e8fbf6 !important;
+      color: #0d7559 !important;
+      border: 1px solid #c9f0e6 !important;
+    }
+
+    #matchArea .match-row:not(.edit-mode) .score-team-badge.c {
+      background: #fff4dd !important;
+      color: #a05f00 !important;
+      border: 1px solid #f3dcac !important;
+    }
+
+    .match-table-editor .match-type-cell.type-men {
+      color: #14569d !important;
+      background: #eaf4ff !important;
+      border-color: #cfe6ff !important;
+    }
+
+    .match-table-editor .match-type-cell.type-women {
+      color: #b42358 !important;
+      background: #fff0f6 !important;
+      border-color: #ffd0e2 !important;
+    }
+
+    .match-table-editor .match-type-cell.type-mixed {
+      color: #0d7559 !important;
+      background: #e8fbf6 !important;
+      border-color: #c9f0e6 !important;
+    }
+
+    .match-table-editor-select option {
+      font-weight: 850;
+    }
+
+    @media (max-width: 720px) {
+      #matchArea .match-row:not(.edit-mode) {
+        grid-template-columns: 54px minmax(0, 1.28fr) 118px minmax(0, 1.28fr) 60px !important;
+        gap: 3px !important;
+        min-height: 64px !important;
+        align-items: center !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .compact-side-names {
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+        display: grid !important;
+        grid-template-rows: repeat(2, minmax(15px, auto)) !important;
+        gap: 2px !important;
+        font-size: 11.2px !important;
+        line-height: 1.12 !important;
+        letter-spacing: -0.055em !important;
+        padding: 0 !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .player-name-token {
+        display: block !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+        padding-right: 2px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .player-separator {
+        display: none !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .player-game-ordinal {
+        position: static !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        min-width: 10px !important;
+        height: 12px !important;
+        margin-left: 2px !important;
+        padding: 0 2px !important;
+        font-size: 8px !important;
+        line-height: 1 !important;
+        vertical-align: super !important;
+        color: #ef4444 !important;
+        background: rgba(254, 226, 226, 0.95) !important;
+        border-radius: 4px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .compact-score-wrap.score-team-symmetric {
+        grid-template-columns: 21px 31px 4px 31px 21px !important;
+        gap: 2px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .score-team-badge {
+        min-width: 20px !important;
+        height: 21px !important;
+        padding: 0 2px !important;
+        font-size: 6.5px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) select.compact-score.compact-score-select {
+        width: 31px !important;
+        min-width: 31px !important;
+        height: 32px !important;
+        min-height: 32px !important;
+        font-size: 12px !important;
+        padding: 0 8px 0 2px !important;
+        border-radius: 9px !important;
+        background-position: calc(100% - 7px) 50%, calc(100% - 4px) 50% !important;
+      }
+    }
+
+    @media (min-width: 721px) {
+      #matchArea .match-row:not(.edit-mode) .compact-score-wrap.score-team-symmetric select.compact-score.compact-score-select {
+        width: 44px !important;
+        min-width: 44px !important;
+      }
+    }
+
+    @media (max-width: 430px) {
+      #matchArea .match-row:not(.edit-mode) {
+        grid-template-columns: 50px minmax(0, 1.28fr) 112px minmax(0, 1.28fr) 57px !important;
+        gap: 2px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .compact-side-names {
+        font-size: 10.7px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .compact-score-wrap.score-team-symmetric {
+        grid-template-columns: 19px 30px 4px 30px 19px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .score-team-badge {
+        min-width: 18px !important;
+        height: 20px !important;
+        font-size: 6px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) select.compact-score.compact-score-select {
+        width: 30px !important;
+        min-width: 30px !important;
+        height: 31px !important;
+        min-height: 31px !important;
+        font-size: 12px !important;
+      }
+    }
+
+
+    /* v61: 스코어칸 팀 배지 유지 + 선수명 쪽 중복 팀 배지 제거 */
+    #matchArea .match-row:not(.edit-mode) .compact-side-top {
+      display: none !important;
+    }
+
+    #matchArea .match-row:not(.edit-mode) {
+      grid-template-columns: 64px minmax(150px, 1.45fr) 158px minmax(150px, 1.45fr) 96px !important;
+      gap: 7px !important;
+      align-items: center !important;
+    }
+
+    #matchArea .match-row:not(.edit-mode) .compact-side {
+      min-width: 0 !important;
+      padding: 0 !important;
+      border: 0 !important;
+      background: transparent !important;
+    }
+
+    #matchArea .match-row:not(.edit-mode) > .compact-side:nth-child(2) .compact-side-names {
+      text-align: left !important;
+    }
+
+    #matchArea .match-row:not(.edit-mode) > .compact-side:nth-child(4) .compact-side-names {
+      text-align: left !important;
+    }
+
+    #matchArea .match-row:not(.edit-mode) .compact-score-wrap.score-team-symmetric {
+      width: 158px !important;
+      max-width: 158px !important;
+      grid-template-columns: 30px 40px 8px 40px 30px !important;
+      gap: 3px !important;
+      justify-self: center !important;
+    }
+
+    #matchArea .match-row:not(.edit-mode) .score-team-badge {
+      height: 23px !important;
+      min-width: 28px !important;
+      padding: 0 4px !important;
+      font-size: 8.5px !important;
+    }
+
+    #matchArea .match-row:not(.edit-mode) select.compact-score.compact-score-select {
+      width: 40px !important;
+      min-width: 40px !important;
+      height: 34px !important;
+      min-height: 34px !important;
+      font-size: 14px !important;
+      padding-left: 4px !important;
+    }
+
+    @media (max-width: 1024px) {
+      #matchArea .match-row:not(.edit-mode) {
+        grid-template-columns: 58px minmax(122px, 1.35fr) 146px minmax(122px, 1.35fr) 82px !important;
+        gap: 6px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .compact-score-wrap.score-team-symmetric {
+        width: 146px !important;
+        max-width: 146px !important;
+        grid-template-columns: 28px 37px 8px 37px 28px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) select.compact-score.compact-score-select {
+        width: 37px !important;
+        min-width: 37px !important;
+      }
+    }
+
+    @media (max-width: 720px) {
+      #matchArea .match-row:not(.edit-mode) {
+        grid-template-columns: 50px minmax(0, 1.4fr) 108px minmax(0, 1.4fr) 56px !important;
+        gap: 2px !important;
+        min-height: 64px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .compact-side-names {
+        font-size: 10.9px !important;
+        line-height: 1.12 !important;
+        letter-spacing: -0.06em !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .compact-score-wrap.score-team-symmetric {
+        width: 108px !important;
+        max-width: 108px !important;
+        grid-template-columns: 18px 30px 4px 30px 18px !important;
+        gap: 2px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .score-team-badge {
+        min-width: 18px !important;
+        width: 18px !important;
+        height: 19px !important;
+        padding: 0 1px !important;
+        font-size: 5.8px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) select.compact-score.compact-score-select {
+        width: 30px !important;
+        min-width: 30px !important;
+        height: 31px !important;
+        min-height: 31px !important;
+        font-size: 12px !important;
+        padding: 0 8px 0 2px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .status-cycle-btn {
+        min-height: 30px !important;
+        padding: 0 2px !important;
+        font-size: 8px !important;
+      }
+    }
+
+    @media (max-width: 430px) {
+      #matchArea .match-row:not(.edit-mode) {
+        grid-template-columns: 49px minmax(0, 1.5fr) 104px minmax(0, 1.5fr) 54px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .compact-side-names {
+        font-size: 10.5px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .compact-score-wrap.score-team-symmetric {
+        width: 104px !important;
+        max-width: 104px !important;
+        grid-template-columns: 17px 29px 3px 29px 17px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .score-team-badge {
+        min-width: 17px !important;
+        width: 17px !important;
+        font-size: 5.5px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) select.compact-score.compact-score-select {
+        width: 29px !important;
+        min-width: 29px !important;
+      }
+    }
+
+  
+
+    /* v62: 경기현황 팀 배지/선수명 가독성 재정렬 */
+    #matchArea .match-row:not(.edit-mode) .score-team-badge {
+      height: 27px !important;
+      min-width: 34px !important;
+      padding: 0 6px !important;
+      font-size: 10px !important;
+      font-weight: 1000 !important;
+      letter-spacing: -0.04em !important;
+    }
+
+    #matchArea .match-row:not(.edit-mode) .compact-side-names {
+      font-size: 13px !important;
+      line-height: 1.22 !important;
+      font-weight: 1000 !important;
+      letter-spacing: -0.045em !important;
+    }
+
+    #matchArea .match-row:not(.edit-mode) .player-name-token {
+      font-weight: 1000 !important;
+    }
+
+    #matchArea .match-row:not(.edit-mode) .player-game-ordinal {
+      margin-left: 3px !important;
+      min-width: 12px !important;
+      height: 13px !important;
+      padding: 0 3px !important;
+      font-size: 8.5px !important;
+      line-height: 13px !important;
+      border-radius: 4px !important;
+      vertical-align: super !important;
+    }
+
+    #matchArea .match-row:not(.edit-mode) .compact-score-wrap.score-team-symmetric {
+      width: 170px !important;
+      max-width: 170px !important;
+      grid-template-columns: 34px 42px 8px 42px 34px !important;
+      gap: 3px !important;
+    }
+
+    @media (max-width: 1024px) {
+      #matchArea .match-row:not(.edit-mode) {
+        grid-template-columns: 58px minmax(130px, 1.45fr) 154px minmax(130px, 1.45fr) 78px !important;
+        gap: 5px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .compact-score-wrap.score-team-symmetric {
+        width: 154px !important;
+        max-width: 154px !important;
+        grid-template-columns: 31px 38px 8px 38px 31px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .score-team-badge {
+        height: 25px !important;
+        min-width: 31px !important;
+        font-size: 9px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .compact-side-names {
+        font-size: 12.4px !important;
+      }
+    }
+
+    @media (max-width: 720px) {
+      #matchArea .match-row:not(.edit-mode) {
+        grid-template-columns: 49px minmax(0, 1.58fr) 116px minmax(0, 1.58fr) 54px !important;
+        gap: 2px !important;
+        min-height: 68px !important;
+        padding: 6px 5px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .compact-side-names {
+        font-size: 11.7px !important;
+        line-height: 1.16 !important;
+        letter-spacing: -0.055em !important;
+        gap: 3px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .compact-score-wrap.score-team-symmetric {
+        width: 116px !important;
+        max-width: 116px !important;
+        grid-template-columns: 22px 30px 4px 30px 22px !important;
+        gap: 2px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .score-team-badge {
+        min-width: 22px !important;
+        width: 22px !important;
+        height: 22px !important;
+        padding: 0 1px !important;
+        font-size: 7px !important;
+        letter-spacing: -0.08em !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) select.compact-score.compact-score-select {
+        width: 30px !important;
+        min-width: 30px !important;
+        height: 31px !important;
+        min-height: 31px !important;
+        font-size: 12px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .player-game-ordinal {
+        min-width: 11px !important;
+        height: 12px !important;
+        padding: 0 2px !important;
+        font-size: 8px !important;
+        line-height: 12px !important;
+        margin-left: 2px !important;
+      }
+    }
+
+    @media (max-width: 430px) {
+      #matchArea .match-row:not(.edit-mode) {
+        grid-template-columns: 48px minmax(0, 1.62fr) 112px minmax(0, 1.62fr) 52px !important;
+        gap: 2px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .compact-side-names {
+        font-size: 11.3px !important;
+        line-height: 1.14 !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .compact-score-wrap.score-team-symmetric {
+        width: 112px !important;
+        max-width: 112px !important;
+        grid-template-columns: 21px 29px 3px 29px 21px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .score-team-badge {
+        min-width: 21px !important;
+        width: 21px !important;
+        height: 21px !important;
+        font-size: 6.8px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) select.compact-score.compact-score-select {
+        width: 29px !important;
+        min-width: 29px !important;
+      }
+    }
+
+  
+
+    /* v63: A팀 이름을 스코어 쪽으로 정렬 + 스코어 팀 배지 확대 */
+    #matchArea .match-row:not(.edit-mode) > .compact-side:nth-child(2) .compact-side-names {
+      text-align: right !important;
+      justify-items: end !important;
+      padding-right: 2px !important;
+    }
+
+    #matchArea .match-row:not(.edit-mode) > .compact-side:nth-child(4) .compact-side-names {
+      text-align: left !important;
+      justify-items: start !important;
+      padding-left: 2px !important;
+    }
+
+    #matchArea .match-row:not(.edit-mode) .score-team-badge {
+      height: 30px !important;
+      min-width: 40px !important;
+      padding: 0 8px !important;
+      font-size: 11px !important;
+      letter-spacing: -0.04em !important;
+    }
+
+    #matchArea .match-row:not(.edit-mode) .compact-score-wrap.score-team-symmetric {
+      width: 186px !important;
+      max-width: 186px !important;
+      grid-template-columns: 40px 42px 8px 42px 40px !important;
+      gap: 3px !important;
+    }
+
+    @media (max-width: 1024px) {
+      #matchArea .match-row:not(.edit-mode) {
+        grid-template-columns: 58px minmax(126px, 1.42fr) 170px minmax(126px, 1.42fr) 78px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .compact-score-wrap.score-team-symmetric {
+        width: 170px !important;
+        max-width: 170px !important;
+        grid-template-columns: 36px 38px 8px 38px 36px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .score-team-badge {
+        height: 28px !important;
+        min-width: 36px !important;
+        padding: 0 6px !important;
+        font-size: 10px !important;
+      }
+    }
+
+    @media (max-width: 720px) {
+      #matchArea .match-row:not(.edit-mode) {
+        grid-template-columns: 48px minmax(0, 1.62fr) 124px minmax(0, 1.62fr) 52px !important;
+        gap: 2px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) > .compact-side:nth-child(2) .compact-side-names {
+        text-align: right !important;
+        justify-items: end !important;
+        padding-right: 2px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) > .compact-side:nth-child(4) .compact-side-names {
+        text-align: left !important;
+        justify-items: start !important;
+        padding-left: 2px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .compact-side-names {
+        font-size: 11.8px !important;
+        line-height: 1.16 !important;
+        letter-spacing: -0.055em !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .compact-score-wrap.score-team-symmetric {
+        width: 124px !important;
+        max-width: 124px !important;
+        grid-template-columns: 26px 30px 4px 30px 26px !important;
+        gap: 2px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .score-team-badge {
+        min-width: 25px !important;
+        width: 25px !important;
+        height: 24px !important;
+        padding: 0 2px !important;
+        font-size: 7.6px !important;
+        letter-spacing: -0.08em !important;
+      }
+    }
+
+    @media (max-width: 430px) {
+      #matchArea .match-row:not(.edit-mode) {
+        grid-template-columns: 47px minmax(0, 1.7fr) 120px minmax(0, 1.7fr) 50px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .compact-side-names {
+        font-size: 11.5px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .compact-score-wrap.score-team-symmetric {
+        width: 120px !important;
+        max-width: 120px !important;
+        grid-template-columns: 25px 29px 3px 29px 25px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .score-team-badge {
+        min-width: 24px !important;
+        width: 24px !important;
+        height: 23px !important;
+        font-size: 7.2px !important;
+      }
+    }
+
+
+    /* v64: 참가자모드 메인 탭/과거이력/조편성 참가자 명단 정리 */
+    .public-team-participant-panel {
+      border-color: #d7e6f5;
+      background: rgba(255,255,255,0.98);
+    }
+
+    .history-control-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .history-hint-box {
+      margin-top: 10px;
+      padding: 12px 13px;
+      border-radius: 16px;
+      border: 1px solid #dbe7f3;
+      background: #f7fbff;
+      color: #49637d;
+      font-size: 12px;
+      line-height: 1.55;
+      font-weight: 850;
+    }
+
+    .history-hint-box strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--navy);
+      font-size: 13px;
+      font-weight: 1000;
+    }
+
+    .history-hint-box span {
+      display: block;
+    }
+
+    .desktop-public-tabs .main-match-tab {
+      position: relative;
+      transform: translateY(-2px);
+      border-radius: 20px;
+    }
+
+    @media (max-width: 1024px) {
+      .public-main-bottom-nav {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        overflow: visible;
+        align-items: center;
+        padding: 8px 10px;
+      }
+
+      .public-main-bottom-nav button {
+        min-width: 0;
+        min-height: 48px;
+        padding: 0 3px;
+        border-radius: 16px;
+        display: flex !important;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2px;
+        font-size: 9px;
+        line-height: 1.1;
+        white-space: nowrap;
+      }
+
+      .public-main-bottom-nav button span:first-child {
+        font-size: 15px;
+        line-height: 1;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn {
+        min-height: 70px;
+        margin-top: -22px;
+        border-radius: 999px 999px 22px 22px;
+        background: linear-gradient(180deg, #b9f227 0%, #8ddc12 54%, #071a33 55%, #071a33 100%);
+        color: white;
+        box-shadow: 0 14px 30px rgba(7,26,51,0.26);
+        transform: translateY(-4px);
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn.active {
+        background: linear-gradient(180deg, #cdfb34 0%, #92df14 52%, #071a33 53%, #071a33 100%);
+        color: white;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn .tennis-ball-icon {
+        width: 36px;
+        height: 36px;
+        margin-top: -3px;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        background: #d6ff3f;
+        box-shadow: inset -4px -5px 0 rgba(0,0,0,0.10), 0 5px 12px rgba(0,0,0,0.18);
+        font-size: 21px !important;
+      }
+
+      .history-control-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .public-main-bottom-nav {
+        width: min(760px, calc(100% - 12px));
+        gap: 4px;
+        padding: 7px;
+      }
+
+      .public-main-bottom-nav button {
+        font-size: 8px;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn {
+        min-height: 66px;
+        margin-top: -20px;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn .tennis-ball-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 19px !important;
+      }
+    }
+
+
+    /* v67: 승패 우선 스코어보드 + 수동편집 표 폭 보정 */
+    #page-matches .team-leader-banner .leader-label::after {
+      content: "";
+    }
+
+    .scoreboard-footer {
+      display: none !important;
+    }
+
+    #page-matches .team-leader-banner .leader-sub {
+      font-size: 11px;
+      line-height: 1.35;
+      color: rgba(255,255,255,0.84);
+    }
+
+    .scoreboard-mini-card .record-score {
+      font-size: 23px;
+    }
+
+    .scoreboard-mini-card .record-sub {
+      font-size: 10px;
+      opacity: 0.82;
+    }
+
+    .scoreboard-bars {
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+
+    .match-table-editor {
+      table-layout: fixed;
+      width: max-content;
+      min-width: 632px;
+    }
+
+    .match-table-editor .match-col-game { width: 62px; }
+    .match-table-editor .match-col-type { width: 56px; }
+    .match-table-editor .match-col-player { width: 128px; }
+
+    .match-table-editor .game-cell,
+    .match-table-editor .match-type-cell {
+      padding-left: 3px;
+      padding-right: 3px;
+    }
+
+    .match-table-editor-select {
+      min-width: 116px;
+      padding-left: 8px;
+      padding-right: 24px;
+      text-overflow: ellipsis;
+    }
+
+    .match-table-editor-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 4px;
+    }
+
+    @media (max-width: 720px) {
+      .match-table-editor {
+        min-width: 608px;
+      }
+      .match-table-editor .match-col-game { width: 58px; }
+      .match-table-editor .match-col-type { width: 52px; }
+      .match-table-editor .match-col-player { width: 124px; }
+      .match-table-editor-select {
+        min-width: 112px;
+        font-size: 11px;
+        padding-left: 7px;
+        padding-right: 22px;
+      }
+    }
+
+  
+
+    /* v68: 수동편집 표 폭 재압축 - B팀 선수2까지 한 화면 접근성 개선 */
+    .match-table-editor {
+      table-layout: fixed !important;
+      width: max-content !important;
+      min-width: 548px !important;
+    }
+
+    .match-table-editor .match-col-game { width: 48px !important; }
+    .match-table-editor .match-col-type { width: 42px !important; }
+    .match-table-editor .match-col-player { width: 114px !important; }
+
+    .match-table-editor thead th {
+      padding-left: 4px !important;
+      padding-right: 4px !important;
+    }
+
+    .match-table-editor tbody td {
+      padding-left: 3px !important;
+      padding-right: 3px !important;
+    }
+
+    .match-table-editor .game-cell,
+    .match-table-editor .match-type-cell {
+      font-size: 12px !important;
+      padding-left: 2px !important;
+      padding-right: 2px !important;
+    }
+
+    .match-table-editor-select {
+      min-width: 0 !important;
+      width: 100% !important;
+      min-height: 31px !important;
+      padding-left: 6px !important;
+      padding-right: 20px !important;
+      font-size: 11px !important;
+      border-radius: 10px !important;
+    }
+
+    @media (max-width: 720px) {
+      .match-table-editor-wrap {
+        margin-left: -4px !important;
+        margin-right: -4px !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+
+      .match-table-editor {
+        min-width: 520px !important;
+      }
+
+      .match-table-editor .match-col-game { width: 44px !important; }
+      .match-table-editor .match-col-type { width: 38px !important; }
+      .match-table-editor .match-col-player { width: 109px !important; }
+
+      .match-table-editor thead tr:first-child th {
+        font-size: 12px !important;
+      }
+
+      .match-table-editor thead tr:nth-child(2) th {
+        font-size: 10px !important;
+      }
+
+      .match-table-editor .game-cell,
+      .match-table-editor .match-type-cell {
+        font-size: 11px !important;
+      }
+
+      .match-table-editor-select {
+        min-height: 30px !important;
+        font-size: 10.5px !important;
+        padding-left: 5px !important;
+        padding-right: 18px !important;
+      }
+    }
+
+  
+
+    /* v69: 수동편집 표 초압축 - 선수 드롭다운 폭/여백 축소 */
+    .match-table-editor {
+      table-layout: fixed !important;
+      width: max-content !important;
+      min-width: 462px !important;
+    }
+
+    .match-table-editor .match-col-game { width: 38px !important; }
+    .match-table-editor .match-col-type { width: 34px !important; }
+    .match-table-editor .match-col-player { width: 97px !important; }
+
+    .match-table-editor thead th {
+      padding-left: 2px !important;
+      padding-right: 2px !important;
+    }
+
+    .match-table-editor tbody td {
+      padding-left: 2px !important;
+      padding-right: 2px !important;
+    }
+
+    .match-table-editor .game-cell,
+    .match-table-editor .match-type-cell {
+      font-size: 10.5px !important;
+      letter-spacing: -0.05em !important;
+      padding-left: 1px !important;
+      padding-right: 1px !important;
+    }
+
+    .match-table-editor-select {
+      width: 100% !important;
+      min-width: 0 !important;
+      min-height: 29px !important;
+      padding-left: 4px !important;
+      padding-right: 16px !important;
+      font-size: 10.5px !important;
+      letter-spacing: -0.04em !important;
+      border-radius: 9px !important;
+    }
+
+    @media (max-width: 720px) {
+      .match-table-editor-wrap {
+        margin-left: -8px !important;
+        margin-right: -8px !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+
+      .match-table-editor {
+        min-width: 442px !important;
+      }
+
+      .match-table-editor .match-col-game { width: 36px !important; }
+      .match-table-editor .match-col-type { width: 32px !important; }
+      .match-table-editor .match-col-player { width: 93px !important; }
+
+      .match-table-editor thead tr:first-child th {
+        font-size: 11px !important;
+      }
+
+      .match-table-editor thead tr:nth-child(2) th {
+        font-size: 9.5px !important;
+      }
+
+      .match-table-editor .game-cell,
+      .match-table-editor .match-type-cell {
+        font-size: 10px !important;
+      }
+
+      .match-table-editor-select {
+        min-height: 28px !important;
+        padding-left: 3px !important;
+        padding-right: 14px !important;
+        font-size: 10px !important;
+      }
+    }
+
+
+    /* v71: 스코어보드 센터 확장 + 승/패 동시 표시 */
+    .scoreboard-bars {
+      padding: 12px 0 2px;
+      border-top: 1px solid #dbe4ee;
+      border-bottom: 0 !important;
+    }
+
+    .scoreboard-center-board {
+      display: grid;
+      gap: 8px;
+      padding: 4px 0 2px;
+    }
+
+    .scoreboard-center-head,
+    .scoreboard-center-foot {
+      display: grid;
+      grid-template-columns: minmax(72px, 1fr) 44px minmax(72px, 1fr);
+      align-items: center;
+      gap: 8px;
+      color: #4b6078;
+      font-size: 12px;
+      font-weight: 1000;
+    }
+
+    .scoreboard-center-head .left,
+    .scoreboard-center-foot .left {
+      text-align: left;
+      color: #5279dd;
+    }
+
+    .scoreboard-center-head .right,
+    .scoreboard-center-foot .right {
+      text-align: right;
+      color: #39a367;
+    }
+
+    .scoreboard-center-head .center-label {
+      text-align: center;
+      color: #64748b;
+      font-size: 10px;
+      letter-spacing: -0.03em;
+    }
+
+    .scoreboard-center-track {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 38px;
+      overflow: hidden;
+      border-radius: 13px;
+      background: #e7edf4;
+      box-shadow: inset 0 0 0 1px rgba(15,23,42,0.05);
+    }
+
+    .scoreboard-center-track::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 5px;
+      bottom: 5px;
+      width: 2px;
+      transform: translateX(-50%);
+      border-radius: 999px;
+      background: rgba(15,23,42,0.38);
+      z-index: 3;
+    }
+
+    .scoreboard-half {
+      position: relative;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .scoreboard-half.left {
+      border-right: 1px solid rgba(15,23,42,0.08);
+    }
+
+    .scoreboard-half.right {
+      border-left: 1px solid rgba(255,255,255,0.38);
+    }
+
+    .scoreboard-team-stack {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      display: flex;
+      min-width: 42px;
+      overflow: hidden;
+      color: white;
+      font-size: 12px;
+      font-weight: 1000;
+      white-space: nowrap;
+    }
+
+    .scoreboard-team-stack.team-a {
+      right: 0;
+      flex-direction: row;
+      border-radius: 12px 0 0 12px;
+    }
+
+    .scoreboard-team-stack.team-b {
+      left: 0;
+      flex-direction: row;
+      border-radius: 0 12px 12px 0;
+    }
+
+    .scoreboard-part {
+      min-width: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 4px;
+      overflow: hidden;
+      text-overflow: clip;
+    }
+
+    .scoreboard-part.win.team-a { background: linear-gradient(90deg, #7fa0f4, #5279dd); }
+    .scoreboard-part.win.team-b { background: linear-gradient(90deg, #47a76d, #78c68e); }
+    .scoreboard-part.loss { background: rgba(15,23,42,0.40); color: rgba(255,255,255,0.92); }
+    .scoreboard-part.draw { background: #d98b08; color: white; }
+
+    .scoreboard-center-foot {
+      grid-template-columns: minmax(76px, 1fr) 52px minmax(76px, 1fr);
+      font-size: 11px;
+      color: #64748b;
+    }
+
+    .scoreboard-center-foot .score-total {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: #64748b;
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .scoreboard-center-foot .center-gap {
+      justify-content: center;
+      text-align: center;
+      color: #0f172a;
+      font-size: 12px;
+      font-weight: 1000;
+    }
+
+    .scoreboard-bars.legacy .scoreboard-bar-row {
+      grid-template-columns: 42px 1fr 52px;
+    }
+
+    @media (max-width: 720px) {
+      .scoreboard-bars {
+        padding-top: 10px;
+      }
+
+      .scoreboard-center-head,
+      .scoreboard-center-foot {
+        grid-template-columns: minmax(62px, 1fr) 38px minmax(62px, 1fr);
+        gap: 6px;
+        font-size: 11px;
+      }
+
+      .scoreboard-center-track {
+        min-height: 34px;
+        border-radius: 12px;
+      }
+
+      .scoreboard-win-fill {
+        min-width: 30px;
+        font-size: 12px;
+      }
+
+      .scoreboard-center-foot {
+        grid-template-columns: minmax(62px, 1fr) 44px minmax(62px, 1fr);
+        font-size: 10px;
+      }
+
+      .scoreboard-center-foot .score-total {
+        font-size: 10px;
+      }
+
+      .scoreboard-center-foot .center-gap {
+        font-size: 11px;
+      }
+    }
+
+
+    /* v72: 스코어보드 그래프 병합/압축 - 미니 팀카드 제거 */
+    #page-matches .team-leader-banner {
+      min-height: 74px !important;
+      padding: 13px 16px !important;
+      border-radius: 18px 18px 0 0 !important;
+      margin-bottom: 0 !important;
+      box-shadow: 0 8px 18px rgba(15,23,42,0.10) !important;
+    }
+
+    #page-matches .team-leader-banner::after {
+      right: 18px !important;
+      bottom: 14px !important;
+      font-size: 24px !important;
+    }
+
+    #page-matches .team-leader-banner .leader-label,
+    #page-matches .team-leader-banner strong,
+    #page-matches .team-leader-banner .leader-sub {
+      margin-left: 18px !important;
+      max-width: calc(100% - 70px) !important;
+    }
+
+    #page-matches .team-leader-banner strong {
+      font-size: 23px !important;
+      line-height: 1.05 !important;
+    }
+
+    #page-matches .team-leader-banner .leader-sub {
+      margin-top: 3px !important;
+      font-size: 12px !important;
+      line-height: 1.32 !important;
+    }
+
+    .team-record-grid.scoreboard-grid {
+      padding: 10px 16px 12px !important;
+      border-radius: 0 0 18px 18px !important;
+      background: linear-gradient(180deg, rgba(248,251,255,0.98), rgba(242,247,252,0.98)) !important;
+      border-top: 0 !important;
+    }
+
+    .team-record-grid.scoreboard-grid .scoreboard-mini-cards {
+      display: none !important;
+    }
+
+    .team-record-grid.scoreboard-grid .scoreboard-bars {
+      padding: 0 !important;
+      border-top: 0 !important;
+      border-bottom: 0 !important;
+    }
+
+    .scoreboard-center-board {
+      gap: 5px !important;
+      padding: 0 !important;
+    }
+
+    .scoreboard-center-head,
+    .scoreboard-center-foot {
+      grid-template-columns: minmax(96px, 1fr) 52px minmax(96px, 1fr) !important;
+      gap: 8px !important;
+      font-size: 11px !important;
+    }
+
+    .scoreboard-center-head {
+      margin-bottom: -1px !important;
+    }
+
+    .scoreboard-center-head .left,
+    .scoreboard-center-head .right {
+      font-size: 12px !important;
+      letter-spacing: -0.02em !important;
+    }
+
+    .scoreboard-center-head .center-label {
+      font-size: 9px !important;
+      color: #64748b !important;
+    }
+
+    .scoreboard-center-track {
+      min-height: 32px !important;
+      border-radius: 11px !important;
+    }
+
+    .scoreboard-team-stack {
+      font-size: 11px !important;
+      min-width: 34px !important;
+    }
+
+    .scoreboard-part {
+      min-width: 16px !important;
+      padding: 0 3px !important;
+    }
+
+    .scoreboard-center-foot {
+      padding-top: 1px !important;
+      font-size: 10px !important;
+    }
+
+    .scoreboard-center-foot .score-total {
+      font-size: 10px !important;
+      line-height: 1.2 !important;
+    }
+
+    .scoreboard-center-foot .center-gap {
+      font-size: 11px !important;
+      color: #0f172a !important;
+    }
+
+    @media (max-width: 720px) {
+      #page-matches .team-leader-banner {
+        min-height: 62px !important;
+        padding: 10px 12px !important;
+        border-radius: 16px 16px 0 0 !important;
+      }
+
+      #page-matches .team-leader-banner::after {
+        right: 12px !important;
+        bottom: 11px !important;
+        font-size: 21px !important;
+      }
+
+      #page-matches .team-leader-banner .leader-label,
+      #page-matches .team-leader-banner strong,
+      #page-matches .team-leader-banner .leader-sub {
+        margin-left: 12px !important;
+        max-width: calc(100% - 56px) !important;
+      }
+
+      #page-matches .team-leader-banner strong {
+        font-size: 19px !important;
+      }
+
+      #page-matches .team-leader-banner .leader-sub {
+        font-size: 10.5px !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+      }
+
+      .team-record-grid.scoreboard-grid {
+        padding: 8px 10px 10px !important;
+        border-radius: 0 0 16px 16px !important;
+      }
+
+      .scoreboard-center-board {
+        gap: 4px !important;
+      }
+
+      .scoreboard-center-head,
+      .scoreboard-center-foot {
+        grid-template-columns: minmax(72px, 1fr) 44px minmax(72px, 1fr) !important;
+        gap: 5px !important;
+        font-size: 10px !important;
+      }
+
+      .scoreboard-center-head .left,
+      .scoreboard-center-head .right {
+        font-size: 10.5px !important;
+      }
+
+      .scoreboard-center-track {
+        min-height: 29px !important;
+        border-radius: 10px !important;
+      }
+
+      .scoreboard-center-track::before {
+        top: 4px !important;
+        bottom: 4px !important;
+      }
+
+      .scoreboard-team-stack {
+        font-size: 10px !important;
+        min-width: 28px !important;
+      }
+
+      .scoreboard-part {
+        min-width: 13px !important;
+        padding: 0 2px !important;
+      }
+
+      .scoreboard-center-foot .score-total {
+        font-size: 9px !important;
+      }
+
+      .scoreboard-center-foot .center-gap {
+        font-size: 10px !important;
+      }
+    }
+
+
+    /* v73: 참가자모드 중앙 경기현황 탭 테니스공 버튼 정교화 */
+    @media (max-width: 1024px) {
+      .public-main-bottom-nav {
+        overflow: visible !important;
+        align-items: center !important;
+        min-height: 70px !important;
+        padding: 8px 10px 9px !important;
+        border-radius: 26px !important;
+      }
+
+      .public-main-bottom-nav button:not(.main-match-bottom-btn) {
+        min-height: 48px !important;
+        border-radius: 16px !important;
+        background: transparent !important;
+        color: #64748b !important;
+        box-shadow: none !important;
+        transform: none !important;
+      }
+
+      .public-main-bottom-nav button:not(.main-match-bottom-btn).active {
+        background: rgba(7,26,51,0.08) !important;
+        color: var(--navy) !important;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn {
+        position: relative !important;
+        isolation: isolate !important;
+        min-height: 74px !important;
+        margin-top: -30px !important;
+        padding: 6px 5px 8px !important;
+        border-radius: 999px 999px 24px 24px !important;
+        background: linear-gradient(180deg, #d9ff39 0%, #b7ef18 41%, #071a33 42%, #071a33 100%) !important;
+        color: white !important;
+        box-shadow: 0 18px 34px rgba(7,26,51,0.28), 0 0 0 5px rgba(255,255,255,0.86) !important;
+        transform: translateY(-3px) !important;
+        z-index: 2 !important;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn::before {
+        content: "";
+        position: absolute;
+        top: -13px;
+        left: 50%;
+        width: 52px;
+        height: 52px;
+        transform: translateX(-50%);
+        border-radius: 50%;
+        background:
+          radial-gradient(circle at 30% 24%, rgba(255,255,255,0.78), transparent 18%),
+          linear-gradient(135deg, #e6ff54 0%, #b8ef12 46%, #87d40d 100%);
+        box-shadow: inset -7px -8px 0 rgba(64,112,0,0.18), 0 10px 18px rgba(7,26,51,0.24);
+        z-index: -1;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn::after {
+        content: "";
+        position: absolute;
+        top: -9px;
+        left: 50%;
+        width: 43px;
+        height: 43px;
+        transform: translateX(-50%) rotate(-25deg);
+        border-radius: 50%;
+        border-left: 2px solid rgba(255,255,255,0.88);
+        border-right: 2px solid rgba(255,255,255,0.88);
+        z-index: 0;
+        pointer-events: none;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn .tennis-ball-icon {
+        width: 45px !important;
+        height: 45px !important;
+        margin-top: -18px !important;
+        margin-bottom: 1px !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        font-size: 23px !important;
+        line-height: 1 !important;
+        text-shadow: 0 2px 5px rgba(0,0,0,0.22);
+        z-index: 1;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn span:last-child {
+        margin-top: 2px !important;
+        font-size: 10px !important;
+        line-height: 1.05 !important;
+        font-weight: 1000 !important;
+        letter-spacing: -0.04em !important;
+        color: white !important;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .public-main-bottom-nav {
+        min-height: 66px !important;
+        padding: 7px 8px 8px !important;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn {
+        min-height: 70px !important;
+        margin-top: -28px !important;
+        border-radius: 999px 999px 22px 22px !important;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn::before {
+        width: 48px;
+        height: 48px;
+        top: -12px;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn::after {
+        width: 40px;
+        height: 40px;
+        top: -8px;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn .tennis-ball-icon {
+        width: 41px !important;
+        height: 41px !important;
+        margin-top: -16px !important;
+        font-size: 21px !important;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn span:last-child {
+        font-size: 9px !important;
+      }
+    }
+
+
+    /* v74: 경기현황 메인탭 테니스공 정리 + 텍스트 확대 */
+    @media (max-width: 1024px) {
+      .public-main-bottom-nav {
+        min-height: 68px !important;
+        padding: 8px 10px 9px !important;
+        overflow: visible !important;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn {
+        position: relative !important;
+        min-height: 62px !important;
+        margin-top: -18px !important;
+        padding: 28px 5px 9px !important;
+        border-radius: 24px !important;
+        background: linear-gradient(180deg, #071a33 0%, #071a33 100%) !important;
+        color: #fff !important;
+        box-shadow: 0 15px 28px rgba(7,26,51,0.25), 0 0 0 5px rgba(255,255,255,0.92) !important;
+        transform: translateY(-2px) !important;
+        z-index: 3 !important;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn::before {
+        content: "" !important;
+        position: absolute !important;
+        top: -28px !important;
+        left: 50% !important;
+        width: 52px !important;
+        height: 52px !important;
+        transform: translateX(-50%) rotate(-20deg) !important;
+        border-radius: 50% !important;
+        background:
+          radial-gradient(circle at 30% 22%, rgba(255,255,255,0.78), transparent 19%),
+          linear-gradient(135deg, #eaff52 0%, #c7f528 48%, #8fd817 100%) !important;
+        box-shadow: inset -7px -8px 0 rgba(54,99,0,0.16), 0 9px 18px rgba(7,26,51,0.23) !important;
+        z-index: 0 !important;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn::after {
+        content: "" !important;
+        position: absolute !important;
+        top: -24px !important;
+        left: 50% !important;
+        width: 42px !important;
+        height: 42px !important;
+        transform: translateX(-50%) rotate(-22deg) !important;
+        border-radius: 50% !important;
+        border-left: 2px solid rgba(255,255,255,0.9) !important;
+        border-right: 2px solid rgba(255,255,255,0.9) !important;
+        pointer-events: none !important;
+        z-index: 1 !important;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn .tennis-ball-icon {
+        display: none !important;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn span:last-child {
+        position: relative !important;
+        z-index: 2 !important;
+        display: block !important;
+        margin-top: 0 !important;
+        color: #fff !important;
+        font-size: 13px !important;
+        line-height: 1.05 !important;
+        font-weight: 1000 !important;
+        letter-spacing: -0.055em !important;
+        text-shadow: 0 2px 5px rgba(0,0,0,0.22) !important;
+        white-space: nowrap !important;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .public-main-bottom-nav .main-match-bottom-btn {
+        min-height: 60px !important;
+        margin-top: -16px !important;
+        padding-top: 27px !important;
+        border-radius: 22px !important;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn::before {
+        width: 48px !important;
+        height: 48px !important;
+        top: -26px !important;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn::after {
+        width: 39px !important;
+        height: 39px !important;
+        top: -22px !important;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn span:last-child {
+        font-size: 12px !important;
+      }
+    }
+
   </style>
   <!-- matterhorn_v31: v30 + admin participant label + red admin background tone -->
 </head>
@@ -6811,12 +8578,12 @@
       <button class="btn btn-outline" id="returnLiveMeetupBtn" type="button">현재 월례회로 돌아가기</button>
     </div>
 
-    <nav class="desktop-page-tabs desktop-public-tabs">
-      <button class="page-tab active" data-page="matches">1. 경기현황</button>
-      <button class="page-tab" data-page="ranking">2. 순위</button>
-      <button class="page-tab" data-page="teams">3. 조 편성</button>
-      <button class="page-tab" data-page="members">4. 참가자</button>
-      <button class="page-tab" data-page="awards">5. 행운권</button>
+    <nav class="desktop-page-tabs desktop-public-tabs public-main-tabs">
+      <button class="page-tab" data-page="ranking">1. 순위</button>
+      <button class="page-tab" data-page="teams">2. 조 편성</button>
+      <button class="page-tab active main-match-tab" data-page="matches">3. 경기현황</button>
+      <button class="page-tab" data-page="awards">4. 행운권</button>
+      <button class="page-tab" data-page="history">5. 과거이력</button>
     </nav>
 
     <nav class="desktop-page-tabs desktop-admin-tabs admin-only">
@@ -6827,24 +8594,28 @@
       <button class="page-tab" data-page="admin-tools">5. 운영관리</button>
     </nav>
 
-    <section class="page" id="page-members">
-      <div class="panel participant-view-panel">
-          <div class="section-head compact-section-head">
-            <div class="section-icon">👥</div>
-            <div>
-              <h2>이번 월례회 참가자 명단</h2>
-              <p>관리자가 선택한 확정 참가자와 게스트만 표시됩니다.</p>
-            </div>
+    <section class="page" id="page-history">
+      <div class="panel history-view-panel">
+        <div class="section-head compact-section-head">
+          <div class="section-icon">🗂️</div>
+          <div>
+            <h2>과거 월례회 이력</h2>
+            <p>지난 월례회의 경기 결과, 순위, 조 편성, 행운권 결과를 조회합니다.</p>
           </div>
-
-          <div class="participant-mini-summary">
-            <span id="participantInlineSummary">참가 0명</span>
-            <span id="participantGenderInline">남 0 · 여 0</span>
-            <span id="guestInlineSummary">Guest 0명</span>
-          </div>
-
-          <div class="public-participant-grid" id="publicParticipantList"></div>
         </div>
+
+        <div class="history-control-row">
+          <select id="publicArchiveMonthSelect" class="field">
+            <option value="">지난 월례회 불러오는 중</option>
+          </select>
+          <button class="btn btn-blue" id="publicViewArchiveMeetupBtn" type="button">결과 보기</button>
+        </div>
+
+        <div class="history-hint-box">
+          <strong>조회 전용</strong>
+          <span>과거 월례회를 선택하면 해당 월의 경기현황, 순위, 조 편성, 행운권 결과를 볼 수 있습니다. 현재 운영 화면으로 돌아가려면 상단의 현재 월례회로 돌아가기를 누르세요.</span>
+        </div>
+      </div>
     </section>
 
     <section class="page" id="page-teams">
@@ -6888,13 +8659,32 @@
         </div>
         <div class="team-board" id="teamBoard"></div>
       </div>
+
+      <div class="panel public-team-participant-panel public-only" style="margin-top:12px;">
+          <div class="section-head compact-section-head">
+            <div class="section-icon">👥</div>
+            <div>
+              <h2>이번 월례회 참가자 명단</h2>
+              <p>관리자가 선택한 확정 참가자와 게스트만 표시됩니다.</p>
+            </div>
+          </div>
+
+          <div class="participant-mini-summary">
+            <span id="participantInlineSummary">참가 0명</span>
+            <span id="participantGenderInline">남 0 · 여 0</span>
+            <span id="guestInlineSummary">Guest 0명</span>
+          </div>
+
+          <div class="public-participant-grid" id="publicParticipantList"></div>
+        </div>
+      </div>
     </section>
 
     <section class="page active" id="page-matches">
       <div class="public-guide-panel public-only"><strong>경기 일정 및 점수 입력</strong><span>점수 입력은 누구나 가능하고, 경기 상태 변경과 대진 편집은 관리자 모드에서만 가능합니다.</span></div>
       <section class="team-record-dashboard">
             <div class="team-leader-banner" id="teamLeaderBanner">
-              <span class="leader-label">현재 우세</span>
+              <span class="leader-label">현재 판세</span>
               <strong id="leadingTeamText">기록 대기</strong>
               <span class="leader-sub" id="leadingTeamSub">완료된 경기 결과가 반영됩니다.</span>
             </div>
@@ -7098,10 +8888,8 @@
 
           <div class="status-row admin-status-row">
             <div class="save-status" id="saveStatus">💾 DB 저장 준비됨</div>
-            <div class="actions compact-actions">
-              <button class="btn btn-outline" id="manualSaveBtn">저장</button>
+            <div class="actions compact-actions admin-hidden-danger-actions">
               <button class="btn btn-rose" id="resetSampleBtn">샘플 초기화</button>
-              <button class="btn btn-outline" id="adminLogoutBtn">로그아웃</button>
             </div>
           </div>
 
@@ -7206,12 +8994,12 @@
 
   </main>
 
-  <nav class="bottom-nav bottom-nav-public">
-    <button class="active" data-page="matches"><span>🎾</span><span>경기현황</span></button>
+  <nav class="bottom-nav bottom-nav-public public-main-bottom-nav">
     <button data-page="ranking"><span>🏆</span><span>순위</span></button>
     <button data-page="teams"><span>🔀</span><span>조편성</span></button>
-    <button data-page="members"><span>👥</span><span>참가자</span></button>
+    <button class="active main-match-bottom-btn" data-page="matches"><span class="tennis-ball-icon">🎾</span><span>경기현황</span></button>
     <button data-page="awards"><span>🎁</span><span>행운권</span></button>
+    <button data-page="history"><span>🗂️</span><span>과거이력</span></button>
   </nav>
 
   <nav class="bottom-nav bottom-nav-admin admin-only">
@@ -7753,20 +9541,21 @@
 
 
     async function refreshArchiveMonthList() {
-      const select = $("archiveMonthSelect");
-      if (!select || !dataAdapter.loadMonthlyArchiveList) return;
+      const selects = [$("archiveMonthSelect"), $("publicArchiveMonthSelect")].filter(Boolean);
+      if (!selects.length || !dataAdapter.loadMonthlyArchiveList) return;
       try {
         const list = await dataAdapter.loadMonthlyArchiveList();
         if (!list.length) {
-          select.innerHTML = `<option value="">보관된 월례회 없음</option>`;
+          selects.forEach(select => { select.innerHTML = `<option value="">보관된 월례회 없음</option>`; });
           return;
         }
-        select.innerHTML = list.map(item => `
+        const options = list.map(item => `
           <option value="${safeText(item.id)}">${safeText(item.title || getMonthTitle(item.id))}${item.status === "active" ? " · 운영" : ""}</option>
         `).join("");
+        selects.forEach(select => { select.innerHTML = options; });
       } catch (error) {
         console.error(error);
-        select.innerHTML = `<option value="">지난 월례회 불러오기 실패</option>`;
+        selects.forEach(select => { select.innerHTML = `<option value="">지난 월례회 불러오기 실패</option>`; });
       }
     }
 
@@ -7841,16 +9630,15 @@
       }
     }
 
-    async function viewArchiveMeetup() {
-      const select = $("archiveMonthSelect");
-      const monthId = normalizeMonthId(select?.value || "");
-      if (!monthId) {
+    async function loadArchiveMeetupById(monthId) {
+      const normalizedMonthId = normalizeMonthId(monthId || "");
+      if (!normalizedMonthId) {
         alert("조회할 지난 월례회를 선택하세요.");
         return;
       }
       try {
         setSaveStatus("🔎 과거 월례회 불러오는 중...");
-        const item = await dataAdapter.loadMonthlyArchive(monthId);
+        const item = await dataAdapter.loadMonthlyArchive(normalizedMonthId);
         if (!item || !item.payload) {
           alert("해당 월례회 데이터를 찾지 못했습니다.");
           return;
@@ -7877,6 +9665,16 @@
         alert("지난 월례회 불러오기 실패: " + (error?.message || error));
         setSaveStatus("⚠️ 지난 월례회 불러오기 실패");
       }
+    }
+
+    async function viewArchiveMeetup() {
+      const select = $("archiveMonthSelect");
+      await loadArchiveMeetupById(select?.value || "");
+    }
+
+    async function viewPublicArchiveMeetup() {
+      const select = $("publicArchiveMonthSelect");
+      await loadArchiveMeetupById(select?.value || "");
     }
 
     async function returnLiveMeetup() {
@@ -7993,6 +9791,69 @@
       return keys.map(team => records[team]);
     }
 
+    function renderScoreboardWinCenter(records) {
+      const teams = records.filter(record => ["A", "B"].includes(record.team));
+      if (teams.length < 2) {
+        return records.map(record => {
+          const total = Math.max(1, Number(record.wins || 0) + Number(record.losses || 0) + Number(record.draws || 0));
+          const winWidth = Math.max(0, Math.min(100, Math.round((Number(record.wins || 0) / total) * 100)));
+          const lossWidth = Math.max(0, Math.min(100, Math.round((Number(record.losses || 0) / total) * 100)));
+          const drawWidth = Math.max(0, Math.min(100, Math.round((Number(record.draws || 0) / total) * 100)));
+          const teamClass = `team-${record.team.toLowerCase()}`;
+          return `
+            <div class="scoreboard-bar-row ${teamClass}">
+              <div><span class="scoreboard-team-dot ${teamClass}"></span>${record.team}팀</div>
+              <div class="scoreboard-track" aria-label="${record.team}팀 ${record.wins}승 ${record.losses}패${record.draws ? " " + record.draws + "무" : ""}">
+                <span class="scoreboard-seg win ${teamClass}" style="width:${winWidth}%">${record.wins ? record.wins + "승" : ""}</span>
+                <span class="scoreboard-seg loss" style="width:${lossWidth}%">${record.losses ? record.losses + "패" : ""}</span>
+                ${record.draws ? `<span class="scoreboard-seg draw" style="width:${drawWidth}%">${record.draws}무</span>` : ""}
+              </div>
+              <div class="scoreboard-total">${record.pointsFor}점</div>
+            </div>
+          `;
+        }).join("");
+      }
+
+      const a = teams.find(record => record.team === "A") || teams[0];
+      const b = teams.find(record => record.team === "B") || teams[1];
+      const totalGames = record => Math.max(1, Number(record.wins || 0) + Number(record.losses || 0) + Number(record.draws || 0));
+      const maxGames = Math.max(1, totalGames(a), totalGames(b));
+      const barWidth = record => Math.max(10, Math.min(100, Math.round((totalGames(record) / maxGames) * 100)));
+      const partWidth = (record, key) => Math.max(0, Math.min(100, (Number(record[key] || 0) / totalGames(record)) * 100));
+      const partLabel = (value, label) => Number(value || 0) ? `${value}${label}` : "";
+      const winGap = Math.abs(Number(a.wins || 0) - Number(b.wins || 0));
+      return `
+        <div class="scoreboard-center-board">
+          <div class="scoreboard-center-head">
+            <div class="left"><span class="scoreboard-team-dot team-a"></span>A팀</div>
+            <div class="center-label">승패</div>
+            <div class="right">B팀 <span class="scoreboard-team-dot team-b"></span></div>
+          </div>
+          <div class="scoreboard-center-track" aria-label="A팀 ${a.wins}승 ${a.losses}패, B팀 ${b.wins}승 ${b.losses}패">
+            <div class="scoreboard-half left">
+              <div class="scoreboard-team-stack team-a" style="width:${barWidth(a)}%">
+                <span class="scoreboard-part loss" style="width:${partWidth(a, "losses")}%">${partLabel(a.losses, "패")}</span>
+                ${a.draws ? `<span class="scoreboard-part draw" style="width:${partWidth(a, "draws")}%">${a.draws}무</span>` : ""}
+                <span class="scoreboard-part win team-a" style="width:${partWidth(a, "wins")}%">${partLabel(a.wins, "승")}</span>
+              </div>
+            </div>
+            <div class="scoreboard-half right">
+              <div class="scoreboard-team-stack team-b" style="width:${barWidth(b)}%">
+                <span class="scoreboard-part win team-b" style="width:${partWidth(b, "wins")}%">${partLabel(b.wins, "승")}</span>
+                ${b.draws ? `<span class="scoreboard-part draw" style="width:${partWidth(b, "draws")}%">${b.draws}무</span>` : ""}
+                <span class="scoreboard-part loss" style="width:${partWidth(b, "losses")}%">${partLabel(b.losses, "패")}</span>
+              </div>
+            </div>
+          </div>
+          <div class="scoreboard-center-foot">
+            <div class="left"><span class="score-total">${a.wins}승 ${a.losses}패 · 총점 ${a.pointsFor}점</span></div>
+            <div class="center-gap">${winGap ? winGap + "승 차" : "동률"}</div>
+            <div class="right"><span class="score-total">${b.wins}승 ${b.losses}패 · 총점 ${b.pointsFor}점</span></div>
+          </div>
+        </div>
+      `;
+    }
+
     function renderTeamRecords() {
       const grid = $("teamRecordGrid");
       const leaderBanner = $("teamLeaderBanner");
@@ -8001,15 +9862,27 @@
       if (!grid || !leaderText || !leaderSub || !leaderBanner) return;
 
       const records = getTeamRecords();
-      grid.innerHTML = records.map(record => `
-        <article class="team-record-card team-${record.team.toLowerCase()}">
-          <span class="record-team-name">${record.team}팀</span>
-          <strong class="record-score">${record.wins}승 ${record.losses}패${record.draws ? " " + record.draws + "무" : ""}</strong>
-          <span class="record-sub">총점 ${record.pointsFor}점</span>
-        </article>
-      `).join("");
-
       const finishedMatches = state.matches.filter(match => (match.status || "pending") === "finished").length;
+      const maxPoints = Math.max(1, ...records.map(record => Number(record.pointsFor || 0)));
+      const winTotal = record => Math.max(1, Number(record.wins || 0) + Number(record.losses || 0) + Number(record.draws || 0));
+      const pct = (value, total) => Math.max(0, Math.min(100, Math.round((Number(value || 0) / Math.max(1, total)) * 100)));
+
+      grid.classList.add("scoreboard-grid");
+      grid.innerHTML = `
+        <div class="scoreboard-mini-cards">
+          ${records.map(record => `
+            <article class="scoreboard-mini-card team-${record.team.toLowerCase()}">
+              <span class="record-team-name">${record.team}팀</span>
+              <strong class="record-score">${record.wins}승 ${record.losses}패${record.draws ? " " + record.draws + "무" : ""}</strong>
+              <span class="record-sub">총점 ${record.pointsFor}점</span>
+            </article>
+          `).join("")}
+        </div>
+        <div class="scoreboard-bars">
+          ${renderScoreboardWinCenter(records)}
+        </div>
+      `;
+
       if (!finishedMatches) {
         leaderText.textContent = "기록 대기";
         leaderSub.textContent = "완료된 경기 결과가 반영됩니다.";
@@ -8018,22 +9891,37 @@
 
       const sorted = [...records].sort((a, b) => {
         if (b.wins !== a.wins) return b.wins - a.wins;
+        if (a.losses !== b.losses) return a.losses - b.losses;
         if (b.pointsFor !== a.pointsFor) return b.pointsFor - a.pointsFor;
         return (b.pointsFor - b.pointsAgainst) - (a.pointsFor - a.pointsAgainst);
       });
 
       const best = sorted[0];
       const second = sorted[1];
+      const bestDiff = best.pointsFor - best.pointsAgainst;
+      const secondDiff = second ? second.pointsFor - second.pointsAgainst : 0;
       const tied =
         second &&
         best.wins === second.wins &&
+        best.losses === second.losses &&
         best.pointsFor === second.pointsFor &&
-        (best.pointsFor - best.pointsAgainst) === (second.pointsFor - second.pointsAgainst);
+        bestDiff === secondDiff;
 
-      leaderText.textContent = tied ? "공동 우세" : `${best.team}팀 우세`;
-      leaderSub.textContent = tied
-        ? "승수와 총점이 동일합니다."
-        : `${best.wins}승 ${best.losses}패 · 총점 ${best.pointsFor}점`;
+      if (tied) {
+        leaderText.textContent = "접전";
+        leaderSub.textContent = "승패와 총점이 동일합니다.";
+      } else {
+        const winGap = second ? best.wins - second.wins : best.wins;
+        const lossGap = second ? second.losses - best.losses : 0;
+        const pointGap = second ? best.pointsFor - second.pointsFor : best.pointsFor;
+        const gapText = winGap > 0
+          ? `${winGap}승 차`
+          : lossGap > 0
+            ? `${lossGap}패 적음`
+            : `총점 ${pointGap >= 0 ? "+" : ""}${pointGap}점`;
+        leaderText.textContent = `${best.team}팀 우위`;
+        leaderSub.textContent = `${best.wins}승 ${best.losses}패${best.draws ? " " + best.draws + "무" : ""} · ${gapText} · 총점 ${best.pointsFor}점`;
+      }
     }
 
     function renderPublicParticipants() {
@@ -8170,12 +10058,25 @@
       }).join("");
     }
 
-    function getTeamPlayerOptionsForMatchTable(team, selectedId = "") {
+    function getPlayerOrdinalForMatch(matchId, playerId) {
+      if (!matchId || !playerId) return "";
+      let count = 0;
+      for (const match of state.matches || []) {
+        if (match.id === matchId) return String(count + 1);
+        const players = [...(match.side1Players || []), ...(match.side2Players || [])];
+        if (players.includes(playerId)) count += 1;
+      }
+      return String(count + 1);
+    }
+
+    function getTeamPlayerOptionsForMatchTable(team, selectedId = "", matchId = "") {
       return `<option value="">선택</option>` + sortByKoreanName(
         participants().filter(member => member.team === team)
       ).map(member => {
         const selected = member.id === selectedId ? " selected" : "";
-        return `<option value="${member.id}"${selected}>${safeText(member.name)}${member.isGuest ? " · Guest" : ""}</option>`;
+        const ordinal = getPlayerOrdinalForMatch(matchId, member.id);
+        const ordinalText = ordinal ? ` (${ordinal})` : "";
+        return `<option value="${member.id}"${selected}>${safeText(member.name)}${ordinalText}${member.isGuest ? " · Guest" : ""}</option>`;
       }).join("");
     }
 
@@ -8195,6 +10096,14 @@
         </div>
         <div class="match-table-editor-wrap">
           <table class="match-table-editor">
+            <colgroup>
+              <col class="match-col-game" />
+              <col class="match-col-type" />
+              <col class="match-col-player" />
+              <col class="match-col-player" />
+              <col class="match-col-player" />
+              <col class="match-col-player" />
+            </colgroup>
             <thead>
               <tr>
                 <th rowspan="2">게임</th>
@@ -8216,25 +10125,25 @@
                 return `
                   <tr>
                     <td class="game-cell">${match.round}게임</td>
-                    <td class="match-type-cell">${getMatchType(match)}</td>
+                    <td class="match-type-cell type-${getMatchType(match) === "남복" ? "men" : getMatchType(match) === "여복" ? "women" : "mixed"}">${getMatchType(match)}</td>
                     <td class="team-edit-${String(match.side1Team || "A").toLowerCase()}" title="${side1Label} 선수 1">
                       <select class="match-table-editor-select team-select-${String(match.side1Team || "A").toLowerCase()}" onchange="updateMatchTablePlayer('${match.id}','side1',0,this.value)">
-                        ${getTeamPlayerOptionsForMatchTable(match.side1Team, match.side1Players?.[0] || "")}
+                        ${getTeamPlayerOptionsForMatchTable(match.side1Team, match.side1Players?.[0] || "", match.id)}
                       </select>
                     </td>
                     <td class="team-edit-${String(match.side1Team || "A").toLowerCase()}" title="${side1Label} 선수 2">
                       <select class="match-table-editor-select team-select-${String(match.side1Team || "A").toLowerCase()}" onchange="updateMatchTablePlayer('${match.id}','side1',1,this.value)">
-                        ${getTeamPlayerOptionsForMatchTable(match.side1Team, match.side1Players?.[1] || "")}
+                        ${getTeamPlayerOptionsForMatchTable(match.side1Team, match.side1Players?.[1] || "", match.id)}
                       </select>
                     </td>
                     <td class="team-edit-${String(match.side2Team || "B").toLowerCase()}" title="${side2Label} 선수 1">
                       <select class="match-table-editor-select team-select-${String(match.side2Team || "B").toLowerCase()}" onchange="updateMatchTablePlayer('${match.id}','side2',0,this.value)">
-                        ${getTeamPlayerOptionsForMatchTable(match.side2Team, match.side2Players?.[0] || "")}
+                        ${getTeamPlayerOptionsForMatchTable(match.side2Team, match.side2Players?.[0] || "", match.id)}
                       </select>
                     </td>
                     <td class="team-edit-${String(match.side2Team || "B").toLowerCase()}" title="${side2Label} 선수 2">
                       <select class="match-table-editor-select team-select-${String(match.side2Team || "B").toLowerCase()}" onchange="updateMatchTablePlayer('${match.id}','side2',1,this.value)">
-                        ${getTeamPlayerOptionsForMatchTable(match.side2Team, match.side2Players?.[1] || "")}
+                        ${getTeamPlayerOptionsForMatchTable(match.side2Team, match.side2Players?.[1] || "", match.id)}
                       </select>
                     </td>
                   </tr>
@@ -8471,7 +10380,7 @@
           const ordinal = (appearanceCounts.get(id) || 0) + 1;
           appearanceCounts.set(id, ordinal);
           return `<span class="player-name-token">${safeText(member?.name || "-")}<sup class="player-game-ordinal">${ordinal}</sup></span>`;
-        }).join(" · ");
+        }).join(`<span class="player-separator"> · </span>`);
       };
 
       const scoreOptions = (currentValue) => {
@@ -10056,13 +11965,14 @@
     $("addCustomMatchBtn").addEventListener("click", () => openMatchEditor(null, "add"));
     $("spinWheelBtn").addEventListener("click", spinRaffleWheel);
     $("resetGiftBtn").addEventListener("click", resetGift);
-    $("manualSaveBtn").addEventListener("click", saveNow);
+    if ($("manualSaveBtn")) $("manualSaveBtn").addEventListener("click", saveNow);
     if ($("archiveCurrentMeetupBtn")) $("archiveCurrentMeetupBtn").addEventListener("click", archiveCurrentMeetup);
     if ($("startNewMeetupBtn")) $("startNewMeetupBtn").addEventListener("click", startNewMeetup);
     if ($("viewArchiveMeetupBtn")) $("viewArchiveMeetupBtn").addEventListener("click", viewArchiveMeetup);
+    if ($("publicViewArchiveMeetupBtn")) $("publicViewArchiveMeetupBtn").addEventListener("click", viewPublicArchiveMeetup);
     if ($("returnLiveMeetupBtn")) $("returnLiveMeetupBtn").addEventListener("click", returnLiveMeetup);
     $("resetSampleBtn").addEventListener("click", resetSample);
-    $("adminLogoutBtn").addEventListener("click", logoutAdmin);
+    if ($("adminLogoutBtn")) $("adminLogoutBtn").addEventListener("click", logoutAdmin);
     $("confirmAdminLoginBtn").addEventListener("click", confirmAdminLogin);
     $("cancelConfirmActionBtn").addEventListener("click", closeConfirmation);
     $("approveConfirmActionBtn").addEventListener("click", approveConfirmation);
