@@ -6613,6 +6613,164 @@
       }
     }
 
+
+
+    /* v59: 모바일 경기현황 한 줄 유지 + 스코어 영역 A/B팀 좌우 대칭 */
+    .score-team-badge {
+      display: none;
+    }
+
+    @media (max-width: 720px) {
+      #matchArea .match-row:not(.edit-mode) {
+        grid-template-columns: 54px minmax(0, 1.18fr) 126px minmax(0, 1.18fr) 62px !important;
+        gap: 3px !important;
+        padding: 5px 6px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .compact-side {
+        display: block !important;
+        min-width: 0 !important;
+        padding: 0 !important;
+        background: transparent !important;
+        border: 0 !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .compact-side .compact-side-top {
+        display: none !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .compact-side-names {
+        display: block !important;
+        min-width: 0 !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+        word-break: keep-all !important;
+        font-size: 10.8px !important;
+        line-height: 1.15 !important;
+        letter-spacing: -0.055em !important;
+        padding: 0 1px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .player-name-token {
+        display: inline-flex !important;
+        align-items: flex-start !important;
+        white-space: nowrap !important;
+        vertical-align: baseline !important;
+        max-width: none !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .player-game-ordinal {
+        position: relative !important;
+        top: -0.18em !important;
+        margin-left: 1px !important;
+        display: inline-block !important;
+        min-width: 7px !important;
+        font-size: 8px !important;
+        line-height: 1 !important;
+        color: #ef4444 !important;
+        background: rgba(254, 226, 226, 0.95) !important;
+        border-radius: 3px !important;
+        padding: 0 1px !important;
+        vertical-align: baseline !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .compact-score-wrap.score-team-symmetric {
+        display: grid !important;
+        grid-template-columns: 22px 33px 5px 33px 22px !important;
+        gap: 2px !important;
+        align-items: center !important;
+        justify-content: center !important;
+        min-width: 0 !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .score-team-badge {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        min-width: 21px !important;
+        height: 21px !important;
+        padding: 0 2px !important;
+        border-radius: 999px !important;
+        font-size: 7px !important;
+        line-height: 1 !important;
+        font-weight: 1000 !important;
+        white-space: nowrap !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .score-team-badge.a {
+        background: #eaf4ff !important;
+        color: #14569d !important;
+        border: 1px solid #cfe6ff !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .score-team-badge.b {
+        background: #e8fbf6 !important;
+        color: #0d7559 !important;
+        border: 1px solid #c9f0e6 !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .score-team-badge.c {
+        background: #fff4dd !important;
+        color: #a05f00 !important;
+        border: 1px solid #f3dcac !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) select.compact-score.compact-score-select {
+        width: 33px !important;
+        min-width: 33px !important;
+        height: 32px !important;
+        min-height: 32px !important;
+        padding: 0 9px 0 2px !important;
+        font-size: 13px !important;
+        border-radius: 9px !important;
+        background-position: calc(100% - 8px) 50%, calc(100% - 5px) 50% !important;
+        background-size: 4px 4px, 4px 4px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .compact-vs {
+        font-size: 10px !important;
+        line-height: 1 !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .status-cycle-btn {
+        min-height: 30px !important;
+        padding: 0 3px !important;
+        font-size: 8px !important;
+      }
+    }
+
+    @media (max-width: 430px) {
+      #matchArea .match-row:not(.edit-mode) {
+        grid-template-columns: 51px minmax(0, 1.13fr) 118px minmax(0, 1.13fr) 59px !important;
+        gap: 2px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .compact-side-names {
+        font-size: 10.2px !important;
+        letter-spacing: -0.065em !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .compact-score-wrap.score-team-symmetric {
+        grid-template-columns: 20px 31px 4px 31px 20px !important;
+        gap: 2px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .score-team-badge {
+        min-width: 19px !important;
+        height: 20px !important;
+        font-size: 6.5px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) select.compact-score.compact-score-select {
+        width: 31px !important;
+        min-width: 31px !important;
+        height: 31px !important;
+        min-height: 31px !important;
+        font-size: 12px !important;
+      }
+    }
+
   </style>
   <!-- matterhorn_v31: v30 + admin participant label + red admin background tone -->
 </head>
@@ -8356,7 +8514,8 @@
               <div class="compact-side-names" title="${safeText(pairNames(match.side1Players))}">${side1Display}</div>
             </div>
 
-            <div class="compact-score-wrap">
+            <div class="compact-score-wrap score-team-symmetric">
+              <span class="score-team-badge score-team-a ${match.side1Team.toLowerCase()}">${match.side1Team}팀</span>
               <select class="compact-score compact-score-select" ${scoreControlAttrs} onchange="updateScore('${match.id}','score1',this.value)" aria-label="${match.round}게임 ${match.side1Team}팀 점수">
                 ${scoreOptions(match.score1)}
               </select>
@@ -8364,6 +8523,7 @@
               <select class="compact-score compact-score-select" ${scoreControlAttrs} onchange="updateScore('${match.id}','score2',this.value)" aria-label="${match.round}게임 ${match.side2Team}팀 점수">
                 ${scoreOptions(match.score2)}
               </select>
+              <span class="score-team-badge score-team-b ${match.side2Team.toLowerCase()}">${match.side2Team}팀</span>
             </div>
 
             <div class="compact-side">
