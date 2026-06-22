@@ -9959,6 +9959,86 @@
       }
     }
 
+  
+
+    /* v90: 전 화면 하단탭 통일 + 완료 경기 승리 점수 강조 + iOS 비밀번호 팝업 확대 방지 */
+    body {
+      padding-bottom: calc(104px + var(--safe-bottom)) !important;
+    }
+
+    .desktop-page-tabs,
+    .desktop-public-tabs,
+    .desktop-admin-tabs,
+    body.admin-mode .desktop-admin-tabs,
+    body:not(.admin-mode) .desktop-public-tabs {
+      display: none !important;
+    }
+
+    .bottom-nav,
+    .bottom-nav-public,
+    .bottom-nav-admin {
+      display: grid !important;
+      grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+      width: min(760px, calc(100% - 20px)) !important;
+      gap: 6px !important;
+    }
+
+    body:not(.admin-mode) .bottom-nav-public {
+      display: grid !important;
+    }
+
+    body:not(.admin-mode) .bottom-nav-admin,
+    body.admin-mode .bottom-nav-public {
+      display: none !important;
+    }
+
+    body.admin-mode .bottom-nav-admin {
+      display: grid !important;
+    }
+
+    @media (min-width: 1025px) {
+      .bottom-nav,
+      .bottom-nav-public,
+      .bottom-nav-admin {
+        width: min(860px, calc(100% - 56px)) !important;
+        bottom: calc(18px + var(--safe-bottom)) !important;
+        padding: 10px !important;
+        border-radius: 26px !important;
+      }
+
+      .bottom-nav button {
+        min-height: 58px !important;
+        font-size: 12px !important;
+      }
+    }
+
+    #matchArea .match-row:not(.edit-mode) select.compact-score.compact-score-select.winner-score {
+      background-color: #fff4c4 !important;
+      border-color: #f2b84b !important;
+      color: #7c3f00 !important;
+      box-shadow: inset 0 0 0 2px rgba(245, 158, 11, 0.20), 0 4px 10px rgba(245, 158, 11, 0.12) !important;
+      font-weight: 1000 !important;
+    }
+
+    #matchArea .match-row.status-finished:not(.edit-mode) select.compact-score.compact-score-select.winner-score:focus {
+      border-color: #d97706 !important;
+      box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.16) !important;
+    }
+
+    #adminPasswordInput,
+    #adminPasswordModal .field,
+    .admin-modal input,
+    .admin-modal select,
+    .admin-modal textarea {
+      font-size: 16px !important;
+      -webkit-text-size-adjust: 100%;
+      transform: translateZ(0);
+    }
+
+    .admin-modal-card {
+      max-width: min(390px, calc(100vw - 28px)) !important;
+    }
+
   </style>
   <!-- matterhorn_v31: v30 + admin participant label + red admin background tone -->
 </head>
@@ -10000,19 +10080,19 @@
     </div>
 
     <nav class="desktop-page-tabs desktop-public-tabs public-main-tabs">
-      <button class="page-tab" data-page="ranking">1. 순위</button>
-      <button class="page-tab" data-page="teams">2. 조 편성</button>
-      <button class="page-tab active main-match-tab" data-page="matches">3. 경기현황</button>
-      <button class="page-tab" data-page="awards">4. 행운권</button>
-      <button class="page-tab" data-page="history">5. 과거이력</button>
+      <button class="page-tab" data-page="ranking"><span>🏆</span><span>순위</span></button>
+      <button class="page-tab" data-page="teams"><span>🔀</span><span>조편성</span></button>
+      <button class="page-tab active main-match-tab" data-page="matches"><span class="tennis-ball-icon">🎾</span><span>경기현황</span></button>
+      <button class="page-tab" data-page="awards"><span>🎁</span><span>행운권</span></button>
+      <button class="page-tab" data-page="history"><span>🗂️</span><span>과거이력</span></button>
     </nav>
 
     <nav class="desktop-page-tabs desktop-admin-tabs admin-only">
-      <button class="page-tab" data-page="admin">1. 회원명부</button>
-      <button class="page-tab" data-page="teams">2. 조 편성 관리</button>
-      <button class="page-tab" data-page="matches">3. 경기 관리</button>
+      <button class="page-tab" data-page="admin"><span>📋</span><span>회원명부</span></button>
+      <button class="page-tab" data-page="teams"><span>🔀</span><span>조편성</span></button>
+      <button class="page-tab" data-page="matches"><span>🎾</span><span>경기관리</span></button>
       <button class="page-tab" data-page="awards">4. 행운권</button>
-      <button class="page-tab" data-page="admin-tools">5. 운영관리</button>
+      <button class="page-tab" data-page="admin-tools"><span>🛠️</span><span>운영관리</span></button>
     </nav>
 
     <section class="page" id="page-history">
@@ -11828,6 +11908,11 @@
         const side1Display = playerNamesWithOrdinals(match.side1Players);
         const side2Display = playerNamesWithOrdinals(match.side2Players);
         const scoreControlAttrs = "";
+        const s1 = Number(match.score1 || 0);
+        const s2 = Number(match.score2 || 0);
+        const isFinished = status === "finished";
+        const side1ScoreClass = isFinished && s1 > s2 ? " winner-score" : "";
+        const side2ScoreClass = isFinished && s2 > s1 ? " winner-score" : "";
         const statusButtonAttrs = `onclick="cycleMatchStatus('${match.id}')" title="누르면 상태가 변경됩니다"`;
 
         return `
@@ -11846,11 +11931,11 @@
 
             <div class="compact-score-wrap score-team-symmetric">
               <span class="score-team-badge score-team-a ${match.side1Team.toLowerCase()}">${match.side1Team}팀</span>
-              <select class="compact-score compact-score-select" ${scoreControlAttrs} onchange="updateScore('${match.id}','score1',this.value)" aria-label="${match.round}게임 ${match.side1Team}팀 점수">
+              <select class="compact-score compact-score-select${side1ScoreClass}" ${scoreControlAttrs} onchange="updateScore('${match.id}','score1',this.value)" aria-label="${match.round}게임 ${match.side1Team}팀 점수">
                 ${scoreOptions(match.score1)}
               </select>
               <span class="compact-vs">:</span>
-              <select class="compact-score compact-score-select" ${scoreControlAttrs} onchange="updateScore('${match.id}','score2',this.value)" aria-label="${match.round}게임 ${match.side2Team}팀 점수">
+              <select class="compact-score compact-score-select${side2ScoreClass}" ${scoreControlAttrs} onchange="updateScore('${match.id}','score2',this.value)" aria-label="${match.round}게임 ${match.side2Team}팀 점수">
                 ${scoreOptions(match.score2)}
               </select>
               <span class="score-team-badge score-team-b ${match.side2Team.toLowerCase()}">${match.side2Team}팀</span>
@@ -12843,7 +12928,7 @@
       $("adminPasswordModal").classList.remove("hidden");
       $("adminPasswordInput").value = "";
       $("adminPasswordError").textContent = "";
-      setTimeout(() => $("adminPasswordInput").focus(), 0);
+      // iOS 자동 확대 방지를 위해 비밀번호 입력창 자동 포커스는 사용하지 않음.
     }
 
     function closeAdminPasswordModal() {
@@ -13695,4 +13780,202 @@
       top: 10px !important;
     }
   }
+</style>
+
+
+<style>
+/* v91: 큰 화면은 상단 탭으로 복귀 + 탭 높이 축소, 모바일은 하단 탭 유지 */
+@media (min-width: 1025px) {
+  body {
+    padding-bottom: 34px !important;
+  }
+
+  .bottom-nav,
+  .bottom-nav-public,
+  .bottom-nav-admin,
+  body:not(.admin-mode) .bottom-nav-public,
+  body.admin-mode .bottom-nav-admin {
+    display: none !important;
+  }
+
+  .desktop-page-tabs {
+    display: flex !important;
+    position: sticky !important;
+    top: 8px !important;
+    z-index: 28 !important;
+    gap: 6px !important;
+    padding: 6px !important;
+    margin-bottom: 10px !important;
+    border-radius: 17px !important;
+    border: 1px solid rgba(217, 228, 239, 0.96) !important;
+    background: rgba(255,255,255,0.92) !important;
+    backdrop-filter: blur(18px) !important;
+    box-shadow: 0 10px 24px rgba(15,23,42,0.08) !important;
+  }
+
+  body:not(.admin-mode) .desktop-public-tabs {
+    display: flex !important;
+  }
+
+  body.admin-mode .desktop-admin-tabs {
+    display: flex !important;
+  }
+
+  body:not(.admin-mode) .desktop-admin-tabs,
+  body.admin-mode .desktop-public-tabs {
+    display: none !important;
+  }
+
+  .desktop-page-tabs .page-tab {
+    min-height: 34px !important;
+    height: 34px !important;
+    padding: 0 10px !important;
+    border-radius: 12px !important;
+    font-size: 12px !important;
+    line-height: 1 !important;
+    letter-spacing: -0.02em !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: none !important;
+  }
+
+  .desktop-page-tabs .page-tab.active {
+    box-shadow: 0 8px 18px rgba(7,26,51,0.14) !important;
+  }
+
+  .desktop-public-tabs .main-match-tab {
+    transform: none !important;
+    border-radius: 12px !important;
+  }
+
+  body.admin-mode .desktop-page-tabs {
+    border-color: rgba(242, 201, 206, 0.95) !important;
+    box-shadow: 0 10px 24px rgba(127, 29, 29, 0.08) !important;
+  }
+}
+
+@media (max-width: 1024px) {
+  .desktop-page-tabs,
+  .desktop-public-tabs,
+  .desktop-admin-tabs,
+  body.admin-mode .desktop-admin-tabs,
+  body:not(.admin-mode) .desktop-public-tabs {
+    display: none !important;
+  }
+}
+
+
+/* v92: 큰 화면 상단탭도 모바일 하단탭 항목 디자인과 동일한 아이콘형 스타일 적용 */
+@media (min-width: 1025px) {
+  .desktop-page-tabs {
+    width: min(860px, calc(100% - 56px)) !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    display: grid !important;
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+    padding: 8px !important;
+    border-radius: 24px !important;
+    background: rgba(255,255,255,0.94) !important;
+    border: 1px solid rgba(217,228,239,0.98) !important;
+    box-shadow: 0 14px 32px rgba(15,23,42,0.10) !important;
+  }
+
+  body.admin-mode .desktop-page-tabs {
+    border-color: rgba(242,201,206,0.95) !important;
+    background: rgba(255,255,255,0.94) !important;
+  }
+
+  .desktop-page-tabs .page-tab {
+    min-height: 46px !important;
+    height: 46px !important;
+    padding: 0 10px !important;
+    border: 0 !important;
+    border-radius: 17px !important;
+    background: transparent !important;
+    color: #64748b !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 7px !important;
+    white-space: nowrap !important;
+    font-size: 12px !important;
+    font-weight: 1000 !important;
+    line-height: 1 !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+
+  .desktop-page-tabs .page-tab span:first-child {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 16px !important;
+    line-height: 1 !important;
+  }
+
+  .desktop-page-tabs .page-tab span:last-child {
+    display: inline-block !important;
+    white-space: nowrap !important;
+  }
+
+  .desktop-page-tabs .page-tab.active {
+    background: var(--navy) !important;
+    color: #fff !important;
+    box-shadow: 0 12px 24px rgba(7,26,51,0.18) !important;
+  }
+
+  body.admin-mode .desktop-page-tabs .page-tab.active {
+    background: #872824 !important;
+    color: #fff !important;
+    box-shadow: 0 12px 24px rgba(127,29,29,0.18) !important;
+  }
+
+  .desktop-public-tabs .main-match-tab {
+    position: relative !important;
+    min-height: 54px !important;
+    height: 54px !important;
+    margin-top: -8px !important;
+    margin-bottom: -2px !important;
+    padding-top: 10px !important;
+    border-radius: 22px !important;
+    background: var(--navy) !important;
+    color: #fff !important;
+    box-shadow: 0 16px 30px rgba(7,26,51,0.22), 0 0 0 4px rgba(255,255,255,0.86) !important;
+    overflow: visible !important;
+    z-index: 2 !important;
+  }
+
+  .desktop-public-tabs .main-match-tab .tennis-ball-icon {
+    position: absolute !important;
+    top: -16px !important;
+    left: 50% !important;
+    width: 34px !important;
+    height: 34px !important;
+    transform: translateX(-50%) !important;
+    border-radius: 50% !important;
+    color: transparent !important;
+    background:
+      radial-gradient(circle at 30% 24%, rgba(255,255,255,0.72), transparent 18%),
+      linear-gradient(135deg, #e9ff4d 0%, #c9f330 48%, #92d918 100%) !important;
+    box-shadow: inset -5px -6px 0 rgba(60,100,0,0.16), 0 7px 12px rgba(7,26,51,0.22) !important;
+  }
+
+  .desktop-public-tabs .main-match-tab .tennis-ball-icon::after {
+    content: "" !important;
+    position: absolute !important;
+    inset: 6px 4px !important;
+    border-radius: 50% !important;
+    border-left: 2px solid rgba(255,255,255,0.88) !important;
+    transform: rotate(-22deg) !important;
+  }
+
+  .desktop-public-tabs .main-match-tab span:last-child {
+    margin-top: 9px !important;
+    font-size: 13px !important;
+    letter-spacing: -0.04em !important;
+  }
+}
 </style>
