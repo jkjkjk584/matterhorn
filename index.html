@@ -8538,6 +8538,1427 @@
       }
     }
 
+  
+
+    /* v75: 스코어보드 하단 정리 + 판세 겹침 보정 + 테니스공 탭 위치/줄무늬 개선 */
+    #page-matches .team-leader-banner {
+      min-height: 58px !important;
+      padding: 10px 58px 10px 14px !important;
+      display: grid !important;
+      align-content: center !important;
+      row-gap: 2px !important;
+    }
+
+    #page-matches .team-leader-banner::before {
+      left: 14px !important;
+      top: 50% !important;
+      width: 11px !important;
+      height: 11px !important;
+      transform: translateY(-50%) !important;
+      box-shadow: 0 0 0 5px rgba(101,200,131,0.16) !important;
+    }
+
+    #page-matches .team-leader-banner::after {
+      right: 18px !important;
+      bottom: 50% !important;
+      transform: translateY(50%) !important;
+      font-size: 22px !important;
+      opacity: 0.98 !important;
+    }
+
+    #page-matches .team-leader-banner .leader-label,
+    #page-matches .team-leader-banner strong,
+    #page-matches .team-leader-banner .leader-sub {
+      margin-left: 24px !important;
+      max-width: calc(100% - 18px) !important;
+      display: block !important;
+      position: relative !important;
+      z-index: 2 !important;
+    }
+
+    #page-matches .team-leader-banner .leader-label {
+      font-size: 10px !important;
+      line-height: 1.05 !important;
+      opacity: 0.82 !important;
+    }
+
+    #page-matches .team-leader-banner strong {
+      font-size: 22px !important;
+      line-height: 1.05 !important;
+      letter-spacing: -0.045em !important;
+    }
+
+    #page-matches .team-leader-banner .leader-sub {
+      font-size: 11px !important;
+      line-height: 1.2 !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+
+    .team-record-grid.scoreboard-grid {
+      padding: 9px 14px 10px !important;
+    }
+
+    .scoreboard-center-head {
+      grid-template-columns: minmax(82px, 1fr) 46px minmax(82px, 1fr) !important;
+      margin-bottom: 1px !important;
+    }
+
+    .scoreboard-center-head .left,
+    .scoreboard-center-head .right {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+      font-size: 13px !important;
+      font-weight: 1000 !important;
+    }
+
+    .scoreboard-center-head .left {
+      justify-content: flex-start !important;
+    }
+
+    .scoreboard-center-head .right {
+      justify-content: flex-end !important;
+    }
+
+    .scoreboard-center-head .left::after,
+    .scoreboard-center-head .right::before {
+      display: none !important;
+    }
+
+    .scoreboard-team-dot {
+      width: 11px !important;
+      height: 11px !important;
+      box-shadow: 0 0 0 3px rgba(255,255,255,0.7) !important;
+    }
+
+    .scoreboard-center-track {
+      min-height: 31px !important;
+    }
+
+    .scoreboard-center-foot.scoreboard-total-only-foot {
+      grid-template-columns: minmax(88px, 1fr) 48px minmax(88px, 1fr) !important;
+      padding-top: 2px !important;
+    }
+
+    .scoreboard-center-foot.scoreboard-total-only-foot .score-total {
+      color: #475569 !important;
+      font-size: 10.5px !important;
+      font-weight: 1000 !important;
+    }
+
+    .scoreboard-center-foot.scoreboard-total-only-foot .left .score-total {
+      color: #5279dd !important;
+    }
+
+    .scoreboard-center-foot.scoreboard-total-only-foot .right .score-total {
+      color: #39a367 !important;
+    }
+
+    .scoreboard-center-foot.scoreboard-total-only-foot .center-gap {
+      font-size: 11px !important;
+      color: #0f172a !important;
+      font-weight: 1000 !important;
+    }
+
+    @media (max-width: 720px) {
+      #page-matches .team-leader-banner {
+        min-height: 52px !important;
+        padding: 8px 48px 8px 12px !important;
+      }
+
+      #page-matches .team-leader-banner::before {
+        left: 12px !important;
+        width: 10px !important;
+        height: 10px !important;
+      }
+
+      #page-matches .team-leader-banner::after {
+        right: 12px !important;
+        font-size: 20px !important;
+      }
+
+      #page-matches .team-leader-banner .leader-label,
+      #page-matches .team-leader-banner strong,
+      #page-matches .team-leader-banner .leader-sub {
+        margin-left: 22px !important;
+      }
+
+      #page-matches .team-leader-banner strong {
+        font-size: 18px !important;
+      }
+
+      #page-matches .team-leader-banner .leader-sub {
+        font-size: 10px !important;
+      }
+
+      .team-record-grid.scoreboard-grid {
+        padding: 7px 10px 9px !important;
+      }
+
+      .scoreboard-center-head {
+        grid-template-columns: minmax(64px, 1fr) 38px minmax(64px, 1fr) !important;
+      }
+
+      .scoreboard-center-head .left,
+      .scoreboard-center-head .right {
+        font-size: 11.5px !important;
+      }
+
+      .scoreboard-team-dot {
+        width: 10px !important;
+        height: 10px !important;
+      }
+
+      .scoreboard-center-track {
+        min-height: 29px !important;
+      }
+
+      .scoreboard-center-foot.scoreboard-total-only-foot {
+        grid-template-columns: minmax(70px, 1fr) 40px minmax(70px, 1fr) !important;
+      }
+
+      .scoreboard-center-foot.scoreboard-total-only-foot .score-total {
+        font-size: 9.5px !important;
+      }
+
+      .scoreboard-center-foot.scoreboard-total-only-foot .center-gap {
+        font-size: 10px !important;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .public-main-bottom-nav .main-match-bottom-btn {
+        min-height: 58px !important;
+        margin-top: -8px !important;
+        padding-top: 23px !important;
+        transform: translateY(0) !important;
+        border-radius: 22px !important;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn::before {
+        top: -18px !important;
+        width: 46px !important;
+        height: 46px !important;
+        background:
+          radial-gradient(circle at 30% 20%, rgba(255,255,255,0.82), transparent 18%),
+          radial-gradient(ellipse at 28% 50%, transparent 42%, rgba(255,255,255,0.92) 44%, rgba(255,255,255,0.92) 49%, transparent 51%),
+          radial-gradient(ellipse at 72% 50%, transparent 42%, rgba(255,255,255,0.88) 44%, rgba(255,255,255,0.88) 49%, transparent 51%),
+          linear-gradient(135deg, #eaff52 0%, #c7f528 48%, #8fd817 100%) !important;
+        box-shadow: inset -6px -7px 0 rgba(54,99,0,0.18), 0 8px 14px rgba(7,26,51,0.20) !important;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn::after {
+        top: -15px !important;
+        width: 36px !important;
+        height: 36px !important;
+        border-left: 3px solid rgba(255,255,255,0.92) !important;
+        border-right: 3px solid rgba(255,255,255,0.92) !important;
+        opacity: 0.9 !important;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .public-main-bottom-nav .main-match-bottom-btn {
+        min-height: 56px !important;
+        margin-top: -7px !important;
+        padding-top: 22px !important;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn::before {
+        top: -17px !important;
+        width: 42px !important;
+        height: 42px !important;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn::after {
+        top: -14px !important;
+        width: 33px !important;
+        height: 33px !important;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn span:last-child {
+        font-size: 12px !important;
+      }
+    }
+
+
+  
+
+    /* v77: 스코어보드 팀 바 강조 + 패 연회색 + 점수입력/테니스탭 재보정 */
+    .scoreboard-center-head {
+      position: relative !important;
+      min-height: 24px !important;
+      align-items: center !important;
+      overflow: visible !important;
+      isolation: isolate !important;
+    }
+
+    .scoreboard-center-head::before,
+    .scoreboard-center-head::after {
+      content: "" !important;
+      position: absolute !important;
+      top: 50% !important;
+      height: 8px !important;
+      transform: translateY(-50%) !important;
+      border-radius: 999px !important;
+      opacity: 0.96 !important;
+      z-index: 0 !important;
+      pointer-events: none !important;
+    }
+
+    .scoreboard-center-head::before {
+      left: 64px !important;
+      right: calc(50% + 31px) !important;
+      background: linear-gradient(90deg, rgba(95,141,242,0.20), #5f8df2) !important;
+      box-shadow: 0 2px 6px rgba(95,141,242,0.18) !important;
+    }
+
+    .scoreboard-center-head::after {
+      left: calc(50% + 31px) !important;
+      right: 64px !important;
+      background: linear-gradient(90deg, #69bd84, rgba(105,189,132,0.20)) !important;
+      box-shadow: 0 2px 6px rgba(105,189,132,0.18) !important;
+    }
+
+    .scoreboard-center-head .left,
+    .scoreboard-center-head .right,
+    .scoreboard-center-head .center-label {
+      position: relative !important;
+      z-index: 1 !important;
+    }
+
+    .scoreboard-center-head .left,
+    .scoreboard-center-head .right {
+      background: rgba(248,251,255,0.92) !important;
+      padding: 2px 5px !important;
+      border-radius: 999px !important;
+    }
+
+    .scoreboard-center-head .center-label {
+      background: rgba(248,251,255,0.98) !important;
+      padding: 2px 6px !important;
+      border-radius: 999px !important;
+      font-weight: 1000 !important;
+    }
+
+    .scoreboard-part.loss {
+      background: #d8dee8 !important;
+      color: #475569 !important;
+    }
+
+    #matchArea .match-row:not(.edit-mode) .compact-score-wrap.score-team-symmetric {
+      width: 204px !important;
+      max-width: 204px !important;
+      grid-template-columns: 44px 50px 10px 50px 44px !important;
+      gap: 3px !important;
+    }
+
+    #matchArea .match-row:not(.edit-mode) .score-team-badge {
+      min-width: 42px !important;
+      width: 42px !important;
+      height: 31px !important;
+      font-size: 11px !important;
+    }
+
+    #matchArea .match-row:not(.edit-mode) select.compact-score.compact-score-select {
+      width: 50px !important;
+      min-width: 50px !important;
+      height: 42px !important;
+      min-height: 42px !important;
+      font-size: 19px !important;
+      font-weight: 1000 !important;
+      padding: 0 15px 0 5px !important;
+      border-radius: 13px !important;
+      background-position: calc(100% - 11px) 50%, calc(100% - 7px) 50% !important;
+      background-size: 5px 5px, 5px 5px !important;
+    }
+
+    @media (max-width: 1024px) {
+      #matchArea .match-row:not(.edit-mode) {
+        grid-template-columns: 56px minmax(116px, 1.4fr) 176px minmax(116px, 1.4fr) 74px !important;
+      }
+      #matchArea .match-row:not(.edit-mode) .compact-score-wrap.score-team-symmetric {
+        width: 176px !important;
+        max-width: 176px !important;
+        grid-template-columns: 38px 44px 8px 44px 38px !important;
+      }
+      #matchArea .match-row:not(.edit-mode) .score-team-badge {
+        min-width: 37px !important;
+        width: 37px !important;
+        height: 28px !important;
+        font-size: 10px !important;
+      }
+      #matchArea .match-row:not(.edit-mode) select.compact-score.compact-score-select {
+        width: 44px !important;
+        min-width: 44px !important;
+        height: 39px !important;
+        min-height: 39px !important;
+        font-size: 17px !important;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .scoreboard-center-head::before {
+        left: 47px !important;
+        right: calc(50% + 25px) !important;
+        height: 7px !important;
+      }
+      .scoreboard-center-head::after {
+        left: calc(50% + 25px) !important;
+        right: 47px !important;
+        height: 7px !important;
+      }
+      .scoreboard-center-head .left,
+      .scoreboard-center-head .right {
+        padding: 1px 4px !important;
+      }
+      .scoreboard-center-head .center-label {
+        padding: 1px 5px !important;
+      }
+      #matchArea .match-row:not(.edit-mode) {
+        grid-template-columns: 48px minmax(0, 1.45fr) 134px minmax(0, 1.45fr) 52px !important;
+        gap: 2px !important;
+      }
+      #matchArea .match-row:not(.edit-mode) .compact-score-wrap.score-team-symmetric {
+        width: 134px !important;
+        max-width: 134px !important;
+        grid-template-columns: 24px 36px 5px 36px 24px !important;
+        gap: 2px !important;
+      }
+      #matchArea .match-row:not(.edit-mode) .score-team-badge {
+        min-width: 24px !important;
+        width: 24px !important;
+        height: 23px !important;
+        font-size: 7.2px !important;
+      }
+      #matchArea .match-row:not(.edit-mode) select.compact-score.compact-score-select {
+        width: 36px !important;
+        min-width: 36px !important;
+        height: 36px !important;
+        min-height: 36px !important;
+        font-size: 15px !important;
+        padding: 0 10px 0 3px !important;
+        border-radius: 10px !important;
+        background-position: calc(100% - 8px) 50%, calc(100% - 5px) 50% !important;
+      }
+      .public-main-bottom-nav .main-match-bottom-btn {
+        margin-top: -10px !important;
+        padding-top: 35px !important;
+        min-height: 64px !important;
+      }
+      .public-main-bottom-nav .main-match-bottom-btn::before {
+        top: -19px !important;
+        width: 48px !important;
+        height: 48px !important;
+        background:
+          radial-gradient(circle at 30% 22%, rgba(255,255,255,0.78), transparent 17%),
+          radial-gradient(ellipse at 22% 50%, transparent 45%, rgba(255,255,255,0.95) 47%, rgba(255,255,255,0.95) 52%, transparent 54%),
+          radial-gradient(ellipse at 78% 50%, transparent 45%, rgba(255,255,255,0.95) 47%, rgba(255,255,255,0.95) 52%, transparent 54%),
+          linear-gradient(135deg, #eaff52 0%, #c8f526 47%, #8ed817 100%) !important;
+      }
+      .public-main-bottom-nav .main-match-bottom-btn::after {
+        display: none !important;
+      }
+      .public-main-bottom-nav .main-match-bottom-btn span:last-child {
+        margin-top: 5px !important;
+      }
+    }
+
+    @media (max-width: 430px) {
+      #matchArea .match-row:not(.edit-mode) {
+        grid-template-columns: 47px minmax(0, 1.44fr) 130px minmax(0, 1.44fr) 51px !important;
+      }
+      #matchArea .match-row:not(.edit-mode) .compact-score-wrap.score-team-symmetric {
+        width: 130px !important;
+        max-width: 130px !important;
+        grid-template-columns: 23px 35px 4px 35px 23px !important;
+      }
+      #matchArea .match-row:not(.edit-mode) .score-team-badge {
+        min-width: 23px !important;
+        width: 23px !important;
+        font-size: 6.8px !important;
+      }
+      #matchArea .match-row:not(.edit-mode) select.compact-score.compact-score-select {
+        width: 35px !important;
+        min-width: 35px !important;
+        height: 35px !important;
+        min-height: 35px !important;
+        font-size: 14.5px !important;
+      }
+      .public-main-bottom-nav .main-match-bottom-btn::before {
+        top: -17px !important;
+        width: 45px !important;
+        height: 45px !important;
+      }
+    }
+
+  
+
+    /* v78: 요청 반영 재수정 - 팀 바를 실제 색상 바처럼 강하게 표시 + 점수박스 확대 + 테니스공 하향/무늬 강화 */
+    .scoreboard-center-head {
+      position: relative !important;
+      display: grid !important;
+      grid-template-columns: minmax(72px, 1fr) 46px minmax(72px, 1fr) !important;
+      align-items: center !important;
+      min-height: 30px !important;
+      gap: 8px !important;
+      overflow: visible !important;
+      isolation: isolate !important;
+    }
+
+    .scoreboard-center-head::before,
+    .scoreboard-center-head::after {
+      content: "" !important;
+      position: absolute !important;
+      top: 50% !important;
+      height: 14px !important;
+      transform: translateY(-50%) !important;
+      border-radius: 999px !important;
+      opacity: 1 !important;
+      z-index: 0 !important;
+      pointer-events: none !important;
+    }
+
+    .scoreboard-center-head::before {
+      left: 56px !important;
+      right: calc(50% + 28px) !important;
+      background: linear-gradient(90deg, #5f8df2 0%, #5f8df2 72%, rgba(95,141,242,0.28) 100%) !important;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.38), 0 3px 8px rgba(95,141,242,0.20) !important;
+    }
+
+    .scoreboard-center-head::after {
+      left: calc(50% + 28px) !important;
+      right: 56px !important;
+      background: linear-gradient(90deg, rgba(105,189,132,0.28) 0%, #69bd84 28%, #69bd84 100%) !important;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.38), 0 3px 8px rgba(105,189,132,0.20) !important;
+    }
+
+    .scoreboard-center-head .left,
+    .scoreboard-center-head .right,
+    .scoreboard-center-head .center-label {
+      position: relative !important;
+      z-index: 2 !important;
+    }
+
+    .scoreboard-center-head .left,
+    .scoreboard-center-head .right {
+      min-height: 25px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 5px !important;
+      width: fit-content !important;
+      max-width: 100% !important;
+      padding: 3px 9px !important;
+      border-radius: 999px !important;
+      background: rgba(255,255,255,0.94) !important;
+      box-shadow: 0 1px 5px rgba(15,23,42,0.08) !important;
+      font-size: 13px !important;
+      font-weight: 1000 !important;
+    }
+
+    .scoreboard-center-head .left { justify-self: start !important; color: #416fdf !important; }
+    .scoreboard-center-head .right { justify-self: end !important; color: #339765 !important; }
+
+    .scoreboard-center-head .center-label {
+      justify-self: center !important;
+      padding: 3px 8px !important;
+      border-radius: 999px !important;
+      background: #ffffff !important;
+      color: #475569 !important;
+      box-shadow: 0 1px 5px rgba(15,23,42,0.08) !important;
+      font-size: 11px !important;
+      font-weight: 1000 !important;
+    }
+
+    .scoreboard-team-dot {
+      width: 13px !important;
+      height: 13px !important;
+      box-shadow: 0 0 0 3px rgba(255,255,255,0.78) !important;
+    }
+
+    .scoreboard-part.loss {
+      background: #edf1f6 !important;
+      color: #64748b !important;
+    }
+
+    .scoreboard-center-track {
+      margin-top: 2px !important;
+    }
+
+    #matchArea .match-row:not(.edit-mode) .compact-score-wrap.score-team-symmetric {
+      width: 224px !important;
+      max-width: 224px !important;
+      grid-template-columns: 44px 58px 12px 58px 44px !important;
+      gap: 4px !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+
+    #matchArea .match-row:not(.edit-mode) .score-team-badge {
+      min-width: 42px !important;
+      width: 42px !important;
+      height: 32px !important;
+      font-size: 11px !important;
+      font-weight: 1000 !important;
+    }
+
+    #matchArea .match-row:not(.edit-mode) select.compact-score.compact-score-select {
+      width: 58px !important;
+      min-width: 58px !important;
+      height: 46px !important;
+      min-height: 46px !important;
+      font-size: 22px !important;
+      font-weight: 1000 !important;
+      padding: 0 16px 0 6px !important;
+      border-radius: 14px !important;
+      border-width: 2px !important;
+      background-position: calc(100% - 12px) 50%, calc(100% - 8px) 50% !important;
+      background-size: 6px 6px, 6px 6px !important;
+    }
+
+    #matchArea .match-row:not(.edit-mode) .compact-vs {
+      font-size: 18px !important;
+      font-weight: 1000 !important;
+    }
+
+    @media (max-width: 1024px) {
+      #matchArea .match-row:not(.edit-mode) {
+        grid-template-columns: 56px minmax(100px, 1.3fr) 190px minmax(100px, 1.3fr) 74px !important;
+      }
+      #matchArea .match-row:not(.edit-mode) .compact-score-wrap.score-team-symmetric {
+        width: 190px !important;
+        max-width: 190px !important;
+        grid-template-columns: 39px 50px 10px 50px 39px !important;
+        gap: 3px !important;
+      }
+      #matchArea .match-row:not(.edit-mode) .score-team-badge {
+        min-width: 38px !important;
+        width: 38px !important;
+        height: 30px !important;
+        font-size: 10px !important;
+      }
+      #matchArea .match-row:not(.edit-mode) select.compact-score.compact-score-select {
+        width: 50px !important;
+        min-width: 50px !important;
+        height: 43px !important;
+        min-height: 43px !important;
+        font-size: 20px !important;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .scoreboard-center-head {
+        grid-template-columns: minmax(58px, 1fr) 38px minmax(58px, 1fr) !important;
+        min-height: 28px !important;
+        gap: 5px !important;
+      }
+      .scoreboard-center-head::before {
+        left: 44px !important;
+        right: calc(50% + 22px) !important;
+        height: 12px !important;
+      }
+      .scoreboard-center-head::after {
+        left: calc(50% + 22px) !important;
+        right: 44px !important;
+        height: 12px !important;
+      }
+      .scoreboard-center-head .left,
+      .scoreboard-center-head .right {
+        min-height: 23px !important;
+        padding: 2px 7px !important;
+        font-size: 12px !important;
+      }
+      .scoreboard-center-head .center-label {
+        padding: 2px 6px !important;
+        font-size: 10px !important;
+      }
+      .scoreboard-team-dot {
+        width: 11px !important;
+        height: 11px !important;
+      }
+      #matchArea .match-row:not(.edit-mode) {
+        grid-template-columns: 48px minmax(0, 1.25fr) 150px minmax(0, 1.25fr) 52px !important;
+        gap: 3px !important;
+      }
+      #matchArea .match-row:not(.edit-mode) .compact-score-wrap.score-team-symmetric {
+        width: 150px !important;
+        max-width: 150px !important;
+        grid-template-columns: 30px 42px 8px 42px 30px !important;
+        gap: 2px !important;
+      }
+      #matchArea .match-row:not(.edit-mode) .score-team-badge {
+        min-width: 29px !important;
+        width: 29px !important;
+        height: 26px !important;
+        padding: 0 3px !important;
+        font-size: 9px !important;
+      }
+      #matchArea .match-row:not(.edit-mode) select.compact-score.compact-score-select {
+        width: 42px !important;
+        min-width: 42px !important;
+        height: 39px !important;
+        min-height: 39px !important;
+        font-size: 18px !important;
+        padding: 0 12px 0 4px !important;
+        border-radius: 12px !important;
+        background-position: calc(100% - 9px) 50%, calc(100% - 5px) 50% !important;
+        background-size: 5px 5px, 5px 5px !important;
+      }
+      #matchArea .match-row:not(.edit-mode) .compact-vs {
+        font-size: 16px !important;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .public-main-bottom-nav .main-match-bottom-btn {
+        min-height: 56px !important;
+        margin-top: -5px !important;
+        padding-top: 22px !important;
+        border-radius: 21px !important;
+      }
+      .public-main-bottom-nav .main-match-bottom-btn::before {
+        top: -15px !important;
+        width: 43px !important;
+        height: 43px !important;
+        transform: translateX(-50%) rotate(-18deg) !important;
+        background:
+          radial-gradient(circle at 30% 20%, rgba(255,255,255,0.80), transparent 18%),
+          radial-gradient(ellipse at 22% 50%, transparent 35%, rgba(255,255,255,0.96) 37%, rgba(255,255,255,0.96) 45%, transparent 47%),
+          radial-gradient(ellipse at 78% 50%, transparent 35%, rgba(255,255,255,0.94) 37%, rgba(255,255,255,0.94) 45%, transparent 47%),
+          linear-gradient(135deg, #efff59 0%, #c9f72c 46%, #86d414 100%) !important;
+        box-shadow: inset -6px -7px 0 rgba(54,99,0,0.18), 0 7px 13px rgba(7,26,51,0.20) !important;
+      }
+      .public-main-bottom-nav .main-match-bottom-btn::after {
+        top: -12px !important;
+        width: 35px !important;
+        height: 35px !important;
+        transform: translateX(-50%) rotate(-18deg) !important;
+        border-left: 3px solid rgba(255,255,255,0.96) !important;
+        border-right: 3px solid rgba(255,255,255,0.96) !important;
+      }
+      .public-main-bottom-nav .main-match-bottom-btn span:last-child {
+        transform: translateY(3px) !important;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .public-main-bottom-nav .main-match-bottom-btn {
+        min-height: 54px !important;
+        margin-top: -4px !important;
+        padding-top: 21px !important;
+      }
+      .public-main-bottom-nav .main-match-bottom-btn::before {
+        top: -14px !important;
+        width: 40px !important;
+        height: 40px !important;
+      }
+      .public-main-bottom-nav .main-match-bottom-btn::after {
+        top: -11px !important;
+        width: 32px !important;
+        height: 32px !important;
+      }
+      .public-main-bottom-nav .main-match-bottom-btn span:last-child {
+        font-size: 12px !important;
+        transform: translateY(4px) !important;
+      }
+    }
+
+
+    /* v79: 실제 테니스공 패턴 + 점수박스 가독성 유지/카드 높이 압축 */
+    @media (max-width: 1024px) {
+      .public-main-bottom-nav .main-match-bottom-btn {
+        min-height: 54px !important;
+        margin-top: -4px !important;
+        padding-top: 20px !important;
+        padding-bottom: 7px !important;
+        border-radius: 22px !important;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn::before {
+        top: -12px !important;
+        width: 42px !important;
+        height: 42px !important;
+        transform: translateX(-50%) rotate(-7deg) !important;
+        border-radius: 50% !important;
+        background-color: #cfff23 !important;
+        background-image:
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3CradialGradient id='g' cx='34%25' cy='23%25' r='78%25'%3E%3Cstop offset='0%25' stop-color='%23f3ff60'/%3E%3Cstop offset='52%25' stop-color='%23cfff22'/%3E%3Cstop offset='100%25' stop-color='%238bcf09'/%3E%3C/radialGradient%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.45' numOctaves='3' seed='8'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='table' tableValues='0 .18'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='49' fill='url(%23g)'/%3E%3Ccircle cx='50' cy='50' r='49' filter='url(%23n)' opacity='.45'/%3E%3Cpath d='M-8 24 C18 4 47 10 70 27 C86 39 103 39 114 29' fill='none' stroke='white' stroke-width='9.5' stroke-linecap='round' opacity='.97'/%3E%3Cpath d='M-13 76 C14 55 43 60 66 77 C84 91 104 90 116 78' fill='none' stroke='white' stroke-width='9.5' stroke-linecap='round' opacity='.97'/%3E%3Cpath d='M-8 24 C18 4 47 10 70 27 C86 39 103 39 114 29' fill='none' stroke='%23e9f6d8' stroke-width='4' stroke-linecap='round' opacity='.75'/%3E%3Cpath d='M-13 76 C14 55 43 60 66 77 C84 91 104 90 116 78' fill='none' stroke='%23e9f6d8' stroke-width='4' stroke-linecap='round' opacity='.75'/%3E%3C/svg%3E") !important;
+        background-size: cover !important;
+        background-position: center !important;
+        box-shadow: inset -6px -7px 0 rgba(50, 92, 0, 0.18), 0 7px 13px rgba(7,26,51,0.20) !important;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn::after {
+        display: none !important;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn span:last-child {
+        transform: translateY(5px) !important;
+        margin-top: 0 !important;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .public-main-bottom-nav .main-match-bottom-btn {
+        min-height: 52px !important;
+        margin-top: -3px !important;
+        padding-top: 19px !important;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn::before {
+        top: -11px !important;
+        width: 39px !important;
+        height: 39px !important;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn span:last-child {
+        transform: translateY(5px) !important;
+      }
+    }
+
+    #matchArea .match-row:not(.edit-mode) {
+      min-height: 52px !important;
+      align-items: center !important;
+      padding-top: 7px !important;
+      padding-bottom: 7px !important;
+    }
+
+    #matchArea .match-row:not(.edit-mode) .compact-score-wrap.score-team-symmetric {
+      width: 210px !important;
+      max-width: 210px !important;
+      grid-template-columns: 42px 52px 10px 52px 42px !important;
+      gap: 3px !important;
+      align-items: center !important;
+    }
+
+    #matchArea .match-row:not(.edit-mode) .score-team-badge {
+      height: 29px !important;
+      min-height: 29px !important;
+      width: 40px !important;
+      min-width: 40px !important;
+      font-size: 10.5px !important;
+    }
+
+    #matchArea .match-row:not(.edit-mode) select.compact-score.compact-score-select {
+      width: 52px !important;
+      min-width: 52px !important;
+      height: 38px !important;
+      min-height: 38px !important;
+      font-size: 21px !important;
+      line-height: 1 !important;
+      padding: 0 15px 0 6px !important;
+      border-radius: 13px !important;
+      border-width: 2px !important;
+    }
+
+    #matchArea .match-row:not(.edit-mode) .compact-vs {
+      font-size: 16px !important;
+      line-height: 1 !important;
+    }
+
+    @media (max-width: 1024px) {
+      #matchArea .match-row:not(.edit-mode) {
+        min-height: 50px !important;
+        padding-top: 6px !important;
+        padding-bottom: 6px !important;
+        grid-template-columns: 56px minmax(98px, 1.35fr) 178px minmax(98px, 1.35fr) 72px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .compact-score-wrap.score-team-symmetric {
+        width: 178px !important;
+        max-width: 178px !important;
+        grid-template-columns: 38px 47px 8px 47px 38px !important;
+        gap: 2px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .score-team-badge {
+        width: 37px !important;
+        min-width: 37px !important;
+        height: 27px !important;
+        min-height: 27px !important;
+        font-size: 9.8px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) select.compact-score.compact-score-select {
+        width: 47px !important;
+        min-width: 47px !important;
+        height: 36px !important;
+        min-height: 36px !important;
+        font-size: 19px !important;
+        padding: 0 13px 0 5px !important;
+      }
+    }
+
+    @media (max-width: 720px) {
+      #matchArea .match-row:not(.edit-mode) {
+        min-height: 50px !important;
+        padding-top: 6px !important;
+        padding-bottom: 6px !important;
+        grid-template-columns: 48px minmax(0, 1.28fr) 142px minmax(0, 1.28fr) 52px !important;
+        gap: 2px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .compact-score-wrap.score-team-symmetric {
+        width: 142px !important;
+        max-width: 142px !important;
+        grid-template-columns: 27px 40px 6px 40px 27px !important;
+        gap: 1px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .score-team-badge {
+        width: 26px !important;
+        min-width: 26px !important;
+        height: 24px !important;
+        min-height: 24px !important;
+        font-size: 8.4px !important;
+        padding: 0 2px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) select.compact-score.compact-score-select {
+        width: 40px !important;
+        min-width: 40px !important;
+        height: 35px !important;
+        min-height: 35px !important;
+        font-size: 18px !important;
+        padding: 0 11px 0 4px !important;
+        border-radius: 11px !important;
+        background-position: calc(100% - 8px) 50%, calc(100% - 5px) 50% !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .compact-vs {
+        font-size: 14px !important;
+      }
+    }
+
+    @media (max-width: 430px) {
+      #matchArea .match-row:not(.edit-mode) {
+        min-height: 49px !important;
+        grid-template-columns: 47px minmax(0, 1.28fr) 138px minmax(0, 1.28fr) 51px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .compact-score-wrap.score-team-symmetric {
+        width: 138px !important;
+        max-width: 138px !important;
+        grid-template-columns: 26px 39px 6px 39px 26px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) select.compact-score.compact-score-select {
+        width: 39px !important;
+        min-width: 39px !important;
+        height: 34px !important;
+        min-height: 34px !important;
+        font-size: 17px !important;
+      }
+    }
+
+
+
+    /* v80: 큰 화면 경기현황 행 레이아웃 안정화 - 스코어 좌우 이름/팀배지 겹침 방지 */
+    @media (min-width: 1025px) {
+      #matchArea .match-row:not(.edit-mode) {
+        grid-template-columns: 74px minmax(220px, 280px) 196px minmax(220px, 280px) 112px !important;
+        justify-content: center !important;
+        gap: 10px !important;
+        min-height: 56px !important;
+        padding: 8px 12px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .compact-side {
+        min-width: 0 !important;
+        width: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .compact-side-top {
+        display: none !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) > .compact-side:nth-child(2) {
+        justify-content: flex-end !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) > .compact-side:nth-child(4) {
+        justify-content: flex-start !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) > .compact-side:nth-child(2) .compact-side-names {
+        text-align: right !important;
+        justify-content: flex-end !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) > .compact-side:nth-child(4) .compact-side-names {
+        text-align: left !important;
+        justify-content: flex-start !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .compact-side-names {
+        display: flex !important;
+        align-items: center !important;
+        gap: 9px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow: visible !important;
+        white-space: normal !important;
+        text-overflow: clip !important;
+        font-size: 13.5px !important;
+        line-height: 1.25 !important;
+        letter-spacing: -0.035em !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .player-separator {
+        flex: 0 0 auto !important;
+        color: #334155 !important;
+        font-weight: 1000 !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .player-name-token {
+        display: inline-flex !important;
+        align-items: baseline !important;
+        max-width: 112px !important;
+        min-width: 0 !important;
+        overflow: visible !important;
+        white-space: nowrap !important;
+        font-weight: 1000 !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .player-game-ordinal {
+        position: static !important;
+        margin-left: 2px !important;
+        transform: translateY(-0.35em) !important;
+        line-height: 1 !important;
+        font-size: 10px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .compact-score-wrap.score-team-symmetric {
+        width: 196px !important;
+        max-width: 196px !important;
+        grid-template-columns: 38px 49px 8px 49px 38px !important;
+        gap: 3px !important;
+        justify-self: center !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .score-team-badge {
+        width: 37px !important;
+        min-width: 37px !important;
+        height: 28px !important;
+        min-height: 28px !important;
+        font-size: 10px !important;
+        border-radius: 999px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) select.compact-score.compact-score-select {
+        width: 49px !important;
+        min-width: 49px !important;
+        height: 37px !important;
+        min-height: 37px !important;
+        font-size: 19px !important;
+        padding: 0 13px 0 5px !important;
+        border-radius: 12px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .compact-vs {
+        font-size: 15px !important;
+      }
+
+      #matchArea .match-row:not(.edit-mode) .status-pill {
+        width: 104px !important;
+        min-height: 34px !important;
+      }
+    }
+
+
+
+    /* v81: 스코어보드 상단 팀 구분 바 - 그라데이션 제거, 단색 진하게 정리 */
+    .scoreboard-center-head::before {
+      background: #4f73dc !important;
+      background-image: none !important;
+      box-shadow: none !important;
+      opacity: 1 !important;
+    }
+
+    .scoreboard-center-head::after {
+      background: #3f9a5f !important;
+      background-image: none !important;
+      box-shadow: none !important;
+      opacity: 1 !important;
+    }
+
+    .scoreboard-center-head .left,
+    .scoreboard-center-head .right {
+      background: #ffffff !important;
+      box-shadow: 0 1px 4px rgba(15,23,42,0.08) !important;
+    }
+
+  
+
+    /* v82: 조편성 팀 색상 동기화 + 테니스공 중앙 마테호른 마크 */
+    :root {
+      --matterhorn-team-a-solid: #2582db;
+      --matterhorn-team-a-dark: #164d92;
+      --matterhorn-team-b-solid: #13aa81;
+      --matterhorn-team-b-dark: #0c6c54;
+      --matterhorn-tennis-lime: #d7ff24;
+      --matterhorn-tennis-lime-deep: #9ed80b;
+    }
+
+    .scoreboard-center-head::before {
+      background: var(--matterhorn-team-a-solid) !important;
+      background-image: none !important;
+      box-shadow: none !important;
+      opacity: 1 !important;
+    }
+
+    .scoreboard-center-head::after {
+      background: var(--matterhorn-team-b-solid) !important;
+      background-image: none !important;
+      box-shadow: none !important;
+      opacity: 1 !important;
+    }
+
+    .scoreboard-center-head .left {
+      color: var(--matterhorn-team-a-dark) !important;
+      border: 1px solid rgba(37,130,219,0.22) !important;
+    }
+
+    .scoreboard-center-head .right {
+      color: var(--matterhorn-team-b-dark) !important;
+      border: 1px solid rgba(19,170,129,0.22) !important;
+    }
+
+    .scoreboard-center-head .left .scoreboard-team-dot,
+    .scoreboard-team-dot.team-a {
+      background: var(--matterhorn-team-a-solid) !important;
+    }
+
+    .scoreboard-center-head .right .scoreboard-team-dot,
+    .scoreboard-team-dot.team-b {
+      background: var(--matterhorn-team-b-solid) !important;
+    }
+
+    .scoreboard-part.win.team-a,
+    .scoreboard-seg.win.team-a {
+      background: var(--matterhorn-team-a-solid) !important;
+      color: #fff !important;
+    }
+
+    .scoreboard-part.win.team-b,
+    .scoreboard-seg.win.team-b {
+      background: var(--matterhorn-team-b-solid) !important;
+      color: #fff !important;
+    }
+
+    @media (max-width: 1024px) {
+      .public-main-bottom-nav .main-match-bottom-btn::before {
+        top: -9px !important;
+        width: 43px !important;
+        height: 43px !important;
+        transform: translateX(-50%) rotate(-5deg) !important;
+        border-radius: 50% !important;
+        background-color: var(--matterhorn-tennis-lime) !important;
+        background-image:
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Cdefs%3E%3CradialGradient id='g' cx='34%25' cy='22%25' r='82%25'%3E%3Cstop offset='0%25' stop-color='%23f4ff63'/%3E%3Cstop offset='46%25' stop-color='%23d7ff24'/%3E%3Cstop offset='100%25' stop-color='%239ed80b'/%3E%3C/radialGradient%3E%3Cfilter id='felt'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.15' numOctaves='3' seed='12'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='table' tableValues='0 .20'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3C/defs%3E%3Ccircle cx='60' cy='60' r='58' fill='url(%23g)'/%3E%3Ccircle cx='60' cy='60' r='58' filter='url(%23felt)' opacity='.5'/%3E%3Cpath d='M-12 36 C20 12 52 16 79 38 C101 56 125 50 138 35' fill='none' stroke='%23ffffff' stroke-width='10.5' stroke-linecap='round'/%3E%3Cpath d='M-15 92 C17 68 52 73 80 95 C101 111 128 106 142 90' fill='none' stroke='%23ffffff' stroke-width='10.5' stroke-linecap='round'/%3E%3Cpath d='M-12 36 C20 12 52 16 79 38 C101 56 125 50 138 35' fill='none' stroke='%23dbe8c6' stroke-width='3.6' stroke-linecap='round' opacity='.8'/%3E%3Cpath d='M-15 92 C17 68 52 73 80 95 C101 111 128 106 142 90' fill='none' stroke='%23dbe8c6' stroke-width='3.6' stroke-linecap='round' opacity='.8'/%3E%3C/svg%3E") !important;
+        background-size: cover !important;
+        background-position: center !important;
+        box-shadow: inset -5px -6px 0 rgba(54, 98, 0, 0.18), 0 7px 13px rgba(7,26,51,0.22) !important;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn::after {
+        content: "" !important;
+        display: block !important;
+        position: absolute !important;
+        left: 50% !important;
+        top: 6px !important;
+        width: 18px !important;
+        height: 14px !important;
+        transform: translateX(-50%) !important;
+        z-index: 4 !important;
+        pointer-events: none !important;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 42'%3E%3Cpath d='M3 36 L18 12 L28 26 L37 6 L57 36 Z' fill='%23071a33' fill-opacity='.78'/%3E%3Cpath d='M18 12 L28 26 L33 16 L37 6 L42 17 L34 15 L28 26 L22 21 Z' fill='%23ffffff' fill-opacity='.9'/%3E%3Cpath d='M4 37 H56' stroke='%23ffffff' stroke-width='4' stroke-linecap='round' opacity='.95'/%3E%3C/svg%3E") !important;
+        background-size: contain !important;
+        background-repeat: no-repeat !important;
+        background-position: center !important;
+        filter: drop-shadow(0 1px 1px rgba(255,255,255,.45)) !important;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .public-main-bottom-nav .main-match-bottom-btn::before {
+        top: -7px !important;
+        width: 40px !important;
+        height: 40px !important;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn::after {
+        top: 7px !important;
+        width: 16px !important;
+        height: 12px !important;
+      }
+    }
+
+
+    /* v83: 하단 경기현황 테니스공 무늬 제거 + 마테호른 마크 확대/텍스트 하향 */
+    @media (max-width: 1024px) {
+      .public-main-bottom-nav .main-match-bottom-btn {
+        min-height: 56px !important;
+        padding-top: 25px !important;
+        padding-bottom: 5px !important;
+        overflow: visible !important;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn::before {
+        top: -4px !important;
+        width: 42px !important;
+        height: 42px !important;
+        transform: translateX(-50%) rotate(-5deg) !important;
+        border-radius: 50% !important;
+        background-color: #d8ff23 !important;
+        background-image:
+          radial-gradient(circle at 30% 20%, rgba(255,255,255,0.62) 0 10%, transparent 22%),
+          radial-gradient(circle at 62% 70%, rgba(73,115,0,0.20) 0 3%, transparent 4%),
+          radial-gradient(circle at 28% 62%, rgba(73,115,0,0.16) 0 2.5%, transparent 3.5%),
+          radial-gradient(circle at 76% 34%, rgba(73,115,0,0.14) 0 2.4%, transparent 3.4%),
+          linear-gradient(135deg, #efff58 0%, #d9ff24 44%, #96d80b 100%) !important;
+        background-size: cover !important;
+        background-position: center !important;
+        box-shadow: inset -5px -6px 0 rgba(50,92,0,0.18), 0 6px 12px rgba(7,26,51,0.22) !important;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn::after {
+        content: "" !important;
+        display: block !important;
+        position: absolute !important;
+        left: 50% !important;
+        top: 7px !important;
+        width: 25px !important;
+        height: 18px !important;
+        transform: translateX(-50%) !important;
+        z-index: 5 !important;
+        pointer-events: none !important;
+        border: 0 !important;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 54'%3E%3Cpath d='M4 47 L20 20 L31 36 L45 7 L76 47 Z' fill='%23071a33' fill-opacity='.86'/%3E%3Cpath d='M20 20 L31 36 L39 20 L45 7 L53 24 L43 21 L31 36 L26 29 Z' fill='%23ffffff' fill-opacity='.92'/%3E%3Cpath d='M5 48 H75' stroke='%23ffffff' stroke-width='5' stroke-linecap='round' opacity='.95'/%3E%3C/svg%3E") !important;
+        background-size: contain !important;
+        background-repeat: no-repeat !important;
+        background-position: center !important;
+        filter: drop-shadow(0 1px 1px rgba(255,255,255,.42)) drop-shadow(0 1px 2px rgba(7,26,51,.20)) !important;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn span:last-child {
+        transform: translateY(8px) !important;
+        margin-top: 0 !important;
+        line-height: 1.05 !important;
+        position: relative !important;
+        z-index: 6 !important;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .public-main-bottom-nav .main-match-bottom-btn {
+        min-height: 55px !important;
+        padding-top: 25px !important;
+      }
+      .public-main-bottom-nav .main-match-bottom-btn::before {
+        top: -3px !important;
+        width: 40px !important;
+        height: 40px !important;
+      }
+      .public-main-bottom-nav .main-match-bottom-btn::after {
+        top: 8px !important;
+        width: 24px !important;
+        height: 17px !important;
+      }
+      .public-main-bottom-nav .main-match-bottom-btn span:last-child {
+        transform: translateY(9px) !important;
+      }
+    }
+
+
+    /* v84: 경기현황 메인탭 - 테니스공 흰 곡선 무늬 복구 + 글자 스타일 개선 */
+    @media (max-width: 1024px) {
+      .public-main-bottom-nav .main-match-bottom-btn {
+        min-height: 58px !important;
+        padding-top: 23px !important;
+        padding-bottom: 6px !important;
+        overflow: visible !important;
+        border-radius: 18px !important;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn::before {
+        top: -6px !important;
+        width: 42px !important;
+        height: 42px !important;
+        transform: translateX(-50%) rotate(-10deg) !important;
+        border-radius: 50% !important;
+        background-color: #d9ff22 !important;
+        background-image:
+          radial-gradient(circle at 31% 22%, rgba(255,255,255,.62) 0 8%, transparent 19%),
+          radial-gradient(circle at 42% 46%, rgba(58,96,0,.18) 0 1.5px, transparent 2.5px),
+          radial-gradient(circle at 58% 33%, rgba(58,96,0,.14) 0 1.3px, transparent 2.3px),
+          radial-gradient(circle at 69% 64%, rgba(58,96,0,.14) 0 1.5px, transparent 2.5px),
+          linear-gradient(140deg, #f4ff63 0%, #dfff28 48%, #9ed80b 100%) !important;
+        box-shadow: inset -5px -6px 0 rgba(54,96,0,.17), 0 7px 14px rgba(7,26,51,.24) !important;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn::after {
+        content: "" !important;
+        display: block !important;
+        position: absolute !important;
+        left: 50% !important;
+        top: -1px !important;
+        width: 40px !important;
+        height: 32px !important;
+        transform: translateX(-50%) rotate(-10deg) !important;
+        z-index: 5 !important;
+        pointer-events: none !important;
+        border: 0 !important;
+        background: transparent !important;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 82'%3E%3Cpath d='M-10 23 C 20 47 55 45 112 18' fill='none' stroke='%23fffef2' stroke-width='9' stroke-linecap='round'/%3E%3Cpath d='M-9 27 C 21 51 56 49 113 22' fill='none' stroke='%23bfe400' stroke-width='2' stroke-linecap='round' opacity='.55'/%3E%3Cpath d='M-12 67 C 22 42 60 45 112 72' fill='none' stroke='%23fffef2' stroke-width='9' stroke-linecap='round'/%3E%3Cpath d='M-12 63 C 22 38 60 41 112 68' fill='none' stroke='%23bfe400' stroke-width='2' stroke-linecap='round' opacity='.55'/%3E%3C/svg%3E") !important;
+        background-size: 100% 100% !important;
+        background-repeat: no-repeat !important;
+        background-position: center !important;
+        filter: drop-shadow(0 1px 1px rgba(70,100,0,.25)) !important;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn .tennis-ball-icon {
+        display: none !important;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn span:last-child {
+        transform: translateY(8px) !important;
+        margin-top: 0 !important;
+        line-height: 1 !important;
+        position: relative !important;
+        z-index: 7 !important;
+        font-family: Pretendard, "Noto Sans KR", "Apple SD Gothic Neo", system-ui, sans-serif !important;
+        font-size: 13px !important;
+        font-weight: 1000 !important;
+        letter-spacing: -0.055em !important;
+        color: #fff !important;
+        text-shadow: 0 1px 0 rgba(255,255,255,.08), 0 2px 6px rgba(0,0,0,.28) !important;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .public-main-bottom-nav .main-match-bottom-btn {
+        min-height: 57px !important;
+        padding-top: 23px !important;
+      }
+      .public-main-bottom-nav .main-match-bottom-btn::before {
+        top: -5px !important;
+        width: 40px !important;
+        height: 40px !important;
+      }
+      .public-main-bottom-nav .main-match-bottom-btn::after {
+        top: -1px !important;
+        width: 38px !important;
+        height: 31px !important;
+      }
+      .public-main-bottom-nav .main-match-bottom-btn span:last-child {
+        transform: translateY(9px) !important;
+        font-size: 12.5px !important;
+      }
+    }
+
+  
+
+    /* v87: 하단 경기현황 테니스공 재제작 - 작고 깔끔한 아이콘형 */
+    @media (max-width: 1024px) {
+      .public-main-bottom-nav .main-match-bottom-btn {
+        min-height: 56px !important;
+        margin-top: -7px !important;
+        padding: 25px 5px 8px !important;
+        border-radius: 22px !important;
+        background: #071a33 !important;
+        box-shadow: 0 12px 24px rgba(7,26,51,0.24), 0 0 0 5px rgba(255,255,255,0.92) !important;
+        overflow: visible !important;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn::before {
+        content: "" !important;
+        position: absolute !important;
+        top: -18px !important;
+        left: 50% !important;
+        width: 44px !important;
+        height: 44px !important;
+        transform: translateX(-50%) !important;
+        border-radius: 50% !important;
+        background:
+          radial-gradient(circle at 28% 22%, rgba(255,255,255,0.72), transparent 18%),
+          radial-gradient(circle at 52% 54%, rgba(255,255,255,0.10) 0 1px, transparent 1.5px),
+          linear-gradient(135deg, #e9ff4f 0%, #c9f52d 48%, #91d815 100%) !important;
+        background-size: auto, 7px 7px, auto !important;
+        box-shadow:
+          inset -6px -7px 0 rgba(67,112,0,0.17),
+          inset 3px 3px 0 rgba(255,255,255,0.20),
+          0 7px 13px rgba(7,26,51,0.22) !important;
+        border: 1px solid rgba(255,255,255,0.45) !important;
+        z-index: 2 !important;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn::after {
+        content: "" !important;
+        position: absolute !important;
+        top: -10px !important;
+        left: 50% !important;
+        width: 34px !important;
+        height: 19px !important;
+        transform: translateX(-50%) rotate(-17deg) !important;
+        border-radius: 50% !important;
+        border-top: 3px solid rgba(255,255,255,0.96) !important;
+        border-left: 0 !important;
+        border-right: 0 !important;
+        border-bottom: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        opacity: 0.98 !important;
+        pointer-events: none !important;
+        z-index: 3 !important;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn .tennis-ball-icon {
+        display: none !important;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn span:last-child {
+        position: relative !important;
+        z-index: 4 !important;
+        margin-top: 1px !important;
+        font-size: 12.5px !important;
+        line-height: 1.05 !important;
+        font-weight: 1000 !important;
+        letter-spacing: -0.05em !important;
+        color: #fff !important;
+        text-shadow: 0 2px 5px rgba(0,0,0,0.22) !important;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .public-main-bottom-nav .main-match-bottom-btn {
+        min-height: 55px !important;
+        margin-top: -6px !important;
+        padding-top: 24px !important;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn::before {
+        top: -17px !important;
+        width: 42px !important;
+        height: 42px !important;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn::after {
+        top: -9px !important;
+        width: 32px !important;
+        height: 18px !important;
+        border-top-width: 3px !important;
+      }
+
+      .public-main-bottom-nav .main-match-bottom-btn span:last-child {
+        font-size: 12px !important;
+      }
+    }
+
   </style>
   <!-- matterhorn_v31: v30 + admin participant label + red admin background tone -->
 </head>
@@ -9845,10 +11266,10 @@
               </div>
             </div>
           </div>
-          <div class="scoreboard-center-foot">
-            <div class="left"><span class="score-total">${a.wins}승 ${a.losses}패 · 총점 ${a.pointsFor}점</span></div>
+          <div class="scoreboard-center-foot scoreboard-total-only-foot">
+            <div class="left"><span class="score-total">총점 ${a.pointsFor}점</span></div>
             <div class="center-gap">${winGap ? winGap + "승 차" : "동률"}</div>
-            <div class="right"><span class="score-total">${b.wins}승 ${b.losses}패 · 총점 ${b.pointsFor}점</span></div>
+            <div class="right"><span class="score-total">총점 ${b.pointsFor}점</span></div>
           </div>
         </div>
       `;
@@ -12041,3 +13462,237 @@
   </script>
 </body>
 </html>
+
+<style>
+/* v85: 하단 경기현황 테니스공 무늬 단순화/정리 */
+@media (max-width: 1024px) {
+  .public-main-bottom-nav .main-match-bottom-btn::before {
+    top: -18px !important;
+    width: 46px !important;
+    height: 46px !important;
+    transform: translateX(-50%) rotate(-10deg) !important;
+    border-radius: 50% !important;
+    background:
+      radial-gradient(circle at 32% 24%, rgba(255,255,255,0.58), transparent 18%),
+      radial-gradient(circle at 70% 78%, rgba(80,120,0,0.12), transparent 28%),
+      linear-gradient(135deg, #e6ff4a 0%, #c8f321 48%, #8ed218 100%) !important;
+    box-shadow:
+      inset -6px -7px 0 rgba(61,97,0,0.16),
+      inset 2px 2px 0 rgba(255,255,255,0.24),
+      0 8px 14px rgba(7,26,51,0.20) !important;
+    overflow: hidden !important;
+  }
+
+  .public-main-bottom-nav .main-match-bottom-btn::after {
+    content: "" !important;
+    position: absolute !important;
+    top: -15px !important;
+    left: 50% !important;
+    width: 38px !important;
+    height: 38px !important;
+    transform: translateX(-50%) rotate(-10deg) !important;
+    border-radius: 50% !important;
+    border: 0 !important;
+    background:
+      radial-gradient(ellipse 42px 16px at 50% 18%, transparent 55%, rgba(255,255,255,0.94) 58%, rgba(255,255,255,0.94) 65%, transparent 68%),
+      radial-gradient(ellipse 42px 16px at 50% 82%, transparent 55%, rgba(255,255,255,0.92) 58%, rgba(255,255,255,0.92) 65%, transparent 68%) !important;
+    opacity: 0.96 !important;
+    pointer-events: none !important;
+    z-index: 1 !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .public-main-bottom-nav .main-match-bottom-btn::before {
+    top: -17px !important;
+    width: 42px !important;
+    height: 42px !important;
+  }
+
+  .public-main-bottom-nav .main-match-bottom-btn::after {
+    top: -14px !important;
+    width: 34px !important;
+    height: 34px !important;
+    background:
+      radial-gradient(ellipse 38px 14px at 50% 18%, transparent 55%, rgba(255,255,255,0.94) 58%, rgba(255,255,255,0.94) 65%, transparent 68%),
+      radial-gradient(ellipse 38px 14px at 50% 82%, transparent 55%, rgba(255,255,255,0.92) 58%, rgba(255,255,255,0.92) 65%, transparent 68%) !important;
+  }
+}
+</style>
+
+
+<style>
+/* v86: 하단 경기현황 테니스공 무늬를 업로드 샘플처럼 좌우 U자형 회색 라인으로 변경 */
+@media (max-width: 1024px) {
+  .public-main-bottom-nav .main-match-bottom-btn::before {
+    top: -18px !important;
+    width: 46px !important;
+    height: 46px !important;
+    transform: translateX(-50%) rotate(0deg) !important;
+    border-radius: 50% !important;
+    background:
+      radial-gradient(circle at 32% 24%, rgba(255,255,255,0.48), transparent 20%),
+      radial-gradient(circle at 72% 80%, rgba(70,110,0,0.13), transparent 30%),
+      linear-gradient(135deg, #eaff4d 0%, #ccf522 52%, #91d91a 100%) !important;
+    box-shadow:
+      inset -6px -7px 0 rgba(62,96,0,0.15),
+      inset 2px 2px 0 rgba(255,255,255,0.20),
+      0 8px 14px rgba(7,26,51,0.20) !important;
+    overflow: hidden !important;
+  }
+
+  .public-main-bottom-nav .main-match-bottom-btn::after {
+    content: "" !important;
+    position: absolute !important;
+    top: -18px !important;
+    left: 50% !important;
+    width: 46px !important;
+    height: 46px !important;
+    transform: translateX(-50%) rotate(-9deg) !important;
+    border-radius: 50% !important;
+    border: 0 !important;
+    background:
+      radial-gradient(ellipse 34px 56px at -10% 48%, transparent 66%, rgba(214,224,213,0.96) 68%, rgba(214,224,213,0.96) 75%, transparent 77%),
+      radial-gradient(ellipse 34px 56px at 110% 52%, transparent 66%, rgba(214,224,213,0.96) 68%, rgba(214,224,213,0.96) 75%, transparent 77%) !important;
+    opacity: 0.98 !important;
+    pointer-events: none !important;
+    z-index: 1 !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .public-main-bottom-nav .main-match-bottom-btn::before {
+    top: -17px !important;
+    width: 42px !important;
+    height: 42px !important;
+  }
+
+  .public-main-bottom-nav .main-match-bottom-btn::after {
+    top: -17px !important;
+    width: 42px !important;
+    height: 42px !important;
+    background:
+      radial-gradient(ellipse 31px 52px at -10% 48%, transparent 66%, rgba(214,224,213,0.96) 68%, rgba(214,224,213,0.96) 75%, transparent 77%),
+      radial-gradient(ellipse 31px 52px at 110% 52%, transparent 66%, rgba(214,224,213,0.96) 68%, rgba(214,224,213,0.96) 75%, transparent 77%) !important;
+  }
+}
+</style>
+
+<style>
+/* v88: 하단 경기현황 테니스공 흰줄 추가 + 공 위치 하향 */
+@media (max-width: 1024px) {
+  .public-main-bottom-nav .main-match-bottom-btn {
+    padding-top: 23px !important;
+  }
+
+  .public-main-bottom-nav .main-match-bottom-btn::before {
+    top: -14px !important;
+    width: 44px !important;
+    height: 44px !important;
+    background:
+      radial-gradient(circle at 30% 22%, rgba(255,255,255,0.72), transparent 19%),
+      radial-gradient(ellipse at 50% 78%, transparent 55%, rgba(255,255,255,0.92) 57%, rgba(255,255,255,0.92) 63%, transparent 65%),
+      linear-gradient(135deg, #eaff52 0%, #c8f52b 48%, #91d916 100%) !important;
+    box-shadow: inset -6px -7px 0 rgba(54,99,0,0.16), 0 7px 14px rgba(7,26,51,0.20) !important;
+  }
+
+  .public-main-bottom-nav .main-match-bottom-btn::after {
+    content: "" !important;
+    position: absolute !important;
+    left: 50% !important;
+    top: -10px !important;
+    width: 35px !important;
+    height: 35px !important;
+    transform: translateX(-50%) rotate(-18deg) !important;
+    border-radius: 50% !important;
+    border-top: 3px solid rgba(255,255,255,0.92) !important;
+    border-bottom: 3px solid rgba(255,255,255,0.86) !important;
+    border-left: 0 !important;
+    border-right: 0 !important;
+    opacity: 0.95 !important;
+    pointer-events: none !important;
+    z-index: 1 !important;
+  }
+
+  .public-main-bottom-nav .main-match-bottom-btn span:last-child {
+    margin-top: 3px !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .public-main-bottom-nav .main-match-bottom-btn {
+    padding-top: 22px !important;
+  }
+
+  .public-main-bottom-nav .main-match-bottom-btn::before {
+    top: -13px !important;
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  .public-main-bottom-nav .main-match-bottom-btn::after {
+    top: -9px !important;
+    width: 32px !important;
+    height: 32px !important;
+    border-top-width: 2.5px !important;
+    border-bottom-width: 2.5px !important;
+  }
+}
+</style>
+
+<style>
+  /* v89: hero club badge moved to bottom-left, diagonally balanced with admin button */
+  .hero-inner.hero-inner-clean {
+    position: relative !important;
+  }
+
+  .hero-top-clean {
+    position: static !important;
+    display: block !important;
+    width: 100% !important;
+  }
+
+  .hero-right-tools {
+    position: static !important;
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+  }
+
+  .hero-pill-right {
+    position: absolute !important;
+    left: 20px !important;
+    bottom: 18px !important;
+    z-index: 3 !important;
+    max-width: min(360px, calc(100% - 180px)) !important;
+    min-height: 34px !important;
+    padding: 0 14px !important;
+    justify-content: center !important;
+    background: rgba(7, 26, 51, 0.42) !important;
+    border-color: rgba(255,255,255,0.34) !important;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.14) !important;
+  }
+
+  .hero-admin-btn {
+    position: absolute !important;
+    right: 20px !important;
+    top: 14px !important;
+    z-index: 4 !important;
+  }
+
+  @media (max-width: 720px) {
+    .hero-pill-right {
+      left: 12px !important;
+      bottom: 14px !important;
+      max-width: calc(100vw - 132px) !important;
+      min-height: 30px !important;
+      padding: 0 10px !important;
+      font-size: 10px !important;
+    }
+
+    .hero-admin-btn {
+      right: 12px !important;
+      top: 10px !important;
+    }
+  }
+</style>
