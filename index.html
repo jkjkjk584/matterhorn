@@ -12851,6 +12851,7 @@ body {
     const ADMIN_PASSWORD_KEY = "matterhorn_admin_password";
     const MASTER_KEY_STORAGE_KEY = "matterhorn_master_key";
     const DEVICE_ROLE_KEY = "matterhorn_device_default_role";
+    const ADMIN_MODE_PERSIST_KEY = "matterhorn_admin_mode_persist_v1";
     const DEVICE_ID_KEY = "matterhorn_device_id";
     const DEVICE_ID = (() => {
       try {
@@ -12896,8 +12897,31 @@ body {
     function clearDeviceRole() {
       try {
         localStorage.removeItem(DEVICE_ROLE_KEY);
+        localStorage.removeItem(ADMIN_MODE_PERSIST_KEY);
       } catch (error) {
         console.warn("기기 역할 초기화 실패", error);
+      }
+    }
+
+    function setPersistedAdminMode(enabled) {
+      try {
+        if (enabled) {
+          localStorage.setItem(DEVICE_ROLE_KEY, "admin");
+          localStorage.setItem(ADMIN_MODE_PERSIST_KEY, "1");
+        } else {
+          localStorage.setItem(DEVICE_ROLE_KEY, "participant");
+          localStorage.removeItem(ADMIN_MODE_PERSIST_KEY);
+        }
+      } catch (error) {
+        console.warn("관리자 모드 저장 실패", error);
+      }
+    }
+
+    function shouldRestoreAdminMode() {
+      try {
+        return localStorage.getItem(DEVICE_ROLE_KEY) === "admin" || localStorage.getItem(ADMIN_MODE_PERSIST_KEY) === "1";
+      } catch (error) {
+        return false;
       }
     }
 
@@ -12913,7 +12937,7 @@ body {
     }
 
     function chooseParticipantRole() {
-      setDeviceRole("participant");
+      setPersistedAdminMode(false);
       if (adminUnlocked) {
         adminUnlocked = false;
       }
@@ -12942,9 +12966,9 @@ body {
     }
 
     function applyDeviceRoleAfterBootstrap() {
-      // v107: 입장페이지 제거. 새로고침/첫 접속 모두 참가자 화면으로 바로 진입합니다.
+      // v123: 새로고침해도 직전 관리자/참가자 모드를 유지합니다.
       hideRoleSelectScreen();
-      adminUnlocked = false;
+      adminUnlocked = shouldRestoreAdminMode();
       syncAccessMode();
       renderAll();
     }
@@ -13303,6 +13327,7 @@ body {
         console.error(error);
         setSaveStatus("⚠️ 저장 데이터 불러오기 실패");
       }
+      adminUnlocked = shouldRestoreAdminMode();
       renderAll();
       if ($("desiredGamesSelect")) $("desiredGamesSelect").value = String(state.desiredGamesPerPlayer || 2);
       if ($("menDoublesCountInput")) $("menDoublesCountInput").value = String(state.desiredMenDoublesCount || 0);
@@ -15335,6 +15360,7 @@ body {
         return;
       }
       adminUnlocked = true;
+      setPersistedAdminMode(true);
       hideRoleSelectScreen();
       $("adminPasswordModal").classList.add("hidden");
       $("adminPasswordInput").value = "";
@@ -15347,6 +15373,7 @@ body {
 
     function logoutAdmin() {
       adminUnlocked = false;
+      setPersistedAdminMode(false);
       state.matchEditMode = false;
       syncAccessMode();
       renderAll();
