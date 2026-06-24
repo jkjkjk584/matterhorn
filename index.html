@@ -12757,6 +12757,51 @@ body {
   }
 }
 </style>
+
+
+<style id="v150-entry-pin-full-cover-style">
+  /* v150: 엔트리 관리자 PIN 팝업 뒤로 메인 경기현황이 비치지 않도록 전체 배경을 엔트리 전용으로 덮음 */
+  .mh-entry-pin-modal {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 10050 !important;
+    overflow: hidden !important;
+    background: #eaf3fb !important;
+    isolation: isolate !important;
+  }
+
+  .mh-entry-pin-modal::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background: url("./matterhorn-banner.png") 96% center / cover no-repeat;
+    filter: saturate(1.08) contrast(1.04);
+    transform: scale(1.01);
+  }
+
+  .mh-entry-pin-modal::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.10) 0%, rgba(255,255,255,.22) 34%, rgba(255,255,255,.52) 100%),
+      linear-gradient(180deg, rgba(7,26,51,.10) 0%, rgba(7,26,51,.22) 100%);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+  }
+
+  .mh-entry-pin-modal.open {
+    display: flex !important;
+  }
+
+  .mh-entry-pin-sheet {
+    position: relative !important;
+    z-index: 2 !important;
+  }
+</style>
+
 </head>
 <body>
 
