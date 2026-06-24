@@ -10213,6 +10213,30 @@
   }
 }
 
+
+    /* v137: 완료된 경기 슬롯 배경을 회색 계열로 덮어 완료 상태를 명확히 구분 */
+    #matchArea .match-row.status-finished {
+      background: #f1f3f5 !important;
+      border-color: #cfd8e3 !important;
+      box-shadow: none !important;
+    }
+
+    #matchArea .match-row.status-finished .compact-side {
+      background: #e9eef4 !important;
+      border-color: #d1dbe7 !important;
+    }
+
+    #matchArea .match-row.status-finished .match-round,
+    #matchArea .match-row.status-finished .match-court {
+      background: #e2e8f0 !important;
+      border-color: #cbd5e1 !important;
+      color: #475569 !important;
+    }
+
+    #matchArea .match-row.status-finished .compact-side-names {
+      color: #475569 !important;
+    }
+
 </style>
   <!-- matterhorn_v31: v30 + admin participant label + red admin background tone -->
 <style>
@@ -12288,8 +12312,504 @@ body {
     }
   </style>
 
+
+
+  <style>
+  /* v130: 통합 입장페이지 오버레이 - v24 기준, 메인 앱 CSS와 충돌 방지용 prefix */
+  .mh-entry-overlay,
+  .mh-entry-overlay * {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .mh-entry-overlay {
+    --mh-entry-navy:#071a33;
+    --mh-entry-glass:rgba(255,255,255,.64);
+    --mh-entry-glass-line:rgba(255,255,255,.72);
+    --mh-entry-text:#15233b;
+    --mh-entry-muted:rgba(21,35,59,.58);
+    --mh-entry-safe-bottom:env(safe-area-inset-bottom,0px);
+    position: fixed;
+    inset: 0;
+    z-index: 9990;
+    display: flex;
+    justify-content: center;
+    isolation: isolate;
+    overflow: hidden;
+    background:#eaf3fb;
+    color: var(--mh-entry-text);
+    font-family: Inter, Pretendard, "Noto Sans KR", "Apple SD Gothic Neo", Arial, sans-serif;
+    transition: opacity .38s ease, visibility .38s ease;
+  }
+
+  .mh-entry-overlay.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .mh-entry-overlay::before {
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:-2;
+    background:url("./matterhorn-banner.png") 96% center / cover no-repeat;
+    filter:saturate(1.08) contrast(1.04);
+    transform:scale(1.01);
+  }
+
+  .mh-entry-overlay::after {
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:-1;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.06) 0%, rgba(255,255,255,.18) 36%, rgba(255,255,255,.40) 100%),
+      radial-gradient(circle at 76% 18%, rgba(255,255,255,.16), transparent 38%),
+      linear-gradient(90deg, rgba(7,26,51,.15), rgba(255,255,255,.08) 44%, rgba(255,255,255,.12));
+  }
+
+  .mh-entry-stage {
+    position:relative;
+    width:min(430px,100%);
+    height:100%;
+    min-height:100dvh;
+    padding:22px 34px calc(24px + var(--mh-entry-safe-bottom));
+  }
+
+  .mh-entry-brand {
+    position:absolute;
+    top:34px;
+    right:18px;
+    width:min(255px,60vw);
+    text-align:right;
+    opacity:0;
+    animation:mhEntryFadeDown .56s ease .08s forwards;
+  }
+
+  .mh-entry-brand-logo {
+    width:100%;
+    height:auto;
+    display:block;
+    object-fit:contain;
+    filter: drop-shadow(0 8px 22px rgba(255,255,255,.28));
+  }
+
+  .mh-entry-brand-copy {
+    margin-top:8px;
+    color:rgba(21,35,59,.62);
+    font-size:12px;
+    line-height:1.5;
+    font-weight:850;
+    letter-spacing:-.02em;
+    text-shadow:0 1px 16px rgba(255,255,255,.44);
+  }
+
+  .mh-entry-actions {
+    position:absolute;
+    left:34px;
+    right:34px;
+    top:59%;
+    display:grid;
+    gap:14px;
+    opacity:0;
+    animation:mhEntryFadeUp .58s cubic-bezier(.2,.8,.2,1) .24s forwards;
+  }
+
+  .mh-entry-btn {
+    width:100%;
+    min-height:56px;
+    border:0;
+    border-radius:18px;
+    padding:0 16px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:16px;
+    font-weight:1000;
+    letter-spacing:-.035em;
+    cursor:pointer;
+    transition:transform .14s ease, box-shadow .14s ease, filter .14s ease;
+    box-shadow:0 18px 45px rgba(7,26,51,.18);
+  }
+
+  .mh-entry-btn:active { transform:scale(.982); }
+
+  .mh-entry-btn .mh-entry-btn-icon {
+    width:32px;
+    height:32px;
+    border-radius:11px;
+    display:grid;
+    place-items:center;
+    flex:0 0 auto;
+  }
+
+  .mh-entry-btn .mh-entry-btn-icon svg {
+    width:20px;
+    height:20px;
+    display:block;
+  }
+
+  .mh-entry-btn .mh-entry-btn-text { flex:1; text-align:left; }
+  .mh-entry-btn .mh-entry-btn-arrow { font-size:26px; line-height:1; opacity:.38; }
+
+  .mh-entry-btn.participant {
+    background:rgba(7,26,51,.94);
+    color:#fff;
+  }
+
+  .mh-entry-btn.participant .mh-entry-btn-icon {
+    background:rgba(255,255,255,.12);
+    color:#fff;
+  }
+
+  .mh-entry-btn.admin {
+    background:rgba(255,255,255,.76);
+    color:#13233c;
+    border:1px solid rgba(255,255,255,.78);
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+  }
+
+  .mh-entry-btn.admin .mh-entry-btn-icon {
+    background:rgba(7,26,51,.08);
+    color:#071a33;
+  }
+
+  .mh-entry-foot {
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:calc(18px + var(--mh-entry-safe-bottom));
+    text-align:center;
+    color:rgba(21,35,59,.28);
+    font-size:10px;
+    letter-spacing:.06em;
+    opacity:0;
+    animation:mhEntryFadeUp .55s ease .44s forwards;
+  }
+
+  .mh-entry-pin-modal {
+    position:fixed;
+    inset:0;
+    z-index:10000;
+    display:none;
+    align-items:flex-end;
+    justify-content:center;
+    background:rgba(4,12,28,.55);
+    backdrop-filter:blur(7px);
+    -webkit-backdrop-filter:blur(7px);
+  }
+
+  .mh-entry-pin-modal.open { display:flex; }
+
+  .mh-entry-pin-sheet {
+    width:min(430px,100%);
+    border-radius:26px 26px 0 0;
+    background:rgba(255,255,255,.95);
+    border:1px solid rgba(255,255,255,.92);
+    border-bottom:0;
+    padding:16px 24px calc(28px + var(--mh-entry-safe-bottom));
+    box-shadow:0 -20px 60px rgba(7,26,51,.24);
+    animation:mhEntrySheetUp .28s cubic-bezier(.2,.8,.2,1) forwards;
+  }
+
+  .mh-entry-pin-handle { width:38px;height:4px;margin:0 auto 18px;border-radius:99px;background:rgba(21,35,59,.16); }
+  .mh-entry-pin-title { text-align:center;font-size:22px;font-weight:1000;letter-spacing:-.05em;color:#16243d;margin:0; }
+  .mh-entry-pin-desc { text-align:center;margin:6px 0 18px;color:rgba(21,35,59,.56);font-size:12px;font-weight:750; }
+
+  .mh-entry-pin-input {
+    width:100%;height:54px;border-radius:15px;border:1px solid rgba(21,35,59,.16);
+    background:rgba(241,247,253,.92);color:#16243d;outline:0;text-align:center;
+    font-size:23px;font-weight:950;letter-spacing:.28em;padding-left:.28em;
+  }
+
+  .mh-entry-pin-input:focus { border-color:rgba(7,26,51,.52);box-shadow:0 0 0 4px rgba(7,26,51,.08); }
+  .mh-entry-pin-input::placeholder { font-size:13px;letter-spacing:.02em;color:rgba(21,35,59,.32);font-weight:700; }
+  .mh-entry-pin-err { min-height:19px;margin-top:8px;color:#d64252;text-align:center;font-size:12px;font-weight:850; }
+  .mh-entry-pin-actions { display:grid;grid-template-columns:1fr 1.55fr;gap:9px;margin-top:4px; }
+  .mh-entry-pin-cancel,.mh-entry-pin-ok { height:48px;border:0;border-radius:15px;font-size:14px;font-weight:950;cursor:pointer; }
+  .mh-entry-pin-cancel { background:#eef4fa;color:rgba(21,35,59,.62);border:1px solid rgba(21,35,59,.08); }
+  .mh-entry-pin-ok { background:#071a33;color:#fff; }
+
+  @keyframes mhEntryFadeDown { from{opacity:0;transform:translateY(-12px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes mhEntryFadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes mhEntrySheetUp { from{transform:translateY(100%)} to{transform:translateY(0)} }
+  @keyframes mhEntryShake { 0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}50%{transform:translateX(8px)}75%{transform:translateX(-5px)} }
+
+  @media (min-width:721px){
+    .mh-entry-overlay::before { background-position:center center; }
+    .mh-entry-stage { margin-left:auto;margin-right:auto; }
+  }
+
+  @media (max-width:720px){
+    .mh-entry-overlay::before { background-position:96% center; }
+    .mh-entry-actions { top:59% !important; transform:none !important; }
+  }
+
+  @media (max-width:430px){
+    .mh-entry-stage { padding-left:30px;padding-right:30px;padding-top:18px;padding-bottom:calc(20px + var(--mh-entry-safe-bottom)); }
+    .mh-entry-brand { top:28px;right:16px;width:min(235px,58vw); }
+    .mh-entry-brand-copy { margin-top:7px;font-size:11px;line-height:1.5; }
+    .mh-entry-actions { left:30px;right:30px;top:59% !important;gap:14px; }
+  }
+
+  @media (max-width:720px) and (max-height:720px){
+    .mh-entry-brand { top:22px;right:14px;width:min(215px,56vw); }
+    .mh-entry-brand-copy { margin-top:6px;font-size:10.5px;line-height:1.45; }
+    .mh-entry-actions { top:56% !important; }
+    .mh-entry-btn { min-height:52px; }
+  }
+
+  </style>
+
+
+<style id="v138-home-button-unified-style">
+  /* v138: 홈으로 버튼을 관리자 버튼과 같은 상단 배너 스타일로 통일 */
+  .hero-home-btn {
+    position: absolute !important;
+    right: 108px !important;
+    top: 14px !important;
+    z-index: 4 !important;
+    min-height: 34px !important;
+    padding: 0 12px !important;
+    border-radius: 999px !important;
+    border: 1px solid rgba(255,255,255,0.28) !important;
+    background: rgba(7,26,51,0.38) !important;
+    color: #fff !important;
+    font-size: 11px !important;
+    font-weight: 1000 !important;
+    box-shadow: none !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+  }
+
+  @media (max-width: 720px) {
+    .hero-home-btn {
+      right: 88px !important;
+      top: 10px !important;
+      min-height: 30px !important;
+      padding: 0 9px !important;
+      font-size: 10px !important;
+    }
+  }
+</style>
+
+
+<style id="v148-month-badge-v119-final-override">
+/* v148: 상단 몇월 월례회 배지만 v119 최종 티켓형 스타일로 마지막 레이어에서 복구 */
+.hero-meetup-month {
+  position: absolute !important;
+  left: 14px !important;
+  right: auto !important;
+  top: auto !important;
+  bottom: 17px !important;
+  transform: none !important;
+  z-index: 8 !important;
+
+  width: 186px !important;
+  min-width: 186px !important;
+  max-width: 186px !important;
+  height: 56px !important;
+  min-height: 56px !important;
+  box-sizing: border-box !important;
+
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  overflow: hidden !important;
+  padding: 26px 14px 8px 58px !important;
+  border-radius: 22px !important;
+
+  background:
+    linear-gradient(135deg, rgba(8, 22, 45, 0.70), rgba(74, 91, 114, 0.58)) !important;
+  border: 1px solid rgba(255,255,255,0.40) !important;
+  box-shadow:
+    0 14px 30px rgba(0,0,0,0.22),
+    inset 0 1px 0 rgba(255,255,255,0.22),
+    inset 0 -1px 0 rgba(255,255,255,0.08) !important;
+  backdrop-filter: blur(12px) saturate(1.18) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(1.18) !important;
+
+  color: #ffffff !important;
+  font-size: 18px !important;
+  font-weight: 1000 !important;
+  line-height: 1 !important;
+  letter-spacing: -0.07em !important;
+  white-space: nowrap !important;
+  text-align: left !important;
+  text-shadow: 0 2px 9px rgba(0,0,0,0.52) !important;
+}
+
+.hero-meetup-month::before {
+  content: "" !important;
+  position: absolute !important;
+  left: 14px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 34px !important;
+  height: 34px !important;
+  border-radius: 50% !important;
+  z-index: 1 !important;
+  background:
+    radial-gradient(circle at 32% 25%, #fbffa5 0 16%, #e8ff4a 36%, #badf21 68%, #78aa11 100%) !important;
+  box-shadow:
+    0 0 0 3px rgba(226,255,78,0.18),
+    0 0 16px rgba(226,255,78,0.36),
+    inset -5px -6px 10px rgba(33,63,0,0.24) !important;
+}
+
+.hero-meetup-month::after {
+  content: "MONTHLY MEETUP" !important;
+  position: absolute !important;
+  left: 58px !important;
+  top: 10px !important;
+  z-index: 2 !important;
+  display: block !important;
+  height: 12px !important;
+  line-height: 12px !important;
+  color: rgba(235,255,131,0.98) !important;
+  font-size: 8px !important;
+  font-weight: 1000 !important;
+  letter-spacing: 0.13em !important;
+  white-space: nowrap !important;
+  text-shadow: 0 2px 7px rgba(0,0,0,0.46) !important;
+}
+
+@media (min-width: 1025px) {
+  .hero-meetup-month {
+    left: 18px !important;
+    bottom: 18px !important;
+    width: 198px !important;
+    min-width: 198px !important;
+    max-width: 198px !important;
+    height: 58px !important;
+    min-height: 58px !important;
+    padding: 27px 15px 8px 61px !important;
+    font-size: 19px !important;
+    border-radius: 23px !important;
+  }
+  .hero-meetup-month::before {
+    left: 15px !important;
+    width: 36px !important;
+    height: 36px !important;
+  }
+  .hero-meetup-month::after {
+    left: 61px !important;
+    top: 10px !important;
+    font-size: 8.4px !important;
+  }
+}
+
+@media (max-width: 520px) {
+  .hero-meetup-month {
+    left: 10px !important;
+    bottom: 13px !important;
+    width: 168px !important;
+    min-width: 168px !important;
+    max-width: 168px !important;
+    height: 52px !important;
+    min-height: 52px !important;
+    padding: 24px 11px 7px 53px !important;
+    font-size: 16px !important;
+    border-radius: 20px !important;
+  }
+  .hero-meetup-month::before {
+    left: 12px !important;
+    width: 31px !important;
+    height: 31px !important;
+  }
+  .hero-meetup-month::after {
+    left: 53px !important;
+    top: 9px !important;
+    font-size: 7.2px !important;
+    letter-spacing: 0.105em !important;
+  }
+}
+</style>
+
+
+<style id="v149-month-badge-visible-parent-fix">
+/* v149: 월례회 배지 요소만 hero-top 밖으로 빼서 0-height parent 기준 배치 문제 해결 */
+.hero-inner.hero-inner-clean {
+  position: relative !important;
+}
+.hero-inner.hero-inner-clean > .hero-meetup-month {
+  position: absolute !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: none !important;
+  left: 14px !important;
+  bottom: 17px !important;
+  z-index: 45 !important;
+}
+@media (min-width: 1025px) {
+  .hero-inner.hero-inner-clean > .hero-meetup-month {
+    left: 18px !important;
+    bottom: 18px !important;
+  }
+}
+@media (max-width: 520px) {
+  .hero-inner.hero-inner-clean > .hero-meetup-month {
+    left: 10px !important;
+    bottom: 13px !important;
+  }
+}
+</style>
 </head>
 <body>
+
+  <!-- v130: 통합 입장페이지 오버레이 -->
+  <main class="mh-entry-overlay" id="mhEntryOverlay" aria-label="마테호른 테니스클럽 월례회 입장화면">
+    <section class="mh-entry-stage">
+      <header class="mh-entry-brand">
+        <img class="mh-entry-brand-logo" src="./matterhorn-entry-logo-clean.png" alt="마테호른 테니스클럽" />
+        <p class="mh-entry-brand-copy">정상을 향한 우리의 여정,<br>함께 플레이할 준비 되셨나요?</p>
+      </header>
+
+      <section class="mh-entry-actions" aria-label="입장 선택">
+        <button class="mh-entry-btn participant" type="button" id="mhEntryParticipantBtn" aria-label="참가자로 입장">
+          <span class="mh-entry-btn-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M8.6 10.8a3.15 3.15 0 1 0 0-6.3 3.15 3.15 0 0 0 0 6.3Z" fill="currentColor"/>
+              <path d="M16.1 11.2a2.65 2.65 0 1 0 0-5.3 2.65 2.65 0 0 0 0 5.3Z" fill="currentColor" opacity=".72"/>
+              <path d="M3.7 18.7c.42-3.52 2.26-5.34 4.9-5.34s4.48 1.82 4.9 5.34c.08.66-.45 1.3-1.12 1.3H4.82c-.67 0-1.2-.64-1.12-1.3Z" fill="currentColor"/>
+              <path d="M13.9 19.95c.45-.42.68-1.04.6-1.7a7.96 7.96 0 0 0-1.3-3.7c.73-.53 1.65-.82 2.72-.82 2.3 0 3.9 1.58 4.28 4.62.09.8-.55 1.6-1.36 1.6H13.9Z" fill="currentColor" opacity=".72"/>
+            </svg>
+          </span>
+          <span class="mh-entry-btn-text">참가자로 입장</span>
+          <span class="mh-entry-btn-arrow" aria-hidden="true">›</span>
+        </button>
+        <button class="mh-entry-btn admin" type="button" id="mhEntryAdminBtn" aria-label="관리자 로그인">
+          <span class="mh-entry-btn-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M17.4 10.1h-.92V8.18a4.48 4.48 0 1 0-8.96 0v1.92H6.6c-1.05 0-1.9.85-1.9 1.9v6.1c0 1.05.85 1.9 1.9 1.9h10.8c1.05 0 1.9-.85 1.9-1.9V12c0-1.05-.85-1.9-1.9-1.9Zm-7.88 0V8.18a2.48 2.48 0 1 1 4.96 0v1.92H9.52Zm3.58 5.08v1.4a1.1 1.1 0 1 1-2.2 0v-1.4a1.55 1.55 0 1 1 2.2 0Z" fill="currentColor"/>
+            </svg>
+          </span>
+          <span class="mh-entry-btn-text">관리자 로그인</span>
+          <span class="mh-entry-btn-arrow" aria-hidden="true">›</span>
+        </button>
+      </section>
+
+      <div class="mh-entry-foot">Matterhorn Tennis Club Monthly System</div>
+    </section>
+  </main>
+
+  <div class="mh-entry-pin-modal" id="mhEntryPinModal" aria-hidden="true">
+    <div class="mh-entry-pin-sheet" role="dialog" aria-modal="true" aria-labelledby="mhEntryPinTitle">
+      <div class="mh-entry-pin-handle"></div>
+      <h2 class="mh-entry-pin-title" id="mhEntryPinTitle">관리자 인증</h2>
+      <p class="mh-entry-pin-desc">관리자 비밀번호를 입력해주세요.</p>
+      <input class="mh-entry-pin-input" id="mhEntryPinInput" type="password" inputmode="numeric" autocomplete="off" maxlength="20" placeholder="비밀번호 입력" />
+      <div class="mh-entry-pin-err" id="mhEntryPinErr"></div>
+      <div class="mh-entry-pin-actions">
+        <button class="mh-entry-pin-cancel" type="button" id="mhEntryPinCancel">취소</button>
+        <button class="mh-entry-pin-ok" type="button" id="mhEntryPinOk">입장</button>
+      </div>
+    </div>
+  </div>
+
 
   <!-- v107: 입장 페이지 제거, 앱 바로 진입 -->
   <header class="hero">
@@ -12298,10 +12818,11 @@ body {
         <div class="hero-right-tools">
           <div class="hero-pill hero-pill-right">⛰️ 마테호른 · MATTERHORN TENNIS CLUB</div>
           <button class="btn hero-admin-btn public-only" id="enterAdminModeBtn">🔐 관리자</button>
+          <button class="btn hero-home-btn" id="entryHomeBtn" type="button">🏠 홈으로</button>
           <button class="btn hero-admin-btn admin-only" id="publicModeBtn">참가자모드</button>
         </div>
-        <div class="hero-meetup-month" id="heroMeetupMonthLabel">00월 월례회</div>
       </div>
+      <div class="hero-meetup-month" id="heroMeetupMonthLabel">00월 월례회</div>
     </div>
   </header>
 
@@ -13703,12 +14224,14 @@ body {
       const male = active.filter(member => member.gender === "남").length;
       const female = active.filter(member => member.gender === "여").length;
       const guestCount = active.filter(member => member.isGuest).length;
-      const pendingCount = state.matches.filter(match => (match.status || "pending") === "pending").length;
+      const pendingMatches = state.matches.filter(match => (match.status || "pending") === "pending");
+      const pendingCount = pendingMatches.length;
+      const startableCount = pendingMatches.filter(match => !hasPlayingConflict(match)).length;
       const playingCount = state.matches.filter(match => (match.status || "pending") === "playing").length;
       const finishedCount = state.matches.filter(match => (match.status || "pending") === "finished").length;
 
       if ($("matchCountInline")) $("matchCountInline").textContent = state.matches.length + "경기";
-      if ($("pendingMatchCount")) $("pendingMatchCount").textContent = "시작 전 " + pendingCount;
+      if ($("pendingMatchCount")) $("pendingMatchCount").textContent = playingCount > 0 ? "시작가능 " + startableCount : "시작가능 " + pendingCount;
       if ($("playingMatchCount")) $("playingMatchCount").textContent = "경기 중 " + playingCount;
       if ($("finishedMatchCount")) $("finishedMatchCount").textContent = "완료 " + finishedCount;
       if ($("participantInlineSummary")) $("participantInlineSummary").textContent = "참가 " + active.length + "명";
@@ -14392,9 +14915,13 @@ body {
 
       area.innerHTML = closedScoreNoteHtml + `<div class="match-list">` + state.matches.map(match => {
         const status = match.status || "pending";
+        const pendingBlocked = status === "pending" && hasPlayingConflict(match);
         const statusLabel =
           status === "playing" ? "경기 중" :
-          status === "finished" ? "완료" : "시작 전";
+          status === "finished" ? "완료" :
+          pendingBlocked ? "대기중" : "시작가능";
+        const statusVisualClass =
+          status === "pending" ? (pendingBlocked ? "waiting" : "startable") : status;
         const matchType = getMatchType(match);
         const matchTypeClass =
           matchType === "남복" ? "men" :
@@ -14447,7 +14974,7 @@ body {
             <div class="match-status-box">
               <button
                 type="button"
-                class="status-pill status-cycle-btn ${status}"
+                class="status-pill status-cycle-btn ${statusVisualClass}"
                 ${statusButtonAttrs}
               >
                 ${statusLabel}
@@ -15219,6 +15746,18 @@ body {
       return `${match?.round || ""}게임`;
     }
 
+    function hasPlayingConflict(targetMatch) {
+      if (!targetMatch) return false;
+      const targetPlayerIds = new Set(getMatchPlayerIds(targetMatch));
+      if (!targetPlayerIds.size) return false;
+      return state.matches
+        .filter(match => match.id !== targetMatch.id)
+        .some(match =>
+          (match.status || "pending") === "playing" &&
+          getMatchPlayerIds(match).some(playerId => targetPlayerIds.has(playerId))
+        );
+    }
+
     function getPlayingConflictMessage(targetMatch) {
       const targetPlayerIds = new Set(getMatchPlayerIds(targetMatch));
       const conflicts = [];
@@ -15262,11 +15801,7 @@ body {
       if (nextStatus === "playing") {
         const conflictMessage = getPlayingConflictMessage(targetMatch);
         if (conflictMessage) {
-          requestConfirmation({
-            title: "중복 경기 진행 확인",
-            message: conflictMessage,
-            onConfirm: () => updateMatchStatus(id, nextStatus)
-          });
+          showToast("이미 경기 중인 선수가 포함되어 시작할 수 없습니다.", "warn");
           return;
         }
       }
@@ -15667,7 +16202,7 @@ body {
 
     function backupStatusLabel(status) {
       return status === "playing" ? "경기 중" :
-        status === "finished" ? "완료" : "시작 전";
+        status === "finished" ? "완료" : "시작가능";
     }
 
     function getBackupTeamRecords(matches) {
@@ -16337,6 +16872,218 @@ body {
     font-size: 9px !important;
   }
 }
+</style>
+
+
+<script>
+/* v130: 입장페이지 통합 로직 */
+(function(){
+  const overlay = document.getElementById("mhEntryOverlay");
+  const participantBtn = document.getElementById("mhEntryParticipantBtn");
+  const adminBtn = document.getElementById("mhEntryAdminBtn");
+  const pinModal = document.getElementById("mhEntryPinModal");
+  const pinInput = document.getElementById("mhEntryPinInput");
+  const pinErr = document.getElementById("mhEntryPinErr");
+  const pinCancel = document.getElementById("mhEntryPinCancel");
+  const pinOk = document.getElementById("mhEntryPinOk");
+  const entryHomeBtn = document.getElementById("entryHomeBtn");
+
+  if (!overlay || !participantBtn || !adminBtn) return;
+
+  const ENTRY_PUBLIC_SKIP_MS = 60 * 60 * 1000;
+  const ENTRY_PUBLIC_LAST_KEY = "matterhorn_entry_participant_last_entered_at_v1";
+  const ENTRY_FORCE_SHOW_KEY = "matterhorn_entry_force_show_v1";
+
+  function shouldSkipEntryOnLoad(){
+    try {
+      // 엔트리 화면으로 돌아온 상태에서 새로고침하면 그대로 엔트리페이지를 보여준다.
+      if (localStorage.getItem(ENTRY_FORCE_SHOW_KEY) === "1") return false;
+
+      // 관리자모드에서 새로고침한 경우에는 기존 v123 원칙대로 엔트리를 건너뛴다.
+      if (localStorage.getItem("matterhorn_device_default_role") === "admin" ||
+          localStorage.getItem("matterhorn_admin_mode_persist_v1") === "1") {
+        return true;
+      }
+
+      // 참가자모드는 매 새로고침마다 엔트리가 뜨지 않도록 1시간 동안만 건너뛴다.
+      const lastEnteredAt = Number(localStorage.getItem(ENTRY_PUBLIC_LAST_KEY) || 0);
+      if (!lastEnteredAt) return false;
+      return Date.now() - lastEnteredAt < ENTRY_PUBLIC_SKIP_MS;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  function hideEntry(){
+    overlay.classList.add("hidden");
+    if (pinModal) pinModal.classList.remove("open");
+    setTimeout(() => {
+      overlay.style.display = "none";
+      if (pinModal) pinModal.style.display = "none";
+    }, 420);
+  }
+
+  function showEntryHome(){
+    if (!overlay) return;
+    try { localStorage.setItem(ENTRY_FORCE_SHOW_KEY, "1"); } catch (error) {}
+    overlay.style.display = "";
+    overlay.classList.remove("hidden");
+    if (pinModal) {
+      pinModal.classList.remove("open");
+      pinModal.style.display = "none";
+      pinModal.setAttribute("aria-hidden", "true");
+    }
+  }
+
+  window.openMatterhornEntryHome = showEntryHome;
+
+  function openPin(){
+    if (!pinModal || !pinInput || !pinErr) return;
+    pinErr.textContent = "";
+    pinInput.value = "";
+    pinModal.style.display = "flex";
+    pinModal.classList.add("open");
+    pinModal.setAttribute("aria-hidden", "false");
+    setTimeout(() => pinInput.focus(), 120);
+  }
+
+  function closePin(){
+    if (!pinModal || !pinInput || !pinErr) return;
+    pinModal.classList.remove("open");
+    pinModal.setAttribute("aria-hidden", "true");
+    pinInput.value = "";
+    pinErr.textContent = "";
+    setTimeout(() => { if (!pinModal.classList.contains("open")) pinModal.style.display = "none"; }, 80);
+  }
+
+  function shakeInput(){
+    if (!pinInput) return;
+    pinInput.style.animation = "none";
+    pinInput.getBoundingClientRect();
+    pinInput.style.animation = "mhEntryShake .32s ease";
+  }
+
+  function validAdminCredential(value){
+    if (typeof isValidAdminCredential === "function") return isValidAdminCredential(value);
+    return value === "0000";
+  }
+
+  function enterParticipant(){
+    try { localStorage.removeItem(ENTRY_FORCE_SHOW_KEY); } catch (error) {}
+    if (typeof chooseParticipantRole === "function") {
+      chooseParticipantRole();
+    } else {
+      try { localStorage.setItem("matterhorn_device_default_role", "participant"); } catch (error) {}
+    }
+    try { localStorage.setItem(ENTRY_PUBLIC_LAST_KEY, String(Date.now())); } catch (error) {}
+    hideEntry();
+  }
+
+  function enterAdmin(){
+    try { localStorage.removeItem(ENTRY_FORCE_SHOW_KEY); } catch (error) {}
+    if (typeof adminUnlocked !== "undefined") adminUnlocked = true;
+    if (typeof setPersistedAdminMode === "function") setPersistedAdminMode(true);
+    try { localStorage.setItem("matterhorn_device_default_role", "admin"); localStorage.setItem("matterhorn_admin_mode_persist_v1", "1"); } catch (error) {}
+    if (typeof syncAccessMode === "function") syncAccessMode();
+    if (typeof renderAll === "function") renderAll();
+    if (typeof activatePage === "function") activatePage("matches", false);
+    hideEntry();
+  }
+
+  function confirmPin(){
+    const value = (pinInput?.value || "").trim();
+    if (!validAdminCredential(value)) {
+      if (pinErr) pinErr.textContent = "비밀번호가 올바르지 않습니다.";
+      if (pinInput) pinInput.value = "";
+      shakeInput();
+      return;
+    }
+    closePin();
+    enterAdmin();
+  }
+
+  participantBtn.addEventListener("click", enterParticipant);
+  adminBtn.addEventListener("click", openPin);
+  if (entryHomeBtn) entryHomeBtn.addEventListener("click", showEntryHome);
+  if (pinCancel) pinCancel.addEventListener("click", closePin);
+  if (pinOk) pinOk.addEventListener("click", confirmPin);
+  if (pinInput) pinInput.addEventListener("keydown", event => {
+    if (event.key === "Enter") confirmPin();
+    if (event.key === "Escape") closePin();
+  });
+  if (pinModal) pinModal.addEventListener("click", event => { if (event.target === pinModal) closePin(); });
+
+  // 관리자모드는 계속 유지하고, 참가자모드는 마지막 입장 후 1시간 동안만 엔트리를 건너뜁니다.
+  if (shouldSkipEntryOnLoad()) {
+    overlay.classList.add("hidden");
+    overlay.style.display = "none";
+    if (pinModal) pinModal.style.display = "none";
+  }
+})();
+</script>
+
+
+<style id="v139-home-button-match-admin-style">
+  /* v139: 홈으로 버튼을 관리자 버튼과 완전히 같은 톤/높이/테두리로 최종 통일 */
+  .hero-home-btn {
+    position: absolute !important;
+    right: 104px !important;
+    top: 14px !important;
+    z-index: 4 !important;
+    min-height: 34px !important;
+    padding: 0 12px !important;
+    border-radius: 999px !important;
+    border: 1px solid rgba(255,255,255,0.40) !important;
+    background: rgba(7, 26, 51, 0.44) !important;
+    color: #fff !important;
+    font-size: 11px !important;
+    font-weight: 1000 !important;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.16) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+  }
+
+  .hero-home-btn:hover,
+  .hero-home-btn:focus {
+    background: rgba(7, 26, 51, 0.52) !important;
+    color: #fff !important;
+  }
+
+  @media (max-width: 720px) {
+    .hero-home-btn {
+      right: 86px !important;
+      top: 10px !important;
+      min-height: 30px !important;
+      padding: 0 9px !important;
+      font-size: 10px !important;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.14) !important;
+    }
+  }
+</style>
+
+
+
+<style id="v142-header-mode-buttons-visibility-correction">
+  /* v142: 참가자모드에서는 홈으로 + 관리자 버튼을 함께 표시, 관리자모드에서는 둘 다 숨김 */
+  body:not(.admin-mode) #entryHomeBtn,
+  body:not(.admin-mode) #enterAdminModeBtn {
+    display: inline-flex !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+  }
+
+  body.admin-mode #entryHomeBtn,
+  body.admin-mode #enterAdminModeBtn {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  body:not(.admin-mode) #publicModeBtn {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
 </style>
 
 </body>
@@ -17373,4 +18120,196 @@ body {
     letter-spacing: -0.1em !important;
   }
 }
+
+
+    /* v135: 경기 상태 버튼 색상 재정렬 - 시작가능=초록, 완료=기본색, 대기중=주황 */
+    #matchArea .status-pill.status-cycle-btn.startable {
+      background: #dff8ed !important;
+      border-color: #bfe8d5 !important;
+      color: #0c7559 !important;
+      animation: none !important;
+    }
+
+    #matchArea .status-pill.status-cycle-btn.finished {
+      background: #edf2f7 !important;
+      border-color: #dbe4ee !important;
+      color: #526579 !important;
+      animation: none !important;
+    }
+
+    #matchArea .status-pill.status-cycle-btn.waiting {
+      background: #fff1c9 !important;
+      border-color: #f3d58c !important;
+      color: #8a5200 !important;
+      animation: none !important;
+    }
+
+    /* v136: 경기 중은 대기중과 확실히 구분되는 진한 주황색 */
+    #matchArea .status-pill.status-cycle-btn.playing {
+      background: linear-gradient(135deg, #f97316, #c2410c) !important;
+      border-color: #9a3412 !important;
+      color: #fff7ed !important;
+      box-shadow: 0 8px 16px rgba(194, 65, 12, 0.22) !important;
+    }
+
+    /* v136: 상단 배너 홈 버튼 - 관리자 버튼 바로 옆 */
+    .hero-home-btn {
+      position: absolute !important;
+      right: 112px !important;
+      top: 14px !important;
+      z-index: 4 !important;
+      background: rgba(255,255,255,0.92) !important;
+      color: #071a33 !important;
+      border: 1px solid rgba(255,255,255,0.66) !important;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.12) !important;
+    }
+
+    @media (max-width: 720px) {
+      .hero-home-btn {
+        right: 96px !important;
+        top: 10px !important;
+        min-height: 38px !important;
+        padding: 0 10px !important;
+        font-size: 11px !important;
+      }
+    }
+
 </style>
+
+
+<style id="v140-home-admin-pills-final-fix">
+  /* v140: 홈으로/관리자 버튼을 같은 컨테이너 안의 동일 pill 컴포넌트로 강제 통일 */
+  .hero-inner-clean,
+  .hero-top-clean {
+    position: relative !important;
+  }
+
+  .hero-top-clean .hero-right-tools {
+    position: absolute !important;
+    top: 14px !important;
+    right: 18px !important;
+    z-index: 40 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 7px !important;
+    flex-wrap: nowrap !important;
+    width: auto !important;
+  }
+
+  .hero-top-clean .hero-right-tools .hero-home-btn,
+  .hero-top-clean .hero-right-tools .hero-admin-btn {
+    position: static !important;
+    top: auto !important;
+    right: auto !important;
+    left: auto !important;
+    bottom: auto !important;
+    width: auto !important;
+    min-width: 0 !important;
+    height: 34px !important;
+    min-height: 34px !important;
+    max-height: 34px !important;
+    padding: 0 12px !important;
+    border-radius: 999px !important;
+    border: 1px solid rgba(255,255,255,0.40) !important;
+    background: rgba(7, 26, 51, 0.48) !important;
+    color: #fff !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex: 0 0 auto !important;
+    gap: 6px !important;
+    font-size: 11px !important;
+    line-height: 1 !important;
+    font-weight: 1000 !important;
+    letter-spacing: -0.03em !important;
+    white-space: nowrap !important;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.16) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    transform: none !important;
+  }
+
+  .hero-top-clean .hero-right-tools .hero-home-btn { order: 1 !important; }
+  .hero-top-clean .hero-right-tools #enterAdminModeBtn,
+  .hero-top-clean .hero-right-tools #publicModeBtn { order: 2 !important; }
+
+  .hero-top-clean .hero-right-tools .hero-home-btn:hover,
+  .hero-top-clean .hero-right-tools .hero-home-btn:focus,
+  .hero-top-clean .hero-right-tools .hero-admin-btn:hover,
+  .hero-top-clean .hero-right-tools .hero-admin-btn:focus {
+    background: rgba(7, 26, 51, 0.56) !important;
+    color: #fff !important;
+  }
+
+  @media (max-width: 720px) {
+    .hero-top-clean .hero-right-tools {
+      top: 10px !important;
+      right: 12px !important;
+      gap: 6px !important;
+    }
+
+    .hero-top-clean .hero-right-tools .hero-home-btn,
+    .hero-top-clean .hero-right-tools .hero-admin-btn {
+      height: 30px !important;
+      min-height: 30px !important;
+      max-height: 30px !important;
+      padding: 0 9px !important;
+      font-size: 10px !important;
+      border-width: 1px !important;
+    }
+  }
+</style>
+
+
+<style id="v141-header-mode-buttons-visibility-fix">
+  /* v141: 상단 버튼 노출 규칙 정리
+     - 참가자모드: 홈으로만 표시, 관리자 버튼 숨김
+     - 관리자모드: 홈으로/관리자 버튼 숨김, 참가자모드 전환 버튼만 유지 */
+  body:not(.admin-mode) #enterAdminModeBtn {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  body.admin-mode #entryHomeBtn,
+  body.admin-mode #enterAdminModeBtn {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  body:not(.admin-mode) #publicModeBtn {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+</style>
+
+<style id="v143-public-admin-button-visible-final-fix">
+  /* v143: v141의 늦게 선언된 숨김 CSS를 최종 override.
+     참가자모드에서는 홈으로 + 관리자 버튼 모두 표시, 관리자모드에서는 둘 다 숨김. */
+  body:not(.admin-mode) #entryHomeBtn,
+  body:not(.admin-mode) #enterAdminModeBtn {
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  body.admin-mode #entryHomeBtn,
+  body.admin-mode #enterAdminModeBtn {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  body:not(.admin-mode) #publicModeBtn {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+</style>
+
