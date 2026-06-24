@@ -12802,6 +12802,47 @@ body {
   }
 </style>
 
+
+
+<style id="v151-entry-active-hide-main-style">
+  /* v151: 엔트리/PIN 표시 중 메인 경기현황이 뒤로 비치지 않도록 메인 앱을 완전히 숨기고 스크롤을 잠금 */
+  html.mh-entry-active,
+  body.mh-entry-active {
+    overflow: hidden !important;
+    overscroll-behavior: none !important;
+    background: #eaf3fb !important;
+  }
+
+  body.mh-entry-active > :not(.mh-entry-overlay):not(.mh-entry-pin-modal):not(script):not(style) {
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  .mh-entry-overlay,
+  .mh-entry-pin-modal {
+    position: fixed !important;
+    left: 0 !important;
+    right: 0 !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    min-width: 100vw !important;
+    height: 100vh !important;
+    min-height: 100vh !important;
+    height: 100dvh !important;
+    min-height: 100dvh !important;
+  }
+
+  .mh-entry-overlay {
+    z-index: 99900 !important;
+    background: #eaf3fb !important;
+  }
+
+  .mh-entry-pin-modal {
+    z-index: 99950 !important;
+  }
+</style>
+
 </head>
 <body>
 
@@ -16939,6 +16980,11 @@ body {
   const ENTRY_PUBLIC_LAST_KEY = "matterhorn_entry_participant_last_entered_at_v1";
   const ENTRY_FORCE_SHOW_KEY = "matterhorn_entry_force_show_v1";
 
+  function setEntryActive(active){
+    document.documentElement.classList.toggle("mh-entry-active", !!active);
+    document.body.classList.toggle("mh-entry-active", !!active);
+  }
+
   function shouldSkipEntryOnLoad(){
     try {
       // 엔트리 화면으로 돌아온 상태에서 새로고침하면 그대로 엔트리페이지를 보여준다.
@@ -16965,12 +17011,14 @@ body {
     setTimeout(() => {
       overlay.style.display = "none";
       if (pinModal) pinModal.style.display = "none";
+      setEntryActive(false);
     }, 420);
   }
 
   function showEntryHome(){
     if (!overlay) return;
     try { localStorage.setItem(ENTRY_FORCE_SHOW_KEY, "1"); } catch (error) {}
+    setEntryActive(true);
     overlay.style.display = "";
     overlay.classList.remove("hidden");
     if (pinModal) {
@@ -16984,6 +17032,7 @@ body {
 
   function openPin(){
     if (!pinModal || !pinInput || !pinErr) return;
+    setEntryActive(true);
     pinErr.textContent = "";
     pinInput.value = "";
     pinModal.style.display = "flex";
@@ -17063,6 +17112,9 @@ body {
     overlay.classList.add("hidden");
     overlay.style.display = "none";
     if (pinModal) pinModal.style.display = "none";
+    setEntryActive(false);
+  } else {
+    setEntryActive(true);
   }
 })();
 </script>
