@@ -12843,11 +12843,72 @@ body {
   }
 </style>
 
+
+
+<style id="v153-entry-animation-3-5s-style">
+  /* v153: 엔트리페이지 첫 진입 애니메이션 전체 체감 완료 시간을 약 3.5초로 조정 */
+  .mh-entry-overlay {
+    transition: opacity .9s ease, visibility .9s ease !important;
+  }
+
+  .mh-entry-brand {
+    animation: mhEntryFadeDown 1.30s cubic-bezier(.18,.72,.22,1) .40s forwards !important;
+  }
+
+  .mh-entry-actions {
+    animation: mhEntryFadeUp 1.35s cubic-bezier(.18,.72,.22,1) 1.55s forwards !important;
+  }
+
+  .mh-entry-foot {
+    animation: mhEntryFadeUp .95s ease 2.55s forwards !important;
+  }
+
+  .mh-entry-pin-sheet {
+    animation: mhEntrySheetUp .48s cubic-bezier(.2,.8,.2,1) forwards !important;
+  }
+</style>
+
 </head>
 <body>
 
   <!-- v130: 통합 입장페이지 오버레이 -->
-  <main class="mh-entry-overlay" id="mhEntryOverlay" aria-label="마테호른 테니스클럽 월례회 입장화면">
+  
+<style id="v154-entry-animation-duration-long-style">
+  /* v154: 단순 delay가 아니라 실제 요소별 fade/slide 동작 시간을 길게 늘림 */
+  .mh-entry-brand {
+    animation: mhEntrySlowFadeDown 2.30s cubic-bezier(.16,.72,.18,1) .20s forwards !important;
+  }
+
+  .mh-entry-actions {
+    animation: mhEntrySlowFadeUp 2.45s cubic-bezier(.16,.72,.18,1) .70s forwards !important;
+  }
+
+  .mh-entry-foot {
+    animation: mhEntrySlowFadeUpSoft 1.95s cubic-bezier(.16,.72,.18,1) 1.55s forwards !important;
+  }
+
+  .mh-entry-pin-sheet {
+    animation: mhEntrySheetUp .72s cubic-bezier(.16,.72,.18,1) forwards !important;
+  }
+
+  @keyframes mhEntrySlowFadeDown {
+    0% { opacity:0; transform:translateY(-30px) scale(.985); filter:blur(5px); }
+    48% { opacity:.62; filter:blur(2px); }
+    100% { opacity:1; transform:translateY(0) scale(1); filter:blur(0); }
+  }
+
+  @keyframes mhEntrySlowFadeUp {
+    0% { opacity:0; transform:translateY(36px) scale(.985); filter:blur(5px); }
+    52% { opacity:.72; filter:blur(2px); }
+    100% { opacity:1; transform:translateY(0) scale(1); filter:blur(0); }
+  }
+
+  @keyframes mhEntrySlowFadeUpSoft {
+    0% { opacity:0; transform:translateY(18px); filter:blur(3px); }
+    100% { opacity:1; transform:translateY(0); filter:blur(0); }
+  }
+</style>
+<main class="mh-entry-overlay" id="mhEntryOverlay" aria-label="마테호른 테니스클럽 월례회 입장화면">
     <section class="mh-entry-stage">
       <header class="mh-entry-brand">
         <img class="mh-entry-brand-logo" src="./matterhorn-entry-logo-clean.png" alt="마테호른 테니스클럽" />
